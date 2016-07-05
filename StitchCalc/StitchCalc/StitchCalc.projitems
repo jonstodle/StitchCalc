@@ -10,8 +10,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.IosAndroid.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.Windows.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="$(MSBuildThisFileDirectory)GettingStarted.Xamarin" />
+    <Folder Include="$(MSBuildThisFileDirectory)Models\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Views\" />
+    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
   </ItemGroup>
 </Project>
