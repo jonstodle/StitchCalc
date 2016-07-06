@@ -10,9 +10,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\DataStorageObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Material.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Product.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\WorkUnit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.Materials.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.Plumbing.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.Products.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.IosAndroid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.Windows.cs" />
