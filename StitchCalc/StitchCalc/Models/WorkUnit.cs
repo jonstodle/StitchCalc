@@ -6,8 +6,8 @@ namespace StitchCalc.Models
 {
     public class WorkUnit
     {
+		public Guid Id { get; set; }
 		public double Charge { get; set; }
 		public long Minutes { get; set; }
-		public TimeSpan MinutesTimeSpan => TimeSpan.Zero + TimeSpan.FromMinutes(Minutes);
 	}
 }
