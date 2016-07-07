@@ -22,6 +22,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.IosAndroid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.Windows.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\INavigable.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\NavigationDirection.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
