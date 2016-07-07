@@ -8,7 +8,7 @@ namespace StitchCalc.Models
     {
 		public Guid Id { get; set; }
 		public Guid ProductId { get; set; }
-		public decimal Charge { get; set; }
-		public long Minutes { get; set; }
+		public double Charge { get; set; }
+		public int Minutes { get; set; }
 	}
 }

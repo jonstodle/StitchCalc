@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using StitchCalc.Models;
+using StitchCalc.ViewModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,13 @@ namespace StitchCalc.Services.DataServices
     public partial class DataService
     {
 		readonly ReactiveList<Material> materials = new ReactiveList<Material>();
-		public IReadOnlyList<Material> GetMaterials() => materials;
-		public IReadOnlyList<Material> GetMaterials(Guid productId) => materials.CreateDerivedCollection(x => x, x => x.ProductId == productId);
+		public IReactiveDerivedList<MaterialViewModel> GetMaterials() => materials.CreateDerivedCollection(x=>new MaterialViewModel(x));
+		public IReactiveDerivedList<MaterialViewModel> GetMaterialsForProduct(Guid productId) => materials.CreateDerivedCollection(x => new MaterialViewModel(x), x => x.ProductId == productId);
+		public MaterialViewModel GetMaterial(Guid materialId)
+		{
+			var m = materials.FirstOrDefault(x => x.Id == materialId);
+			return m != default(Material) ? new MaterialViewModel(m) : default(MaterialViewModel);
+		}
 
 
 
@@ -23,7 +29,7 @@ namespace StitchCalc.Services.DataServices
 
 			if (string.IsNullOrWhiteSpace(material.Name)) { throw new ArgumentNullException(nameof(material.Name)); }
 
-			if (material.Price == default(decimal)) { throw new ArgumentNullException(nameof(material.Price)); }
+			if (material.Price == default(double)) { throw new ArgumentNullException(nameof(material.Price)); }
 
 			if (material.Amount == default(double)) { throw new ArgumentNullException(nameof(material.Amount)); }
 
@@ -36,7 +42,7 @@ namespace StitchCalc.Services.DataServices
 
 			if (m == default(Material)) { throw new ArgumentException("Material id not found"); }
 
-			products.Remove(m);
+			materials.Remove(m);
 		}
 
 		public void Update(Material material)

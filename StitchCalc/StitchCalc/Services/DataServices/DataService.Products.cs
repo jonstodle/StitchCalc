@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using StitchCalc.Models;
+using StitchCalc.ViewModels.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,12 @@ namespace StitchCalc.Services.DataServices
     public partial class DataService
     {
 		readonly ReactiveList<Product> products = new ReactiveList<Product>();
-		public IReadOnlyList<Product> GetProducts() => products;
+		public IReactiveDerivedList<ProductViewModel> GetProducts() => products.CreateDerivedCollection(x => new ProductViewModel(x));
+		public ProductViewModel GetProduct(Guid productId)
+		{
+			var p = products.FirstOrDefault(x => x.Id == productId);
+			return p != default(Product) ? new ProductViewModel(p) : default(ProductViewModel);
+		}
 
 
 
