@@ -23,9 +23,5 @@ namespace StitchCalc.Services.DataServices
 				.Merge(workUnits.Changed)
 				.Subscribe(_ => SaveDataToDisk());
 		}
-
-		readonly ReactiveList<WorkUnit> workUnits = new ReactiveList<WorkUnit>();
-		public IReadOnlyList<WorkUnit> GetWorkUnits() => workUnits;
-		public IReadOnlyList<WorkUnit> GetWorkUnits(Guid productId) => workUnits.CreateDerivedCollection(x => x, x => x.ProductId == productId);
 	}
 }

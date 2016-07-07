@@ -20,10 +20,6 @@ namespace StitchCalc.Services.DataServices
 
 			if (string.IsNullOrWhiteSpace(product.Name)) { throw new ArgumentNullException(nameof(product.Name)); }
 
-			if (product.Materials == default(IEnumerable<Material>)) { throw new ArgumentNullException(nameof(product.Materials)); }
-
-			if (product.WorkUnits == default(IEnumerable<WorkUnit>)) { throw new ArgumentNullException(nameof(product.WorkUnits)); }
-
 			products.Add(product);
 		}
 
@@ -47,8 +43,6 @@ namespace StitchCalc.Services.DataServices
 				Remove(p);
 				Add(product);
 			}
-
-			p.Name = product.Name;
 		}
 	}
 }

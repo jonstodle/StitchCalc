@@ -29,5 +29,27 @@ namespace StitchCalc.Services.DataServices
 
 			materials.Add(material);
 		}
+
+		public void Remove(Material material)
+		{
+			var m = materials.FirstOrDefault(x => x.Id == material.Id);
+
+			if (m == default(Material)) { throw new ArgumentException("Material id not found"); }
+
+			products.Remove(m);
+		}
+
+		public void Update(Material material)
+		{
+			var m = materials.FirstOrDefault(x => x.Id == material.Id);
+
+			if (m == default(Material)) { throw new ArgumentException("Material id not found"); }
+
+			using (materials.SuppressChangeNotifications())
+			{
+				Remove(m);
+				Add(material);
+			}
+		}
 	}
 }
