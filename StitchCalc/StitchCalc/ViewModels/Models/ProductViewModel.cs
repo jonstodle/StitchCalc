@@ -14,6 +14,7 @@ namespace StitchCalc.ViewModels.Models
 		readonly Product model;
 		readonly IReactiveDerivedList<MaterialViewModel> materials;
 		readonly IReactiveDerivedList<WorkUnitViewModel> workUnits;
+		readonly IReactiveDerivedList<CustomPropertyViewModel> customProperties;
 		readonly ObservableAsPropertyHelper<double> materialsPrice;
 		readonly ObservableAsPropertyHelper<double> workInMinutes;
 		readonly ObservableAsPropertyHelper<double> workPrice;
@@ -24,6 +25,7 @@ namespace StitchCalc.ViewModels.Models
 			model = productModel;
 			materials = DataService.Current.GetMaterialsForProduct(model.Id);
 			workUnits = DataService.Current.GetWorkUnitsForProduct(model.Id);
+			customProperties = DataService.Current.GetCustomPropertiesForProduct(model.Id);
 
 			materials
 				.Changed
@@ -52,6 +54,8 @@ namespace StitchCalc.ViewModels.Models
 		public IReactiveDerivedList<MaterialViewModel> Materials => materials;
 
 		public IReactiveDerivedList<WorkUnitViewModel> WorkUnits => workUnits;
+
+		public IReactiveDerivedList<CustomPropertyViewModel> CustomProperties => customProperties;
 
 		public double MaterialsPrice => materialsPrice.Value;
 

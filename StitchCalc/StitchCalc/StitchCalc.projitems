@@ -10,11 +10,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\CustomProperty.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DataStorageObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Material.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Product.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\WorkUnit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.CustomProperties.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.Materials.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.LoadSave.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.Products.cs" />
@@ -25,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\INavigable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\NavigationDirection.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\NavigationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\CustomPropertyViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\MaterialViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\ProductViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\WorkUnitViewModel.cs" />
