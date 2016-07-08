@@ -1,4 +1,5 @@
-﻿using StitchCalc.Models;
+﻿using ReactiveUI;
+using StitchCalc.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,7 +8,7 @@ namespace StitchCalc.ViewModels.Models
 {
     public class MaterialViewModel : ViewModelBase
     {
-		Material model;
+		readonly Material model;
 
 		public MaterialViewModel(Material model)
 		{
@@ -17,6 +18,8 @@ namespace StitchCalc.ViewModels.Models
 		public Material Model => model;
 
 		public string Name => model.Name;
+
+		public string Description => model.Description;
 
 		public double PricePerAmount => model.Price;
 
