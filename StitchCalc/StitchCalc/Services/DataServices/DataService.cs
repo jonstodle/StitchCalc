@@ -18,10 +18,12 @@ namespace StitchCalc.Services.DataServices
 
 		DataService()
 		{
+#pragma warning disable 4014
 			products.Changed
 				.Merge(materials.Changed)
 				.Merge(workUnits.Changed)
 				.Subscribe(_ => SaveDataToDisk());
+#pragma warning restore 4014
 		}
 	}
 }

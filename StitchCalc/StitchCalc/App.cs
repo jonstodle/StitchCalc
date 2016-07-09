@@ -1,4 +1,5 @@
 ﻿using StitchCalc.Services.NavigationService;
+using StitchCalc.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace StitchCalc
 		public App ()
 		{
 			// The root page of your application
-			MainPage = new NavigationPage();
+			MainPage = new NavigationPage(new HomeView());
 			new NavigationService(MainPage.Navigation);
 		}
 
