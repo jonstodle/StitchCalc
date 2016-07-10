@@ -22,14 +22,23 @@ namespace StitchCalc.Services.NavigationService
 			Current = Current ?? this;
 		}
 
-		public async Task NavigateTo<TView>(object parameter = null) where TView : class, IViewFor, new()
+		public Task NavigateTo<TView>(object parameter = null) where TView : class, IViewFor, new() => NavigateTo<TView>(parameter, false);
+
+		public Task NavigateToAndRemoveThis<TView>(object parameter = null) where TView : class, IViewFor, new() => NavigateTo<TView>(parameter, true);
+
+		private async Task NavigateTo<TView>(object parameter, bool removeCurrentPageFromBackStack) where TView : class, IViewFor, new()
 		{
-			if (currentPage?.ViewModel is INavigable){await (currentPage.ViewModel as INavigable).OnNavigatingFrom(); }
+			if (currentPage?.ViewModel is INavigable) { await(currentPage.ViewModel as INavigable).OnNavigatingFrom(); }
 
-			currentPage = new TView();
-			if (currentPage.ViewModel is INavigable) { await (currentPage.ViewModel as INavigable).OnNavigatedTo(parameter, NavigationDirection.Forwards); }
+			this.currentPage = new TView();
+			if (this.currentPage.ViewModel is INavigable) { await(this.currentPage.ViewModel as INavigable).OnNavigatedTo(parameter, NavigationDirection.Forwards); }
 
-			await navigation.PushAsync(currentPage as Page);
+			if (removeCurrentPageFromBackStack && currentPage != null)
+			{
+				navigation.InsertPageBefore(this.currentPage as Page, navigation.NavigationStack[navigation.NavigationStack.Count -1]);
+				await navigation.PopAsync();
+			}
+			else { await navigation.PushAsync(this.currentPage as Page); }
 		}
 
 		public async Task GoBack()
