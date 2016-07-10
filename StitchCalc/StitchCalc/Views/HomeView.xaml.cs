@@ -17,6 +17,7 @@ namespace StitchCalc.Views
 		{
 			InitializeComponent ();
 
+			this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem);
 			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text);
 			this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.ProductListView.ItemsSource);
 		}

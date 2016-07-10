@@ -5,7 +5,7 @@
 						 Title="StitchCalc">
 
 	<ContentPage.ToolbarItems>
-		<ToolbarItem Text="Add"/>
+		<ToolbarItem x:Name="AddProductToolbarItem" Text="Add"/>
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout Spacing="10">

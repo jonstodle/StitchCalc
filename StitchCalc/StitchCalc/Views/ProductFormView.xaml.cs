@@ -15,6 +15,9 @@ namespace StitchCalc.Views
 		public ProductFormView ()
 		{
 			InitializeComponent ();
+
+			this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
+			this.BindCommand(ViewModel, vm => vm.AddMaterials, v => v.AddMaterialsButton);
 		}
 
 		public ProductFormViewViewModel ViewModel
