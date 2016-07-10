@@ -34,6 +34,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\HomeViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductFormViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductMaterialsViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductSummaryViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductWorkUnitsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
       <SubType>Code</SubType>
