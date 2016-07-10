@@ -24,10 +24,10 @@ namespace StitchCalc.Services.NavigationService
 
 		public async Task NavigateTo<TView>(object parameter = null) where TView : class, IViewFor, new()
 		{
-			await (currentPage.ViewModel as INavigable)?.OnNavigatingFrom();
+			if (currentPage?.ViewModel is INavigable){await (currentPage.ViewModel as INavigable).OnNavigatingFrom(); }
 
 			currentPage = new TView();
-			await (currentPage.ViewModel as INavigable)?.OnNavigatedTo(parameter, NavigationDirection.Forwards);
+			if (currentPage.ViewModel is INavigable) { await (currentPage.ViewModel as INavigable).OnNavigatedTo(parameter, NavigationDirection.Forwards); }
 
 			await navigation.PushAsync(currentPage as Page);
 		}
