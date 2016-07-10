@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels.Views
 {
-	class ProductMaterialsViewViewModel : ViewModelBase, INavigable
+	public class ProductMaterialsViewViewModel : ViewModelBase, INavigable
 	{
 		public Task OnNavigatedTo(object parameter, NavigationDirection direction) => Task.CompletedTask;
 
