@@ -17,6 +17,7 @@ namespace StitchCalc.ViewModels.Views
 		readonly IReactiveDerivedList<ProductViewModel> products;
 		readonly ObservableAsPropertyHelper<List<ProductViewModel>> collectionView;
 		readonly ReactiveCommand<object> navigateToProductFormPage;
+		readonly ReactiveCommand<object> navigateToProductPage;
 		string searchTerm;
 
 		public HomeViewViewModel()
@@ -31,11 +32,17 @@ namespace StitchCalc.ViewModels.Views
 			navigateToProductFormPage = ReactiveCommand.Create();
 			navigateToProductFormPage
 				.Subscribe(async _ => await NavigationService.Current.NavigateTo<ProductFormView>());
+
+			navigateToProductPage = ReactiveCommand.Create();
+			navigateToProductPage
+				.Subscribe(async _ => await NavigationService.Current.NavigateTo<ProductView>());
 		}
 
 		public List<ProductViewModel> CollectionView => collectionView.Value;
 
 		public ReactiveCommand<object> NavigateToProductFormPage => navigateToProductFormPage;
+
+		public ReactiveCommand<object> NavigateToProductPage => navigateToProductPage;
 
 		public string SearchTerm
 		{

@@ -4,6 +4,7 @@ using StitchCalc.ViewModels.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +21,9 @@ namespace StitchCalc.Views
 			this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem);
 			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text);
 			this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.ProductListView.ItemsSource);
+
+			Observable.FromEventPattern(ProductListView, nameof(ListView.ItemTapped))
+				.InvokeCommand(ViewModel, x => x.NavigateToProductPage);
 		}
 
 		public HomeViewViewModel ViewModel
