@@ -12,7 +12,19 @@
 		<SearchBar x:Name="ProductSearchBar"/>
 
 		<ListView x:Name="ProductListView">
-			
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<ViewCell>
+						<ViewCell.ContextActions>
+							<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}" CommandParameter="{Binding}"/>
+						</ViewCell.ContextActions>
+						
+						<StackLayout>
+							<Label Text="{Binding Name}"/>
+						</StackLayout>
+					</ViewCell>
+				</DataTemplate>
+			</ListView.ItemTemplate>
 		</ListView>
 	</StackLayout>
 </ContentPage>
