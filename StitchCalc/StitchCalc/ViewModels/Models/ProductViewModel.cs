@@ -12,6 +12,7 @@ namespace StitchCalc.ViewModels.Models
     public class ProductViewModel : ViewModelBase
     {
 		readonly Product model;
+		readonly ReactiveCommand<object> delete;
 		readonly IReactiveDerivedList<MaterialViewModel> materials;
 		readonly IReactiveDerivedList<WorkUnitViewModel> workUnits;
 		readonly IReactiveDerivedList<CustomPropertyViewModel> customProperties;
@@ -26,6 +27,10 @@ namespace StitchCalc.ViewModels.Models
 			materials = DataService.Current.GetMaterialsForProduct(model.Id);
 			workUnits = DataService.Current.GetWorkUnitsForProduct(model.Id);
 			customProperties = DataService.Current.GetCustomPropertiesForProduct(model.Id);
+
+			delete = ReactiveCommand.Create();
+			delete
+				.Subscribe(_ => DataService.Current.Remove(model));
 
 			materials
 				.Changed
@@ -48,6 +53,8 @@ namespace StitchCalc.ViewModels.Models
 		}
 
 		public Product Model => model;
+
+		public ReactiveCommand<object> Delete => delete;
 
 		public string Name => model.Name;
 

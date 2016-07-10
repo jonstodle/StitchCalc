@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using StitchCalc.Models;
+using StitchCalc.Services.DataServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,13 +10,20 @@ namespace StitchCalc.ViewModels.Models
     public class MaterialViewModel : ViewModelBase
     {
 		readonly Material model;
+		readonly ReactiveCommand<object> delete;
 
-		public MaterialViewModel(Material model)
+		public MaterialViewModel(Material material)
 		{
-			this.model = model;
+			model = material;
+
+			delete = ReactiveCommand.Create();
+			delete
+				.Subscribe(_ => DataService.Current.Remove(model));
 		}
 
 		public Material Model => model;
+
+		public ReactiveCommand<object> Delete => delete;
 
 		public string Name => model.Name;
 

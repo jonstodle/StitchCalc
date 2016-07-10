@@ -1,4 +1,6 @@
-﻿using StitchCalc.Models;
+﻿using ReactiveUI;
+using StitchCalc.Models;
+using StitchCalc.Services.DataServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,13 +10,20 @@ namespace StitchCalc.ViewModels.Models
     public class WorkUnitViewModel : ViewModelBase
     {
 		readonly WorkUnit model;
+		readonly ReactiveCommand<object> delete;
 
-		public WorkUnitViewModel(WorkUnit model)
+		public WorkUnitViewModel(WorkUnit workUnit)
 		{
-			this.model = model;
+			model = workUnit;
+
+			delete = ReactiveCommand.Create();
+			delete
+				.Subscribe(_ => DataService.Current.Remove(model));
 		}
 
 		public WorkUnit Model => model;
+
+		public ReactiveCommand<object> Delete => delete;
 
 		public double ChargePerHour => model.Charge * 60;
 
