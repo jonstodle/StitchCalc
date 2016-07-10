@@ -16,6 +16,7 @@ namespace StitchCalc.Views
 		{
 			InitializeComponent ();
 
+			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
 			this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
 			this.BindCommand(ViewModel, vm => vm.AddMaterials, v => v.AddMaterialsButton);
 		}
