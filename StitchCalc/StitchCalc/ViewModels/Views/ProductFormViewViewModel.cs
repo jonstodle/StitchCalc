@@ -61,7 +61,11 @@ namespace StitchCalc.ViewModels.Views
 				product = DataService.Current.GetProduct((Guid)parameter);
 				Name = product.Name;
 			}
-			else { PageTitle = "Add Product"; }
+			else
+			{
+				PageTitle = "Add Product";
+				Name = string.Empty;
+			}
 
 			return Task.CompletedTask;
 		}
