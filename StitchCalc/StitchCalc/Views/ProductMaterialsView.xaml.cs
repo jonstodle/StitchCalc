@@ -15,6 +15,9 @@ namespace StitchCalc.Views
 		public ProductMaterialsView ()
 		{
 			InitializeComponent ();
+
+			this.OneWayBind(ViewModel, vm => vm.Model.Materials, v => v.MaterialsListView.ItemsSource);
+			this.OneWayBind(ViewModel, vm => vm.Model.MaterialsPrice, v => v.SumLabel.Text);
 		}
 
 		public ProductMaterialsViewViewModel ViewModel

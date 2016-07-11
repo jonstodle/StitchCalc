@@ -28,7 +28,7 @@ namespace StitchCalc.ViewModels.Views
 
 			Observable.Merge(
 				pages.Changed.Select(_ => 0),
-				this.WhenAnyValue(x=> x.Model).Select(_ => 0))
+				this.WhenAnyValue(x=> x.Model).Where(x => x != null).Select(_ => 0))
 				.Subscribe(_ => SetModelForChildViews());
 
 			this
@@ -56,7 +56,7 @@ namespace StitchCalc.ViewModels.Views
 		{
 			foreach (var page in pages)
 			{
-				((page as IViewFor).ViewModel as INavigable).OnNavigatedTo(model, NavigationDirection.Forwards);
+				((page as IViewFor).ViewModel as INavigable).OnNavigatedTo(model.Model.Id, NavigationDirection.Forwards);
 			}
 		}
 

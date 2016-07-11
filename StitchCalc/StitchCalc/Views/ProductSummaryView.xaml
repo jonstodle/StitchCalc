@@ -1,5 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="StitchCalc.Views.ProductSummaryView">
+             x:Class="StitchCalc.Views.ProductSummaryView"
+						 Title="Summary">
+	<StackLayout>
+		<StackLayout Orientation="Horizontal">
+			<Label Text="Materials cost:" HorizontalOptions="StartAndExpand"/>
+			<Label x:Name="MaterialsCostLabel"/>
+		</StackLayout>
+
+		<StackLayout Orientation="Horizontal">
+			<Label Text="Work cost:" HorizontalOptions="StartAndExpand"/>
+			<Label x:Name="WorkCostLabel"/>
+		</StackLayout>
+
+		<StackLayout Orientation="Horizontal">
+			<Label Text="Sum:" HorizontalOptions="StartAndExpand"/>
+			<Label x:Name="SumCostLabel"/>
+		</StackLayout>
+	</StackLayout>
 </ContentPage>
