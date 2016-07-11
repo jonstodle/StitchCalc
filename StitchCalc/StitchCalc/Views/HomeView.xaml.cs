@@ -21,6 +21,7 @@ namespace StitchCalc.Views
 			this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem);
 			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text);
 			this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.ProductListView.ItemsSource);
+			this.Bind(ViewModel, vm => vm.SelectedProduct, v => v.ProductListView.SelectedItem);
 
 			Observable.FromEventPattern(ProductListView, nameof(ListView.ItemTapped))
 				.InvokeCommand(ViewModel, x => x.NavigateToProductPage);

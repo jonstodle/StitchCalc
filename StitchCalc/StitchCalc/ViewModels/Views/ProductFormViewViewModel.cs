@@ -43,8 +43,8 @@ namespace StitchCalc.ViewModels.Views
 		{
 			if (product == null)
 			{
-				DataService.Current.Add(new Product { Name = Name });
-				await NavigationService.Current.NavigateToAndRemoveThis<HomeView>();
+				var addedItem = DataService.Current.Add(new Product { Name = Name });
+				await NavigationService.Current.NavigateToAndRemoveThis<ProductView>(Tuple.Create(addedItem.Id, 1));
 			}
 			else
 			{

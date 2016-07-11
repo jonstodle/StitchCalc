@@ -25,6 +25,13 @@ namespace StitchCalc.Views
 					Children.Clear();
 					foreach (var page in pages) { Children.Add(page); }
 				});
+
+			ViewModel.WhenAnyValue(x => x.SelectedPageIndex)
+				.Where(x => x >= 0 && x < Children.Count)
+				.Select(x => Children[x])
+				.Subscribe(x => SelectedItem = x);
+
+			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
 		}
 
 		public ProductViewViewModel ViewModel

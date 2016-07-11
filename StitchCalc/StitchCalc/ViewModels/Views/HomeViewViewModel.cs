@@ -19,6 +19,7 @@ namespace StitchCalc.ViewModels.Views
 		readonly ReactiveCommand<object> navigateToProductFormPage;
 		readonly ReactiveCommand<object> navigateToProductPage;
 		string searchTerm;
+		object selectedProduct;
 
 		public HomeViewViewModel()
 		{
@@ -35,7 +36,7 @@ namespace StitchCalc.ViewModels.Views
 
 			navigateToProductPage = ReactiveCommand.Create();
 			navigateToProductPage
-				.Subscribe(async _ => await NavigationService.Current.NavigateTo<ProductView>());
+				.Subscribe(async _ => await NavigationService.Current.NavigateTo<ProductView>(((ProductViewModel)selectedProduct).Model.Id));
 		}
 
 		public List<ProductViewModel> CollectionView => collectionView.Value;
@@ -48,6 +49,12 @@ namespace StitchCalc.ViewModels.Views
 		{
 			get { return searchTerm; }
 			set { this.RaiseAndSetIfChanged(ref searchTerm, value); }
+		}
+
+		public object SelectedProduct
+		{
+			get { return selectedProduct; }
+			set { this.RaiseAndSetIfChanged(ref selectedProduct, value); }
 		}
 
 
