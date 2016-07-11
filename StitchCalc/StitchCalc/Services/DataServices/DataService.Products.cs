@@ -31,7 +31,7 @@ namespace StitchCalc.Services.DataServices
 			return product;
 		}
 
-		public Product Remove(Product product)
+		public bool Remove(Product product)
 		{
 			var p = products.FirstOrDefault(x => x.Id == product.Id);
 

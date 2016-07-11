@@ -36,7 +36,7 @@ namespace StitchCalc.Services.DataServices
 			return customProperty;
 		}
 
-		public CustomProperty Remove(CustomProperty customProperty)
+		public bool Remove(CustomProperty customProperty)
 		{
 			var cp = customProperties.FirstOrDefault(x => x.Id == customProperty.Id);
 

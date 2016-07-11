@@ -38,7 +38,7 @@ namespace StitchCalc.Services.DataServices
 			return material;
 		}
 
-		public Material Remove(Material material)
+		public bool Remove(Material material)
 		{
 			var m = materials.FirstOrDefault(x => x.Id == material.Id);
 

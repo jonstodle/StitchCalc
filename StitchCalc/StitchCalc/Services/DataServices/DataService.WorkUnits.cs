@@ -36,7 +36,7 @@ namespace StitchCalc.Services.DataServices
 			return workUnit;
 		}
 
-		public WorkUnit Remove(WorkUnit workUnit)
+		public bool Remove(WorkUnit workUnit)
 		{
 			var wu = workUnits.FirstOrDefault(x => x.Id == workUnit.Id);
 
