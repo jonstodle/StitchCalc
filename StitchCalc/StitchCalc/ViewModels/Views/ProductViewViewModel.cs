@@ -71,7 +71,7 @@ namespace StitchCalc.ViewModels.Views
 				var p = parameter as Tuple<Guid, int>;
 
 				Model = DataService.Current.GetProduct(p.Item1);
-				
+				SelectedPageIndex = p.Item2;
 			}
 
 			return Task.CompletedTask;
