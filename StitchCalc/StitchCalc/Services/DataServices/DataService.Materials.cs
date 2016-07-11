@@ -21,7 +21,7 @@ namespace StitchCalc.Services.DataServices
 
 
 
-		public void Add(Material material)
+		public Material Add(Material material)
 		{
 			material.Id = Guid.NewGuid();
 
@@ -34,18 +34,20 @@ namespace StitchCalc.Services.DataServices
 			if (material.Amount == default(double)) { throw new ArgumentNullException(nameof(material.Amount)); }
 
 			materials.Add(material);
+
+			return material;
 		}
 
-		public void Remove(Material material)
+		public Material Remove(Material material)
 		{
 			var m = materials.FirstOrDefault(x => x.Id == material.Id);
 
 			if (m == default(Material)) { throw new ArgumentException("Material id not found"); }
 
-			materials.Remove(m);
+			return materials.Remove(m);
 		}
 
-		public void Update(Material material)
+		public Material Update(Material material)
 		{
 			var m = materials.FirstOrDefault(x => x.Id == material.Id);
 
@@ -56,6 +58,8 @@ namespace StitchCalc.Services.DataServices
 				Remove(m);
 				Add(material);
 			}
+
+			return material;
 		}
 	}
 }

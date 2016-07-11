@@ -21,7 +21,7 @@ namespace StitchCalc.Services.DataServices
 
 
 
-		public void Add(WorkUnit workUnit)
+		public WorkUnit Add(WorkUnit workUnit)
 		{
 			workUnit.Id = Guid.NewGuid();
 
@@ -32,18 +32,20 @@ namespace StitchCalc.Services.DataServices
 			if (workUnit.Minutes == default(long)) { throw new ArgumentNullException(nameof(workUnit.Minutes)); }
 
 			workUnits.Add(workUnit);
+
+			return workUnit;
 		}
 
-		public void Remove(WorkUnit workUnit)
+		public WorkUnit Remove(WorkUnit workUnit)
 		{
 			var wu = workUnits.FirstOrDefault(x => x.Id == workUnit.Id);
 
 			if (wu == default(WorkUnit)) { throw new ArgumentException("WorkUnit id not found"); }
 
-			workUnits.Remove(wu);
+			return workUnits.Remove(wu);
 		}
 
-		public void Update(WorkUnit workUnit)
+		public WorkUnit Update(WorkUnit workUnit)
 		{
 			var wu = workUnits.FirstOrDefault(x => x.Id == workUnit.Id);
 
@@ -54,6 +56,8 @@ namespace StitchCalc.Services.DataServices
 				Remove(wu);
 				Add(workUnit);
 			}
+
+			return workUnit;
 		}
 	}
 }

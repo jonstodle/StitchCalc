@@ -20,25 +20,27 @@ namespace StitchCalc.Services.DataServices
 
 
 
-		public void Add(Product product)
+		public Product Add(Product product)
 		{
 			product.Id = Guid.NewGuid();
 
 			if (string.IsNullOrWhiteSpace(product.Name)) { throw new ArgumentNullException(nameof(product.Name)); }
 
 			products.Add(product);
+
+			return product;
 		}
 
-		public void Remove(Product product)
+		public Product Remove(Product product)
 		{
 			var p = products.FirstOrDefault(x => x.Id == product.Id);
 
 			if (p == default(Product)) { throw new ArgumentException("Product id not found"); }
 
-			products.Remove(p);
+			return products.Remove(p);
 		}
 
-		public void Update(Product product)
+		public Product Update(Product product)
 		{
 			var p = products.FirstOrDefault(x => x.Id == product.Id);
 
@@ -49,6 +51,8 @@ namespace StitchCalc.Services.DataServices
 				Remove(p);
 				Add(product);
 			}
+
+			return product;
 		}
 	}
 }

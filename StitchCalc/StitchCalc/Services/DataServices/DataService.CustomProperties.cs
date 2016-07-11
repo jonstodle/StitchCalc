@@ -21,7 +21,7 @@ namespace StitchCalc.Services.DataServices
 
 
 
-		public void Add(CustomProperty customProperty)
+		public CustomProperty Add(CustomProperty customProperty)
 		{
 			customProperty.Id = Guid.NewGuid();
 
@@ -32,18 +32,20 @@ namespace StitchCalc.Services.DataServices
 			if (string.IsNullOrWhiteSpace(customProperty.Value)) { throw new ArgumentNullException(nameof(customProperty.Value)); }
 
 			customProperties.Add(customProperty);
+
+			return customProperty;
 		}
 
-		public void Remove(CustomProperty customProperty)
+		public CustomProperty Remove(CustomProperty customProperty)
 		{
 			var cp = customProperties.FirstOrDefault(x => x.Id == customProperty.Id);
 
 			if (cp == default(CustomProperty)) { throw new ArgumentException("CustomProperty id not found"); }
 
-			customProperties.Remove(cp);
+			return customProperties.Remove(cp);
 		}
 
-		public void Update(CustomProperty customProperty)
+		public CustomProperty Update(CustomProperty customProperty)
 		{
 			var cp = customProperties.FirstOrDefault(x => x.Id == customProperty.Id);
 
@@ -54,6 +56,8 @@ namespace StitchCalc.Services.DataServices
 				Remove(cp);
 				Add(customProperty);
 			}
+
+			return customProperty;
 		}
 	}
 }
