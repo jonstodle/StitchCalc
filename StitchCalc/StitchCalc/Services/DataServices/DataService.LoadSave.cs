@@ -1,4 +1,6 @@
-﻿using StitchCalc.Models;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using StitchCalc.Models;
 using StitchCalc.Services.FileServices;
 using System;
 using System.Collections.Generic;
@@ -18,6 +20,7 @@ namespace StitchCalc.Services.DataServices
 			data[nameof(products)] = new DataStorageObject<IEnumerable<Product>> { TimeStamp = DateTimeOffset.UtcNow, Data = products };
 			data[nameof(materials)] = new DataStorageObject<IEnumerable<Material>> { TimeStamp = DateTimeOffset.UtcNow, Data = materials };
 			data[nameof(workUnits)] = new DataStorageObject<IEnumerable<WorkUnit>> { TimeStamp = DateTimeOffset.UtcNow, Data = workUnits };
+			data[nameof(customProperties)] = new DataStorageObject<IEnumerable<CustomProperty>> { TimeStamp = DateTimeOffset.UtcNow, Data = customProperties };
 
 			await FileService.WriteDataAsync(_dataFileName, data);
 		}
@@ -30,23 +33,30 @@ namespace StitchCalc.Services.DataServices
 
 			using (products.SuppressChangeNotifications())
 			{
-				var productsDso = data[nameof(products)] as DataStorageObject<IEnumerable<Product>>;
+				var productsDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<Product>>>(data[nameof(products)].ToString());
 
 				if (productsDso != null) { products.AddRange(productsDso.Data); }
 			}
 
 			using (materials.SuppressChangeNotifications())
 			{
-				var materialDso = data[nameof(materials)] as DataStorageObject<IEnumerable<Material>>;
+				var materialDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<Material>>>(data[nameof(materials)].ToString());
 
 				if (materialDso != null) { materials.AddRange(materialDso.Data); }
 			}
 
 			using (workUnits.SuppressChangeNotifications())
 			{
-				var workUnitsDso = data[nameof(workUnits)] as DataStorageObject<IEnumerable<WorkUnit>>;
+				var workUnitsDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<WorkUnit>>>(data[nameof(workUnits)].ToString());
 
 				if (workUnitsDso != null) { workUnits.AddRange(workUnitsDso.Data); }
+			}
+
+			using (customProperties.SuppressChangeNotifications())
+			{
+				var customPropertiesDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<CustomProperty>>>(data[nameof(customProperties)].ToString());
+
+				if (customPropertiesDso != null) { customProperties.AddRange(customPropertiesDso.Data); }
 			}
 		}
 	}
