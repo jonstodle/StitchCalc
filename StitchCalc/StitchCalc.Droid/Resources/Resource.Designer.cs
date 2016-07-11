@@ -26,6 +26,7 @@ namespace StitchCalc.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::Splat.Resource.String.library_name = global::StitchCalc.Droid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::StitchCalc.Droid.Resource.Attribute.actionBarSize;
 		}
 		

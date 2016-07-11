@@ -16,6 +16,7 @@ namespace StitchCalc.Views
 		{
 			InitializeComponent ();
 
+			this.BindCommand(ViewModel, vm => vm.NavigateToWorkUnitFormView, v => v.AddWorkUnitToolbarItem);
 			this.OneWayBind(ViewModel, vm => vm.Model.WorkUnits, v => v.WorkUnitsListView.ItemsSource);
 			this.OneWayBind(ViewModel, vm => vm.Model.WorkPrice, v => v.SumLabel.Text);
 		}

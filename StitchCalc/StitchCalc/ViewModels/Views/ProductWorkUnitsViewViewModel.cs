@@ -2,6 +2,7 @@
 using StitchCalc.Services.DataServices;
 using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
+using StitchCalc.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,18 +12,25 @@ namespace StitchCalc.ViewModels.Views
 {
 	public class ProductWorkUnitsViewViewModel : ViewModelBase, INavigable
 	{
-		ProductViewModel model;
+		readonly ReactiveCommand<object> navigateToWorkUnitFormView;
+		ProductViewModel product;
 
 		public ProductWorkUnitsViewViewModel()
 		{
-
+			navigateToWorkUnitFormView = ReactiveCommand.Create();
+			navigateToWorkUnitFormView
+				.Subscribe(async _ => await NavigationService.Current.NavigateTo<WorkUnitFormView>(product.Model.Id));
 		}
+
+		public ReactiveCommand<object> NavigateToWorkUnitFormView => navigateToWorkUnitFormView;
 
 		public ProductViewModel Model
 		{
-			get { return model; }
-			set { this.RaiseAndSetIfChanged(ref model, value); }
+			get { return product; }
+			set { this.RaiseAndSetIfChanged(ref product, value); }
 		}
+
+
 
 		public Task OnNavigatedTo(object parameter, NavigationDirection direction)
 		{
