@@ -20,7 +20,7 @@ namespace StitchCalc.Views
 			this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
 			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
 			this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex);
-			this.Bind(ViewModel, vm => vm.Length, v => v.LengthEntry.Text);
+			this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text);
 
 			ViewModel
 				.Materials

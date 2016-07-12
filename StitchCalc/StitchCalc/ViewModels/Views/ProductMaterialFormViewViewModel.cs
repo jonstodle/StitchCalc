@@ -5,6 +5,7 @@ using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,7 @@ namespace StitchCalc.ViewModels.Views
 		readonly ReactiveCommand<object> save;
 		string pageTitle;
 		int selectedMaterialIndex;
-		string length;
+		string amount;
 		ProductViewModel product;
 		ProductMaterialViewModel productMaterial;
 
@@ -24,13 +25,9 @@ namespace StitchCalc.ViewModels.Views
 		{
 			materials = DataService.Current.GetMaterials();
 
-			save = ReactiveCommand.Create(this.WhenAnyValue(x => x.SelectedMaterialIndex, y => y.Length, (x, y) =>
-			{
-				double l;
-				return x >= 0 && double.TryParse(y, out l);
-			}));
+			save = ReactiveCommand.Create(this.WhenAnyValue(x => x.SelectedMaterialIndex, y => y.Amount, (x, y) => x >= 0 && !string.IsNullOrWhiteSpace(y) && GetLengthFromAmountString(y) > 0));
 			save
-				.Subscribe(_ => SaveImp());
+				.Subscribe(_ => SaveImpl());
 		}
 
 		public string PageTitle
@@ -49,26 +46,42 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref selectedMaterialIndex, value); }
 		}
 
-		public string Length
+		public string Amount
 		{
-			get { return length; }
-			set { this.RaiseAndSetIfChanged(ref length, value); }
+			get { return amount; }
+			set { this.RaiseAndSetIfChanged(ref amount, value); }
 		}
 
-		private async void SaveImp()
+		private async void SaveImpl()
 		{
 			var prdctmtrl = new ProductMaterial
 			{
 				Id = productMaterial?.Model.Id ?? default(Guid),
 				ProductId = product.Model.Id,
 				MaterialId = materials[selectedMaterialIndex].Model.Id,
-				Length = double.Parse(Length)
+				Length = GetLengthFromAmountString(Amount)
 			};
 
 			if (productMaterial == null) { DataService.Current.Add(prdctmtrl); }
 			else { DataService.Current.Update(prdctmtrl); }
 
 			await NavigationService.Current.GoBack();
+		}
+
+		double GetLengthFromAmountString(string amountString)
+		{
+			double l, w;
+
+			if (double.TryParse(amountString, out l)) { return l; }
+
+			var amountParts = amountString.Split('x', 'X').Select(x => x.Trim()).ToList();
+
+			if (amountParts.Count == 2 && double.TryParse(amountParts[0], out l) && double.TryParse(amountParts[1], out w))
+			{
+				return (l * w) / materials[SelectedMaterialIndex >= 0 ? SelectedMaterialIndex : 0].Width;
+			}
+
+			return -1;
 		}
 
 

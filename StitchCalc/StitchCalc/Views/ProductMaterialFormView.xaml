@@ -9,6 +9,6 @@
 	<StackLayout>
 		<Picker x:Name="MaterialPicker"/>
 
-		<Entry x:Name="LengthEntry" Placeholder="Length"/>
+		<Entry x:Name="AmountEntry" Placeholder="Amount"/>
 	</StackLayout>
 </ContentPage>
