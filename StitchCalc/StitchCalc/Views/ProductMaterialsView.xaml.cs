@@ -18,7 +18,7 @@ namespace StitchCalc.Views
 
 			this.OneWayBind(ViewModel, vm => vm.Product.Materials, v => v.MaterialsListView.ItemsSource);
 			this.OneWayBind(ViewModel, vm => vm.Product.MaterialsPrice, v => v.SumLabel.Text);
-			this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialsToolbarItem);
+			this.BindCommand(ViewModel, vm => vm.NavigateToProductMaterialFormView, v => v.AddProductMaterialsToolbarItem);
 		}
 
 		public ProductMaterialsViewViewModel ViewModel

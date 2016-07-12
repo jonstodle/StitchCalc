@@ -40,6 +40,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\MaterialFormViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\MaterialsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductFormViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductMaterialFormViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductMaterialsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductSummaryViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductViewViewModel.cs" />
@@ -60,6 +61,10 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ProductFormView.xaml.cs">
       <DependentUpon>ProductFormView.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Views\ProductMaterialFormView.xaml.cs">
+      <DependentUpon>ProductMaterialFormView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Views\ProductMaterialsView.xaml.cs">
@@ -124,6 +129,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\MaterialsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ProductMaterialFormView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

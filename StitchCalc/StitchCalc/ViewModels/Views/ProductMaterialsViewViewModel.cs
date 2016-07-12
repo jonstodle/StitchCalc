@@ -19,10 +19,10 @@ namespace StitchCalc.ViewModels.Views
 		{
 			navigateToMaterialFormView = ReactiveCommand.Create();
 			navigateToMaterialFormView
-				.Subscribe(_ => NavigationService.Current.NavigateTo<MaterialFormView>(product.Model.Id));
+				.Subscribe(_ => NavigationService.Current.NavigateTo<ProductMaterialFormView>(product.Model.Id));
 		}
 
-		public ReactiveCommand<object> NavigateToMaterialFormView => navigateToMaterialFormView;
+		public ReactiveCommand<object> NavigateToProductMaterialFormView => navigateToMaterialFormView;
 
 		public ProductViewModel Product
 		{

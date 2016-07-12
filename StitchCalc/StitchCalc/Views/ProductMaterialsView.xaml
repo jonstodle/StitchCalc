@@ -4,7 +4,7 @@
              x:Class="StitchCalc.Views.ProductMaterialsView"
 						 Title="Materials">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="AddMaterialsToolbarItem" Text="Add"/>
+		<ToolbarItem x:Name="AddProductMaterialsToolbarItem" Text="Add"/>
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout>
