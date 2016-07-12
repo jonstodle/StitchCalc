@@ -13,19 +13,19 @@ namespace StitchCalc.ViewModels.Views
 {
 	public class ProductFormViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<object> addMaterials;
+		readonly ReactiveCommand<object> save;
 		string pageTitle;
 		ProductViewModel product;
 		string name;
 
 		public ProductFormViewViewModel()
 		{
-			addMaterials = ReactiveCommand.Create(this.WhenAnyValue(x => x.Name, x => !string.IsNullOrWhiteSpace(x)));
-			addMaterials
+			save = ReactiveCommand.Create(this.WhenAnyValue(x => x.Name, x => !string.IsNullOrWhiteSpace(x)));
+			save
 				.Subscribe(_ => AddMaterialsImpl());
 		}
 
-		public ReactiveCommand<object> AddMaterials => addMaterials;
+		public ReactiveCommand<object> Save => save;
 
 		public string PageTitle
 		{
