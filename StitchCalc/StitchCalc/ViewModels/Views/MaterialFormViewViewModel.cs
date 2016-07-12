@@ -15,15 +15,14 @@ namespace StitchCalc.ViewModels.Views
 		readonly ReactiveCommand<object> save;
 		string pageTitle;
 		string name;
-		string amount;
+		string width;
 		string price;
 		string description;
-		ProductViewModel product;
 		MaterialViewModel material;
 
 		public MaterialFormViewViewModel()
 		{
-			save = ReactiveCommand.Create(this.WhenAnyValue(a => a.Name, b => b.Amount, c => c.Price, (a, b, c) =>
+			save = ReactiveCommand.Create(this.WhenAnyValue(a => a.Name, b => b.Width, c => c.Price, (a, b, c) =>
 			{
 				double amnt, prc = default(double);
 				return !string.IsNullOrWhiteSpace(a)
@@ -50,10 +49,10 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref name, value); }
 		}
 
-		public string Amount
+		public string Width
 		{
-			get { return amount; }
-			set { this.RaiseAndSetIfChanged(ref amount, value); }
+			get { return width; }
+			set { this.RaiseAndSetIfChanged(ref width, value); }
 		}
 
 		public string Price
@@ -73,9 +72,8 @@ namespace StitchCalc.ViewModels.Views
 			var mtrl = new Material
 			{
 				Id = material?.Model.Id ?? default(Guid),
-				ProductId = product.Model.Id,
 				Name = Name,
-				Width = double.Parse(Amount),
+				Width = double.Parse(Width),
 				Price = double.Parse(Price),
 				Description = Description
 			};
@@ -92,23 +90,19 @@ namespace StitchCalc.ViewModels.Views
 		{
 			if (parameter is Guid)
 			{
-				product = DataService.Current.GetProduct((Guid)parameter);
+				material = DataService.Current.GetMaterial((Guid)parameter);
 
-				PageTitle = "Add Material";
-				Name = string.Empty;
-				Amount = string.Empty;
-				Price = string.Empty;
-				Description = string.Empty;
+				PageTitle = "Edit Material";
+				Name = material.Model.Name;
+				Width = material.Model.Width.ToString();
+				Price = material.Model.Price.ToString();
+				Description = material.Model.Description;
 			}
 			else
 			{
-				var param = (Tuple<Guid, Guid>)parameter;
-				product = DataService.Current.GetProduct(param.Item1);
-				material = DataService.Current.GetMaterial(param.Item2);
-
-				PageTitle = "Edit Material";
+				PageTitle = "Add Material";
 				Name = string.Empty;
-				Amount = string.Empty;
+				Width = string.Empty;
 				Price = string.Empty;
 				Description = string.Empty;
 			}

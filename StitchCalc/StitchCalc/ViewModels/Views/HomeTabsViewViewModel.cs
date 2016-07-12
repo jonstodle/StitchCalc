@@ -18,6 +18,7 @@ namespace StitchCalc.ViewModels.Views
 		{
 			pages = new ReactiveList<Page>();
 			pages.Add(new HomeView());
+			pages.Add(new MaterialsView());
 
 			pages
 				.Changed

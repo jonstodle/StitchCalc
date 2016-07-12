@@ -14,9 +14,10 @@
 				<ColumnDefinition/>
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
-			<Entry x:Name="AmountEntry" Placeholder="Amount"/>
+			
+			<Entry x:Name="PriceEntry" Placeholder="Price per meter"/>
 
-			<Entry x:Name="PriceEntry" Placeholder="Price" Grid.Column="1"/>
+			<Entry x:Name="WidthEntry" Placeholder="Width" Grid.Column="1"/>
 		</Grid>
 
 		<Editor x:Name="DescriptionEditor"/>
