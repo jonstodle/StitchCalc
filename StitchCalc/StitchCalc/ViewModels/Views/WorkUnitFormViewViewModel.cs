@@ -65,27 +65,17 @@ namespace StitchCalc.ViewModels.Views
 
 		private async void SaveImpl()
 		{
-			if (workUnit == null)
+			var wrknt = new WorkUnit
 			{
-				DataService.Current.Add(new WorkUnit
-				{
-					ProductId = product.Model.Id,
-					Name = Name,
-					Minutes = int.Parse(Minutes),
-					Charge = double.Parse(Charge) / 60
-				});
-			}
-			else
-			{
-				DataService.Current.Update(new WorkUnit
-				{
-					Id = workUnit.Model.Id,
-					ProductId = product.Model.Id,
-					Name = Name,
-					Minutes = int.Parse(Minutes),
-					Charge = double.Parse(Charge) / 60
-				});
-			}
+				Id = workUnit?.Model.Id ?? default(Guid),
+				ProductId = product.Model.Id,
+				Name = Name,
+				Minutes = int.Parse(Minutes),
+				Charge = double.Parse(Charge) / 60
+			};
+
+			if (workUnit == null) { DataService.Current.Add(wrknt); }
+			else { DataService.Current.Update(wrknt); }
 
 			await NavigationService.Current.GoBack();
 		}
