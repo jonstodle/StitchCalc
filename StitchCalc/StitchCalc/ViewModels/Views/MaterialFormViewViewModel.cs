@@ -68,7 +68,7 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref description, value); }
 		}
 
-		private void SaveImpl()
+		private async void SaveImpl()
 		{
 			var mtrl = new Material
 			{
@@ -82,6 +82,8 @@ namespace StitchCalc.ViewModels.Views
 			
 			if(material == null) { DataService.Current.Add(mtrl); }
 			else { DataService.Current.Update(mtrl); }
+
+			await NavigationService.Current.GoBack();
 		}
 
 
