@@ -14,7 +14,7 @@ namespace StitchCalc
 		public App ()
 		{
 			// The root page of your application
-			MainPage = new NavigationPage(new HomeView());
+			MainPage = new NavigationPage(new HomeTabsView());
 			new NavigationService(MainPage.Navigation);
 		}
 

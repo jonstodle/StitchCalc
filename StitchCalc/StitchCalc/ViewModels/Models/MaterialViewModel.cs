@@ -29,10 +29,8 @@ namespace StitchCalc.ViewModels.Models
 
 		public string Description => model.Description;
 
-		public double PricePerAmount => model.Price;
+		public double PricePerMeter => model.Price;
 
-		public double Price => model.Price * model.Amount;
-
-		public double Amount => model.Amount;
+		public double Width => model.Width;
     }
 }

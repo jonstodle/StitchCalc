@@ -75,7 +75,7 @@ namespace StitchCalc.ViewModels.Views
 				Id = material?.Model.Id ?? default(Guid),
 				ProductId = product.Model.Id,
 				Name = Name,
-				Amount = double.Parse(Amount),
+				Width = double.Parse(Amount),
 				Price = double.Parse(Price),
 				Description = Description
 			};

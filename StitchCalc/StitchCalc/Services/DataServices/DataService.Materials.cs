@@ -31,14 +31,14 @@ namespace StitchCalc.Services.DataServices
 
 			if (material.Price == default(double)) { throw new ArgumentNullException(nameof(material.Price)); }
 
-			if (material.Amount == default(double)) { throw new ArgumentNullException(nameof(material.Amount)); }
+			if (material.Width == default(double)) { throw new ArgumentNullException(nameof(material.Width)); }
 
 			materials.Add(material);
 
 			return material;
 		}
 
-		public bool Remove(Material material)
+		public bool Remove(Material productMaterial)
 		{
 			var m = materials.FirstOrDefault(x => x.Id == productMaterial.Id);
 
