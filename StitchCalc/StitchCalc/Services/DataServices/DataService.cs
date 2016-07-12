@@ -25,7 +25,8 @@ namespace StitchCalc.Services.DataServices
 				products.Changed,
 				materials.Changed,
 				workUnits.Changed,
-				customProperties.Changed)
+				customProperties.Changed,
+				productMaterials.Changed)
 				.Subscribe(_ => SaveDataToDisk());
 #pragma warning restore 4014 // Because this call is not awaited, execution of the current method continues before the call is completed
 		}
