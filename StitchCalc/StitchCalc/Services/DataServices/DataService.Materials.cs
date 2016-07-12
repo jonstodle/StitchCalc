@@ -40,7 +40,7 @@ namespace StitchCalc.Services.DataServices
 
 		public bool Remove(Material material)
 		{
-			var m = materials.FirstOrDefault(x => x.Id == material.Id);
+			var m = materials.FirstOrDefault(x => x.Id == productMaterial.Id);
 
 			if (m == default(Material)) { throw new ArgumentException("Material id not found"); }
 

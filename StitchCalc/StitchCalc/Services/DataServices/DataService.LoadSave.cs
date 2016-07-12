@@ -21,6 +21,7 @@ namespace StitchCalc.Services.DataServices
 			data[nameof(materials)] = new DataStorageObject<IEnumerable<Material>> { TimeStamp = DateTimeOffset.UtcNow, Data = materials };
 			data[nameof(workUnits)] = new DataStorageObject<IEnumerable<WorkUnit>> { TimeStamp = DateTimeOffset.UtcNow, Data = workUnits };
 			data[nameof(customProperties)] = new DataStorageObject<IEnumerable<CustomProperty>> { TimeStamp = DateTimeOffset.UtcNow, Data = customProperties };
+			data[nameof(productMaterials)] = new DataStorageObject<IEnumerable<ProductMaterial>> { TimeStamp = DateTimeOffset.UtcNow, Data = productMaterials };
 
 			await FileService.WriteDataAsync(_dataFileName, data);
 		}
@@ -57,6 +58,13 @@ namespace StitchCalc.Services.DataServices
 				var customPropertiesDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<CustomProperty>>>(data[nameof(customProperties)].ToString());
 
 				if (customPropertiesDso != null) { customProperties.AddRange(customPropertiesDso.Data); }
+			}
+
+			using (productMaterials.SuppressChangeNotifications())
+			{
+				var productMaterialsDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<ProductMaterial>>>(data[nameof(productMaterials)].ToString());
+
+				if (productMaterialsDso != null) { productMaterials.AddRange(productMaterialsDso.Data); }
 			}
 		}
 	}
