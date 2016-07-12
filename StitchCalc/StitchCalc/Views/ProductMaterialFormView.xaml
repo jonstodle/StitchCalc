@@ -7,7 +7,11 @@
 	</ContentPage.ToolbarItems>
 
 	<StackLayout>
-		<Picker x:Name="MaterialPicker"/>
+		<StackLayout Orientation="Horizontal">
+			<Picker x:Name="MaterialPicker" HorizontalOptions="FillAndExpand"/>
+
+			<Button x:Name="AddMaterialButton" Text="+"/>
+		</StackLayout>
 
 		<Entry x:Name="AmountEntry" Placeholder="Amount"/>
 	</StackLayout>

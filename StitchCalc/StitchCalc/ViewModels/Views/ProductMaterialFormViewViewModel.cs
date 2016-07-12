@@ -3,6 +3,7 @@ using StitchCalc.Models;
 using StitchCalc.Services.DataServices;
 using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
+using StitchCalc.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace StitchCalc.ViewModels.Views
 	{
 		readonly IReactiveDerivedList<MaterialViewModel> materials;
 		readonly ReactiveCommand<object> save;
+		readonly ReactiveCommand<object> navigateToMaterialFormView;
 		string pageTitle;
 		int selectedMaterialIndex;
 		string amount;
@@ -28,6 +30,10 @@ namespace StitchCalc.ViewModels.Views
 			save = ReactiveCommand.Create(this.WhenAnyValue(x => x.SelectedMaterialIndex, y => y.Amount, (x, y) => x >= 0 && !string.IsNullOrWhiteSpace(y) && GetLengthFromAmountString(y) > 0));
 			save
 				.Subscribe(_ => SaveImpl());
+
+			navigateToMaterialFormView = ReactiveCommand.Create();
+			navigateToMaterialFormView
+				.Subscribe(_ => NavigationService.Current.NavigateTo<MaterialFormView>());
 		}
 
 		public string PageTitle
@@ -37,6 +43,8 @@ namespace StitchCalc.ViewModels.Views
 		}
 
 		public ReactiveCommand<object> Save => save;
+
+		public ReactiveCommand<object> NavigateToMaterialFormView => navigateToMaterialFormView;
 
 		public IReactiveDerivedList<MaterialViewModel> Materials => materials;
 
@@ -88,20 +96,23 @@ namespace StitchCalc.ViewModels.Views
 
 		public Task OnNavigatedTo(object parameter, NavigationDirection direction)
 		{
-			if (parameter is Guid)
+			if (direction == NavigationDirection.Forwards)
 			{
-				product = DataService.Current.GetProduct((Guid)parameter);
+				if (parameter is Guid)
+				{
+					product = DataService.Current.GetProduct((Guid)parameter);
 
-				PageTitle = "Add Material";
-				Amount = string.Empty;
-			}
-			else
-			{
-				var param = (Tuple<Guid, Guid>)parameter;
-				product = DataService.Current.GetProduct(param.Item1);
-				productMaterial = DataService.Current.GetProductMaterial(param.Item2);
+					PageTitle = "Add Material";
+					Amount = string.Empty;
+				}
+				else
+				{
+					var param = (Tuple<Guid, Guid>)parameter;
+					product = DataService.Current.GetProduct(param.Item1);
+					productMaterial = DataService.Current.GetProductMaterial(param.Item2);
 
-				PageTitle = "Edit Material";
+					PageTitle = "Edit Material";
+				} 
 			}
 
 			return Task.CompletedTask;

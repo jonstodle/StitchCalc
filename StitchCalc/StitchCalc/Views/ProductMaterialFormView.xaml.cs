@@ -21,6 +21,7 @@ namespace StitchCalc.Views
 			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
 			this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex);
 			this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text);
+			this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton);
 
 			ViewModel
 				.Materials
