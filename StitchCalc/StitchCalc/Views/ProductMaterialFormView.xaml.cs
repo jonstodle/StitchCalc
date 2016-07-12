@@ -3,6 +3,7 @@ using StitchCalc.ViewModels.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,7 +17,24 @@ namespace StitchCalc.Views
 		{
 			InitializeComponent ();
 
+			this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
 			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
+			this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex);
+			this.Bind(ViewModel, vm => vm.Length, v => v.LengthEntry.Text);
+
+			ViewModel
+				.Materials
+				.Changed
+				.Select(_ => ViewModel.Materials)
+				.StartWith(ViewModel.Materials)
+				.Subscribe(items =>
+				{
+					MaterialPicker.Items.Clear();
+					foreach (var item in items)
+					{
+						MaterialPicker.Items.Add(item.Name);
+					}
+				});
 		}
 
 		public ProductMaterialFormViewViewModel ViewModel
