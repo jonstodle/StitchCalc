@@ -109,7 +109,7 @@ namespace StitchCalc.ViewModels.Views
 				workUnit = DataService.Current.GetWorkUnit(p.Item2);
 
 				PageTitle = "Edit Work";
-				Name = workUnit.Description;
+				Name = workUnit.Name;
 				Minutes = workUnit.Minutes.ToString();
 				Charge = workUnit.ChargePerHour.ToString();
 			}
