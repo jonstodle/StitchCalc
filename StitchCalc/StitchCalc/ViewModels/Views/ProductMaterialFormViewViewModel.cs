@@ -93,6 +93,7 @@ namespace StitchCalc.ViewModels.Views
 				product = DataService.Current.GetProduct((Guid)parameter);
 
 				PageTitle = "Add Material";
+				Amount = string.Empty;
 			}
 			else
 			{
