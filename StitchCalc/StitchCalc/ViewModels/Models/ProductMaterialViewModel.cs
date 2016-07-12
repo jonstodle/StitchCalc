@@ -14,6 +14,7 @@ namespace StitchCalc.ViewModels.Models
 		readonly ReactiveCommand<object> delete;
 		readonly IReactiveDerivedList<MaterialViewModel> materials;
 		ObservableAsPropertyHelper<MaterialViewModel> material;
+		ObservableAsPropertyHelper<string> name;
 		ObservableAsPropertyHelper<double> pricePerMeter;
 		ObservableAsPropertyHelper<double> price;
 
@@ -36,6 +37,9 @@ namespace StitchCalc.ViewModels.Models
 				.WhenAnyValue(x => x.Material)
 				.Where(x => x != null);
 			materialChanged
+				.Select(x => x.Name)
+				.ToProperty(this, x => x.Name, out name);
+			materialChanged
 				.Select(x => x.PricePerMeter)
 				.ToProperty(this, x => x.PricePerMeter, out pricePerMeter);
 			materialChanged
@@ -48,6 +52,8 @@ namespace StitchCalc.ViewModels.Models
 		public ReactiveCommand<object> Delete => delete;
 
 		public MaterialViewModel Material => material.Value;
+
+		public string Name => name.Value;
 
 		public double Length => model.Length;
 
