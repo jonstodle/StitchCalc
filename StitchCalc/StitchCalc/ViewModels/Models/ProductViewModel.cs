@@ -35,16 +35,19 @@ namespace StitchCalc.ViewModels.Models
 			materials
 				.Changed
 				.Select(_ => materials.Sum(x => x.Price))
+				.StartWith(materials.Sum(x => x.Price))
 				.ToProperty(this, x => x.MaterialsPrice, out materialsPrice);
 
 			workUnits
 				.Changed
 				.Select(_ => (double)workUnits.Sum(x => x.Minutes))
+				.StartWith((double)workUnits.Sum(x=> x.Minutes))
 				.ToProperty(this, x => x.WorkInMinutes, out workInMinutes);
 
 			workUnits
 				.Changed
-				.Select(_ => workUnits.Sum(x => x.Hours * x.ChargePerHour))
+				.Select(_ => workUnits.Sum(x => x.TotalCharge))
+				.StartWith(workUnits.Sum(x => x.TotalCharge))
 				.ToProperty(this, x => x.WorkPrice, out workPrice);
 
 			this
