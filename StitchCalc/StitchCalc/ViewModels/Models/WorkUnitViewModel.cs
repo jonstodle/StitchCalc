@@ -25,7 +25,7 @@ namespace StitchCalc.ViewModels.Models
 
 		public ReactiveCommand<object> Delete => delete;
 
-		public string Description => model.Description;
+		public string Description => model.Name;
 
 		public double ChargePerHour => model.Charge * 60;
 

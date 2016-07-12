@@ -14,7 +14,7 @@ namespace StitchCalc.ViewModels.Views
 	{
 		readonly ReactiveCommand<object> save;
 		string pageTitle;
-		string description;
+		string name;
 		string minutes;
 		string charge;
 		ProductViewModel product;
@@ -23,7 +23,7 @@ namespace StitchCalc.ViewModels.Views
 
 		public WorkUnitFormViewViewModel()
 		{
-			save = ReactiveCommand.Create(this.WhenAnyValue(x => x.Description, y => y.Minutes, z => z.Charge, (x, y, z) =>
+			save = ReactiveCommand.Create(this.WhenAnyValue(x => x.Name, y => y.Minutes, z => z.Charge, (x, y, z) =>
 			{
 				double m, c = default(double);
 				return !string.IsNullOrWhiteSpace(x)
@@ -45,10 +45,10 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref pageTitle, value); }
 		}
 
-		public string Description
+		public string Name
 		{
-			get { return description; }
-			set { this.RaiseAndSetIfChanged(ref description, value); }
+			get { return name; }
+			set { this.RaiseAndSetIfChanged(ref name, value); }
 		}
 
 		public string Minutes
@@ -70,7 +70,7 @@ namespace StitchCalc.ViewModels.Views
 				DataService.Current.Add(new WorkUnit
 				{
 					ProductId = product.Model.Id,
-					Description = Description,
+					Name = Name,
 					Minutes = int.Parse(Minutes),
 					Charge = double.Parse(Charge) / 60
 				});
@@ -81,7 +81,7 @@ namespace StitchCalc.ViewModels.Views
 				{
 					Id = workUnit.Model.Id,
 					ProductId = product.Model.Id,
-					Description = Description,
+					Name = Name,
 					Minutes = int.Parse(Minutes),
 					Charge = double.Parse(Charge) / 60
 				});
@@ -98,7 +98,7 @@ namespace StitchCalc.ViewModels.Views
 			{
 				PageTitle = "Add Work";
 				product = DataService.Current.GetProduct((Guid)parameter);
-				Description = string.Empty;
+				Name = string.Empty;
 				Minutes = string.Empty;
 				Charge = string.Empty;
 			}
@@ -109,7 +109,7 @@ namespace StitchCalc.ViewModels.Views
 				workUnit = DataService.Current.GetWorkUnit(p.Item2);
 
 				PageTitle = "Edit Work";
-				Description = workUnit.Description;
+				Name = workUnit.Description;
 				Minutes = workUnit.Minutes.ToString();
 				Charge = workUnit.ChargePerHour.ToString();
 			}

@@ -7,7 +7,7 @@
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout>
-		<Entry x:Name="DescriptionEntry" Placeholder="Description"/>
+		<Entry x:Name="NameEntry" Placeholder="Description"/>
 
 		<Grid>
 			<Grid.ColumnDefinitions>
