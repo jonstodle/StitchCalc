@@ -29,7 +29,9 @@ namespace StitchCalc.ViewModels.Views
 				&& !string.IsNullOrWhiteSpace(b)
 				&& !string.IsNullOrWhiteSpace(b)
 				&& double.TryParse(b, out amnt)
-				&& double.TryParse(c, out prc);
+				&& double.TryParse(c, out prc)
+				&& amnt > 0
+				&& prc > 0;
 			}));
 			save
 				.Subscribe(_ => SaveImpl());
