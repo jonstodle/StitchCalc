@@ -12,7 +12,6 @@ namespace StitchCalc.Services.DataServices
     {
 		readonly ReactiveList<Material> materials = new ReactiveList<Material>();
 		public IReactiveDerivedList<MaterialViewModel> GetMaterials() => materials.CreateDerivedCollection(x=>new MaterialViewModel(x));
-		public IReactiveDerivedList<MaterialViewModel> GetMaterialsForProduct(Guid productId) => materials.CreateDerivedCollection(x => new MaterialViewModel(x), x => x.ProductId == productId);
 		public MaterialViewModel GetMaterial(Guid materialId)
 		{
 			var m = materials.FirstOrDefault(x => x.Id == materialId);
@@ -24,8 +23,6 @@ namespace StitchCalc.Services.DataServices
 		public Material Add(Material material)
 		{
 			material.Id = Guid.NewGuid();
-
-			if (material.ProductId == default(Guid)) { throw new ArgumentNullException(nameof(material.ProductId)); }
 
 			if (string.IsNullOrWhiteSpace(material.Name)) { throw new ArgumentNullException(nameof(material.Name)); }
 

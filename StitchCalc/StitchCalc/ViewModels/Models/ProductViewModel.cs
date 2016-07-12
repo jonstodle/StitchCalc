@@ -13,7 +13,7 @@ namespace StitchCalc.ViewModels.Models
     {
 		readonly Product model;
 		readonly ReactiveCommand<object> delete;
-		readonly IReactiveDerivedList<MaterialViewModel> materials;
+		readonly IReactiveDerivedList<ProductMaterialViewModel> productMaterials;
 		readonly IReactiveDerivedList<WorkUnitViewModel> workUnits;
 		readonly IReactiveDerivedList<CustomPropertyViewModel> customProperties;
 		readonly ObservableAsPropertyHelper<double> materialsPrice;
@@ -24,7 +24,7 @@ namespace StitchCalc.ViewModels.Models
 		public ProductViewModel(Product productModel)
 		{
 			model = productModel;
-			materials = DataService.Current.GetMaterialsForProduct(model.Id);
+			productMaterials = DataService.Current.GetProductMaterialsForProduct(model.Id);
 			workUnits = DataService.Current.GetWorkUnitsForProduct(model.Id);
 			customProperties = DataService.Current.GetCustomPropertiesForProduct(model.Id);
 
@@ -32,10 +32,10 @@ namespace StitchCalc.ViewModels.Models
 			delete
 				.Subscribe(_ => DataService.Current.Remove(model));
 
-			materials
+			productMaterials
 				.Changed
-				.Select(_ => materials.Sum(x => x.Price))
-				.StartWith(materials.Sum(x => x.Price))
+				.Select(_ => productMaterials.Sum(x => x.Price))
+				.StartWith(productMaterials.Sum(x => x.Price))
 				.ToProperty(this, x => x.MaterialsPrice, out materialsPrice);
 
 			workUnits
@@ -61,7 +61,7 @@ namespace StitchCalc.ViewModels.Models
 
 		public string Name => model.Name;
 
-		public IReactiveDerivedList<MaterialViewModel> Materials => materials;
+		public IReactiveDerivedList<ProductMaterialViewModel> Materials => productMaterials;
 
 		public IReactiveDerivedList<WorkUnitViewModel> WorkUnits => workUnits;
 
