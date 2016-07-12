@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="StitchCalc.Views.MaterialFormView">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem x:Name="SaveToolbarItem" Text="Save"/>
+	</ContentPage.ToolbarItems>
+	
+	<StackLayout>
+		<Entry x:Name="NameEntry" Placeholder="Name"/>
+
+		<Grid>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition/>
+				<ColumnDefinition/>
+			</Grid.ColumnDefinitions>
+			<Entry x:Name="AmountEntry" Placeholder="Amount"/>
+
+			<Entry x:Name="PriceEntry" Placeholder="Price" Grid.Column="1"/>
+		</Grid>
+
+		<Editor x:Name="DescriptionEditor"/>
+	</StackLayout>
+</ContentPage>

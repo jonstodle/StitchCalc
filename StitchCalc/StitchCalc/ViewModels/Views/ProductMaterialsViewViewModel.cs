@@ -2,6 +2,7 @@
 using StitchCalc.Services.DataServices;
 using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
+using StitchCalc.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,24 +12,29 @@ namespace StitchCalc.ViewModels.Views
 {
 	public class ProductMaterialsViewViewModel : ViewModelBase, INavigable
 	{
-		ProductViewModel model;
+		readonly ReactiveCommand<object> navigateToMaterialFormView;
+		ProductViewModel product;
 
 		public ProductMaterialsViewViewModel()
 		{
-
+			navigateToMaterialFormView = ReactiveCommand.Create();
+			navigateToMaterialFormView
+				.Subscribe(_ => NavigationService.Current.NavigateTo<MaterialFormView>(product.Model.Id));
 		}
 
-		public ProductViewModel Model
+		public ReactiveCommand<object> NavigateToMaterialFormView => navigateToMaterialFormView;
+
+		public ProductViewModel Product
 		{
-			get { return model; }
-			set { this.RaiseAndSetIfChanged(ref model, value); }
+			get { return product; }
+			set { this.RaiseAndSetIfChanged(ref product, value); }
 		}
 
 		public Task OnNavigatedTo(object parameter, NavigationDirection direction)
 		{
 			if (parameter is Guid)
 			{
-				Model = DataService.Current.GetProduct((Guid)parameter);
+				Product = DataService.Current.GetProduct((Guid)parameter);
 			}
 
 			return Task.CompletedTask;
