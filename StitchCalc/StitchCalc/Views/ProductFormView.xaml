@@ -6,7 +6,8 @@
 		<ToolbarItem x:Name="SaveProductToolbarItem"/>
 	</ContentPage.ToolbarItems>
 	
-	<StackLayout>
-		<Entry x:Name="NameEntry" Placeholder="Name"/>
+	<StackLayout Spacing="0">
+		<Label Text="Name"/>
+		<Entry x:Name="NameEntry" Placeholder="Shorts"/>
 	</StackLayout>
 </ContentPage>

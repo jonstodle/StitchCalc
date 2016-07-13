@@ -7,19 +7,31 @@
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout>
-		<Entry x:Name="NameEntry" Placeholder="Name"/>
+		<StackLayout Spacing="0">
+			<Label Text="Name"/>
+			<Entry x:Name="NameEntry" Placeholder="Yellow with polkadots"/>
+		</StackLayout>
 
-		<Grid>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition/>
-				<ColumnDefinition/>
-			</Grid.ColumnDefinitions>
-			
-			<Entry x:Name="PriceEntry" Placeholder="Price per meter"/>
+			<Grid>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition/>
+					<ColumnDefinition/>
+				</Grid.ColumnDefinitions>
 
-			<Entry x:Name="WidthEntry" Placeholder="Width" Grid.Column="1"/>
-		</Grid>
+				<StackLayout Spacing="0">
+					<Label Text="Price"/>
+					<Entry x:Name="PriceEntry" Placeholder="(per meter)"/>
+				</StackLayout>
 
-		<Editor x:Name="DescriptionEditor"/>
+				<StackLayout Spacing="0" Grid.Column="1">
+					<Label Text="Width"/>
+					<Entry x:Name="WidthEntry" Placeholder="(in meters)"/>
+				</StackLayout>
+			</Grid>
+
+		<StackLayout Spacing="0">
+			<Label Text="Description"/>
+			<Editor x:Name="DescriptionEditor" HeightRequest="100"/>
+		</StackLayout>
 	</StackLayout>
 </ContentPage>

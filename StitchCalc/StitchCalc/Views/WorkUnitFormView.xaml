@@ -7,7 +7,10 @@
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout>
-		<Entry x:Name="NameEntry" Placeholder="Description"/>
+		<StackLayout Spacing="0">
+			<Label Text="Name"/>
+			<Entry x:Name="NameEntry" Placeholder="Pockets"/>
+		</StackLayout>
 
 		<Grid>
 			<Grid.ColumnDefinitions>
@@ -15,9 +18,15 @@
 				<ColumnDefinition/>
 			</Grid.ColumnDefinitions>
 
-			<Entry x:Name="MinutesEntry" Placeholder="Minutes"/>
+			<StackLayout Spacing="0">
+				<Label Text="Time"/>
+				<Entry x:Name="MinutesEntry" Placeholder="(in minutes)"/>
+			</StackLayout>
 
-			<Entry x:Name="ChargeEntry" Placeholder="Charge per hour" Grid.Column="1"/>
+			<StackLayout Spacing="0" Grid.Column="1">
+				<Label Text="Charge"/>
+				<Entry x:Name="ChargeEntry" Placeholder="(per hour)"/>
+			</StackLayout>
 		</Grid>
 	</StackLayout>
 </ContentPage>

@@ -7,12 +7,18 @@
 	</ContentPage.ToolbarItems>
 
 	<StackLayout>
-		<StackLayout Orientation="Horizontal">
-			<Picker x:Name="MaterialPicker" HorizontalOptions="FillAndExpand"/>
+		<StackLayout Spacing="0">
+			<Label Text="Material"/>
+			<StackLayout Orientation="Horizontal">
+				<Picker x:Name="MaterialPicker" HorizontalOptions="FillAndExpand"/>
 
-			<Button x:Name="AddMaterialButton" Text="+"/>
+				<Button x:Name="AddMaterialButton" Text="+"/>
+			</StackLayout>
 		</StackLayout>
 
-		<Entry x:Name="AmountEntry" Placeholder="Amount"/>
+		<StackLayout Spacing="0">
+			<Label Text="Amount"/>
+			<Entry x:Name="AmountEntry" Placeholder="1.2  or  0.74x0.35  (in meters)"/>
+		</StackLayout>
 	</StackLayout>
 </ContentPage>
