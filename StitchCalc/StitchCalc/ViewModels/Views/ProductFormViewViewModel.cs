@@ -57,12 +57,15 @@ namespace StitchCalc.ViewModels.Views
 		{
 			if (parameter is Guid)
 			{
-				PageTitle = "Edit Product";
 				product = DataService.Current.GetProduct((Guid)parameter);
+
+				PageTitle = "Edit Product";
 				Name = product.Name;
 			}
 			else
 			{
+				product = null;
+
 				PageTitle = "Add Product";
 				Name = string.Empty;
 			}

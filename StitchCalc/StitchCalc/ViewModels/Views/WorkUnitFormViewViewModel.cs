@@ -86,8 +86,10 @@ namespace StitchCalc.ViewModels.Views
 		{
 			if (parameter is Guid)
 			{
-				PageTitle = "Add Work";
 				product = DataService.Current.GetProduct((Guid)parameter);
+				workUnit = null;
+
+				PageTitle = "Add Work";
 				Name = string.Empty;
 				Minutes = string.Empty;
 				Charge = string.Empty;
