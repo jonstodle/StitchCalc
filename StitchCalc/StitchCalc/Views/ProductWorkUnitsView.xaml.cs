@@ -3,6 +3,7 @@ using StitchCalc.ViewModels.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,10 @@ namespace StitchCalc.Views
 			this.BindCommand(ViewModel, vm => vm.NavigateToWorkUnitFormView, v => v.AddWorkUnitToolbarItem);
 			this.OneWayBind(ViewModel, vm => vm.Model.WorkUnits, v => v.WorkUnitsListView.ItemsSource);
 			this.OneWayBind(ViewModel, vm => vm.Model.WorkPrice, v => v.SumLabel.Text);
+			this.Bind(ViewModel, vm => vm.SelectedWorkUnit, v => v.WorkUnitsListView.SelectedItem);
+
+			Observable.FromEventPattern(WorkUnitsListView, nameof(ListView.ItemTapped))
+				.InvokeCommand(ViewModel, x => x.Edit);
 		}
 
 		public ProductWorkUnitsViewViewModel ViewModel
