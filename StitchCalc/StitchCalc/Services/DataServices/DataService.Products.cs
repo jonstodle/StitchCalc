@@ -49,7 +49,7 @@ namespace StitchCalc.Services.DataServices
 			using (products.SuppressChangeNotifications())
 			{
 				Remove(p);
-				Add(product);
+				Add(product).Id = p.Id;
 			}
 
 			return product;

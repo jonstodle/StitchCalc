@@ -54,7 +54,7 @@ namespace StitchCalc.Services.DataServices
 			using (workUnits.SuppressChangeNotifications())
 			{
 				Remove(wu);
-				Add(workUnit);
+				Add(workUnit).Id = wu.Id;
 			}
 
 			return workUnit;

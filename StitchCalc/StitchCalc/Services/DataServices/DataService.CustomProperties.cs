@@ -54,7 +54,7 @@ namespace StitchCalc.Services.DataServices
 			using (customProperties.SuppressChangeNotifications())
 			{
 				Remove(cp);
-				Add(customProperty);
+				Add(customProperty).Id = cp.Id;
 			}
 
 			return customProperty;

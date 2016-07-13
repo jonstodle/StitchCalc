@@ -53,7 +53,7 @@ namespace StitchCalc.Services.DataServices
 			using (materials.SuppressChangeNotifications())
 			{
 				Remove(m);
-				Add(material);
+				Add(material).Id = m.Id;
 			}
 
 			return material;
