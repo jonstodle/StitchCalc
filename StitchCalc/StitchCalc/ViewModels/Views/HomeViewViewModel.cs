@@ -28,6 +28,7 @@ namespace StitchCalc.ViewModels.Views
 			products
 				.Changed
 				.Select(_ => products.OrderBy(x => x.Name).ToList())
+				.StartWith(products.OrderBy(x => x.Name).ToList())
 				.ToProperty(this, x => x.CollectionView, out collectionView);
 
 			navigateToProductFormPage = ReactiveCommand.Create();
