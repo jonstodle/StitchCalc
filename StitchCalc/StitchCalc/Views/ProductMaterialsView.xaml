@@ -28,6 +28,14 @@
 		</ListView>
 
 		<StackLayout Orientation="Horizontal">
+			<StackLayout.Resources>
+				<ResourceDictionary>
+					<Style TargetType="Label">
+						<Setter Property="FontSize" Value="Medium"/>
+					</Style>
+				</ResourceDictionary>
+			</StackLayout.Resources>
+
 			<Label Text="Sum" HorizontalOptions="StartAndExpand"/>
 
 			<Label x:Name="SumLabel"/>
