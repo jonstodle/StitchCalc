@@ -3,6 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StitchCalc.Views.ProductSummaryView"
 						 Title="Summary">
+	<ContentPage.ToolbarItems>
+		<ToolbarItem x:Name="EditProductToolbarItem" Text="Edit"/>
+	</ContentPage.ToolbarItems>
+	
 	<StackLayout>
 		<StackLayout Orientation="Horizontal">
 			<Label Text="Materials cost:" HorizontalOptions="StartAndExpand"/>

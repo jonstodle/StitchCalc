@@ -2,6 +2,7 @@
 using StitchCalc.Services.DataServices;
 using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
+using StitchCalc.Views;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,12 +12,17 @@ namespace StitchCalc.ViewModels.Views
 {
 	public class ProductSummaryViewViewModel : ViewModelBase, INavigable
 	{
+		readonly ReactiveCommand<object> edit;
 		ProductViewModel model;
 
 		public ProductSummaryViewViewModel()
 		{
-
+			edit = ReactiveCommand.Create();
+			edit
+				.Subscribe(_ => NavigationService.Current.NavigateTo<ProductFormView>(model.Model.Id));
 		}
+
+		public ReactiveCommand<object> Edit => edit;
 
 		public ProductViewModel Model
 		{

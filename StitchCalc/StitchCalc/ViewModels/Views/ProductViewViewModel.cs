@@ -26,6 +26,11 @@ namespace StitchCalc.ViewModels.Views
 			pages.Add(new ProductMaterialsView());
 			pages.Add(new ProductWorkUnitsView());
 
+			DataService.Current.GetProducts()
+				.Changed
+				.Select(_ => DataService.Current.GetProduct(model.Model.Id))
+				.Subscribe(newModel => Model = newModel);
+
 			Observable.Merge(
 				pages.Changed.Select(_ => 0),
 				this.WhenAnyValue(x=> x.Model).Where(x => x != null).Select(_ => 0))
