@@ -70,6 +70,7 @@ namespace StitchCalc.ViewModels.Views
 			if (parameter is Guid)
 			{
 				Model = DataService.Current.GetProduct((Guid)parameter);
+				SelectedPageIndex = 0;
 			}
 			else if (parameter is Tuple<Guid,int>)
 			{
