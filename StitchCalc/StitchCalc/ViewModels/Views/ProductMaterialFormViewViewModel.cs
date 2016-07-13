@@ -104,6 +104,7 @@ namespace StitchCalc.ViewModels.Views
 					productMaterial = null;
 
 					PageTitle = "Add Material";
+					SelectedMaterialIndex = materials.Count > 0 ? 0 : default(int);
 					Amount = string.Empty;
 				}
 				else
@@ -113,6 +114,15 @@ namespace StitchCalc.ViewModels.Views
 					productMaterial = DataService.Current.GetProductMaterial(param.Item2);
 
 					PageTitle = "Edit Material";
+					for (int i = 0; i < materials.Count; i++)
+					{
+						if (materials[i].Model.Id == productMaterial.Model.MaterialId)
+						{
+							SelectedMaterialIndex = i;
+							break;
+						}
+					}
+					Amount = productMaterial.Length.ToString();
 				} 
 			}
 

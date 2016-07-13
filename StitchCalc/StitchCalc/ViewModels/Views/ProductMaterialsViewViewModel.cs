@@ -28,7 +28,7 @@ namespace StitchCalc.ViewModels.Views
 			edit
 				.Select(_ => selectedProductMaterial)
 				.Cast<ProductMaterialViewModel>()
-				.Subscribe(item => NavigationService.Current.NavigateTo<ProductMaterialFormView>(item.Model.Id));
+				.Subscribe(item => NavigationService.Current.NavigateTo<ProductMaterialFormView>(Tuple.Create(product.Model.Id, item.Model.Id)));
 		}
 
 		public ReactiveCommand<object> NavigateToProductMaterialFormView => navigateToMaterialFormView;
