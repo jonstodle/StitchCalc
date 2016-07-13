@@ -182,16 +182,31 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\home.png" />
+    <BundleResource Include="Resources\save.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\cloth.png" />
+    <BundleResource Include="Resources\home%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\menu%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\clock%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cloth%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\home.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\menu.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\clock.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\cloth.png" />
   </ItemGroup>
   <Import Project="..\StitchCalc\StitchCalc.projitems" Label="Shared" Condition="Exists('..\StitchCalc\StitchCalc.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
