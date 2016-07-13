@@ -12,6 +12,10 @@
 			<ListView.ItemTemplate>
 				<DataTemplate>
 					<ViewCell>
+						<ViewCell.ContextActions>
+							<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>
+						</ViewCell.ContextActions>
+						
 						<StackLayout Orientation="Horizontal">
 							<Label Text="{Binding Name}" HorizontalOptions="StartAndExpand"/>
 
