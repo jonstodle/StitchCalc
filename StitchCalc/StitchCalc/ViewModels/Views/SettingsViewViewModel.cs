@@ -24,6 +24,11 @@ namespace StitchCalc.ViewModels.Views
 				.Where(x => x.IsValidDouble())
 				.Select(x => double.Parse(x))
 				.Subscribe(x => SettingsService.Current.DefaultHourlyCharge = x);
+			SettingsService.Current.Changed
+				.Where(x => x.Key == nameof(SettingsService.Current.DefaultHourlyCharge))
+				.Select(x => x.Value)
+				.Cast<double>()
+				.Subscribe(x => DefaultHourlyCharge = x.ToString());
 		}
 
 		public string DefaultHourlyCharge
