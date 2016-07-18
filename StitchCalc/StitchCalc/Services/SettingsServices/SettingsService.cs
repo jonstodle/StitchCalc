@@ -21,7 +21,7 @@ namespace StitchCalc.Services.SettingsServices
 
 		public async Task Init()
 		{
-			settings = await FileService.ReadDataAsync<Dictionary<string, object>>($"{nameof(settings)}.json");
+			settings = (await FileService.ReadDataAsync<Dictionary<string, object>>($"{nameof(settings)}.json")) ?? new Dictionary<string, object>();
 		}
 
 		async Task SaveSettingsToDisk()
