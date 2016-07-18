@@ -4,10 +4,11 @@
              x:Class="StitchCalc.Views.SettingsView"
 						 Title="Settings">
 	<ScrollView>
-		<TableView>
-			<TableSection>
-				<EntryCell x:Name="DefaultHourlyChargeEntryCell"/>
-			</TableSection>
-		</TableView>
+		<StackLayout>
+			<StackLayout Spacing="0">
+				<Label Text="Default Hourly Charge"/>
+				<Entry x:Name="DefaultHourlyChargeEntry"/>
+			</StackLayout>
+		</StackLayout>
 	</ScrollView>
 </ContentPage>

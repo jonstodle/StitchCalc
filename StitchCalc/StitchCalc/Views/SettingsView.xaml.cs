@@ -16,7 +16,7 @@ namespace StitchCalc.Views
 		{
 			InitializeComponent ();
 
-			this.Bind(ViewModel, vm => vm.DefaultHourlyCharge, v => v.DefaultHourlyChargeEntryCell.Text);
+			this.Bind(ViewModel, vm => vm.DefaultHourlyCharge, v => v.DefaultHourlyChargeEntry.Text);
 		}
 
 		public SettingsViewViewModel ViewModel
