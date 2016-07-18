@@ -23,6 +23,7 @@ namespace StitchCalc.ViewModels.Views
 				.Throttle(TimeSpan.FromMilliseconds(500))
 				.Where(x => x.IsValidDouble())
 				.Select(x => double.Parse(x))
+				.Where(x => x >= 0)
 				.Subscribe(x => SettingsService.Current.DefaultHourlyCharge = x);
 			SettingsService.Current.Changed
 				.Where(x => x.Key == nameof(SettingsService.Current.DefaultHourlyCharge))
