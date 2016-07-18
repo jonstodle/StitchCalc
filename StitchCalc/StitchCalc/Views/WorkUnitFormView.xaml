@@ -20,12 +20,12 @@
 
 			<StackLayout Spacing="0">
 				<Label Text="Time"/>
-				<Entry x:Name="MinutesEntry" Placeholder="(in minutes)"/>
+				<Entry x:Name="MinutesEntry" Placeholder="(in minutes)" Keyboard="Numeric"/>
 			</StackLayout>
 
 			<StackLayout Spacing="0" Grid.Column="1">
 				<Label Text="Charge"/>
-				<Entry x:Name="ChargeEntry" Placeholder="(per hour)"/>
+				<Entry x:Name="ChargeEntry" Placeholder="(per hour)" Keyboard="Numeric"/>
 			</StackLayout>
 		</Grid>
 	</StackLayout>

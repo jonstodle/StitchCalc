@@ -8,6 +8,6 @@
 	
 	<StackLayout Spacing="0">
 		<Label Text="Name"/>
-		<Entry x:Name="NameEntry" Placeholder="Shorts"/>
+		<Entry x:Name="NameEntry" Placeholder="Shorts" Keyboard="Text"/>
 	</StackLayout>
 </ContentPage>

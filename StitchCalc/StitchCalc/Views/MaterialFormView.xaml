@@ -20,18 +20,18 @@
 
 				<StackLayout Spacing="0">
 					<Label Text="Price"/>
-					<Entry x:Name="PriceEntry" Placeholder="(per meter)"/>
+					<Entry x:Name="PriceEntry" Placeholder="(per meter)" Keyboard="Numeric"/>
 				</StackLayout>
 
 				<StackLayout Spacing="0" Grid.Column="1">
 					<Label Text="Width"/>
-					<Entry x:Name="WidthEntry" Placeholder="(in meters)"/>
+					<Entry x:Name="WidthEntry" Placeholder="(in meters)" Keyboard="Numeric"/>
 				</StackLayout>
 			</Grid>
 
 		<StackLayout Spacing="0">
 			<Label Text="Description"/>
-			<Editor x:Name="DescriptionEditor" HeightRequest="100"/>
+			<Editor x:Name="DescriptionEditor" HeightRequest="100" Keyboard="Text"/>
 		</StackLayout>
 	</StackLayout>
 </ContentPage>
