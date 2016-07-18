@@ -2,6 +2,7 @@
 using StitchCalc.Models;
 using StitchCalc.Services.DataServices;
 using StitchCalc.Services.NavigationService;
+using StitchCalc.Services.SettingsServices;
 using StitchCalc.ViewModels.Models;
 using System;
 using System.Collections.Generic;
@@ -92,7 +93,7 @@ namespace StitchCalc.ViewModels.Views
 				PageTitle = "Add Work";
 				Name = string.Empty;
 				Minutes = string.Empty;
-				Charge = string.Empty;
+				Charge = SettingsService.Current.DefaultHourlyCharge.ToString();
 			}
 			else
 			{
