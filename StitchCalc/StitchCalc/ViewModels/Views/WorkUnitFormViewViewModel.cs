@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using StitchCalc.Extras;
 using StitchCalc.Models;
 using StitchCalc.Services.DataServices;
 using StitchCalc.Services.NavigationService;
@@ -25,14 +26,11 @@ namespace StitchCalc.ViewModels.Views
 		public WorkUnitFormViewViewModel()
 		{
 			save = ReactiveCommand.Create(this.WhenAnyValue(x => x.Name, y => y.Minutes, z => z.Charge, (x, y, z) =>
-			{
-				double m, c = default(double);
-				return !string.IsNullOrWhiteSpace(x)
+				!string.IsNullOrWhiteSpace(x)
 				&& !string.IsNullOrWhiteSpace(y)
 				&& !string.IsNullOrWhiteSpace(z)
-				&& double.TryParse(y, out m)
-				&& double.TryParse(z, out c);
-			}));
+				&& y.IsValidDouble()
+				&& z.IsValidDouble()));
 			save
 				.Subscribe(_ => SaveImpl());
 
