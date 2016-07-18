@@ -15,15 +15,11 @@
 		<ListView x:Name="ProductListView">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<ViewCell>
-						<ViewCell.ContextActions>
+					<TextCell Text="{Binding Name}" Detail="{Binding TotalPrice, StringFormat='Price {0:N2}'}">
+						<TextCell.ContextActions>
 							<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>
-						</ViewCell.ContextActions>
-						
-						<StackLayout>
-							<Label Text="{Binding Name}"/>
-						</StackLayout>
-					</ViewCell>
+						</TextCell.ContextActions>
+					</TextCell>
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>

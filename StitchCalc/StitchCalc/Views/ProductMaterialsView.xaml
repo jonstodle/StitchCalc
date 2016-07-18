@@ -12,17 +12,11 @@
 		<ListView x:Name="MaterialsListView">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<ViewCell>
-						<ViewCell.ContextActions>
+					<TextCell Text="{Binding Name}" Detail="{Binding Price, StringFormat='{}{0:N2}'}">
+						<TextCell.ContextActions>
 							<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>
-						</ViewCell.ContextActions>
-						
-						<StackLayout Orientation="Horizontal">
-							<Label Text="{Binding Name}" HorizontalOptions="StartAndExpand"/>
-
-							<Label Text="{Binding Price}"/>
-						</StackLayout>
-					</ViewCell>
+						</TextCell.ContextActions>
+					</TextCell>
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>

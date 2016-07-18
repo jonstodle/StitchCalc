@@ -19,7 +19,7 @@ namespace StitchCalc.Views
 
 			this.BindCommand(ViewModel, vm => vm.NavigateToWorkUnitFormView, v => v.AddWorkUnitToolbarItem);
 			this.OneWayBind(ViewModel, vm => vm.Model.WorkUnits, v => v.WorkUnitsListView.ItemsSource);
-			this.OneWayBind(ViewModel, vm => vm.Model.WorkPrice, v => v.SumLabel.Text);
+			this.OneWayBind(ViewModel, vm => vm.Model.WorkPrice, v => v.SumLabel.Text, x => x.ToString("N2"));
 			this.Bind(ViewModel, vm => vm.SelectedWorkUnit, v => v.WorkUnitsListView.SelectedItem);
 
 			Observable.FromEventPattern(WorkUnitsListView, nameof(ListView.ItemTapped))
