@@ -31,8 +31,8 @@ namespace StitchCalc.ViewModels.Models
 			productMaterials = DataService.Current.GetProductMaterialsForProduct(model.Id);
 			workUnits = DataService.Current.GetWorkUnitsForProduct(model.Id);
 			customProperties = DataService.Current.GetCustomPropertiesForProduct(model.Id);
-			isMaterialsPriceMultiplied = model.MultiplierProperty == Product.SubProperty.MaterialCost && Multiplier > 0;
-			isWorkPriceMultiplied = model.MultiplierProperty == Product.SubProperty.WorkCharge && Multiplier > 0;
+			isMaterialsPriceMultiplied = model.MaterialsMultiplier > 0;
+			isWorkPriceMultiplied = model.WorkMultiplier > 0;
 
 			delete = ReactiveCommand.Create();
 			delete
@@ -94,9 +94,9 @@ namespace StitchCalc.ViewModels.Models
 
 		public bool ChargeForWork => model.ChargeForWork;
 
-		public double Multiplier => model.Multiplier;
+		public double MaterialsMultiplier => model.MaterialsMultiplier;
 
-		public Product.SubProperty MultiplierProperty => model.MultiplierProperty;
+		public double WorkMultiplier => model.WorkMultiplier;
 
 		public IReactiveDerivedList<ProductMaterialViewModel> Materials => productMaterials;
 
@@ -124,26 +124,12 @@ namespace StitchCalc.ViewModels.Models
 
 			if (product.ChargeForMaterials)
 			{
-				if (product.Multiplier > 0 && product.MultiplierProperty == Product.SubProperty.MaterialCost)
-				{
-					sum += materialsPrice * product.Multiplier;
-				}
-				else
-				{
-					sum += materialsPrice;
-				}
+				sum += materialsPrice * (product.MaterialsMultiplier > 0 ? product.MaterialsMultiplier : 1);
 			}
 
 			if (product.ChargeForWork)
 			{
-				if (product.Multiplier > 0 && product.MultiplierProperty == Product.SubProperty.WorkCharge)
-				{
-					sum += workPrice * product.Multiplier;
-				}
-				else
-				{
-					sum += workPrice;
-				}
+				sum += workPrice * (product.WorkMultiplier > 0 ? product.WorkMultiplier : 1);
 			}
 
 			return sum;
@@ -157,8 +143,8 @@ namespace StitchCalc.ViewModels.Models
 				Name = product.Name,
 				ChargeForMaterials = product.ChargeForMaterials,
 				ChargeForWork = product.ChargeForWork,
-				Multiplier = product.Multiplier,
-				MultiplierProperty = product.MultiplierProperty
+				MaterialsMultiplier = product.MaterialsMultiplier,
+				WorkMultiplier = product.WorkMultiplier
 			};
 		}
 	}
