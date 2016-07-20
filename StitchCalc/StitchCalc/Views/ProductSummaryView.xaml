@@ -8,8 +8,17 @@
 		<ToolbarItem x:Name="EditProductToolbarItem" Text="Edit"/>
 	</ContentPage.ToolbarItems>
 	
-	<StackLayout>
-		<StackLayout x:Name="MaterialsStackLayout" Orientation="Horizontal">
+	<StackLayout Spacing="0">
+		<StackLayout.Resources>
+			<ResourceDictionary>
+				<Style TargetType="StackLayout" x:Key="LineStackLayoutStyle">
+					<Setter Property="BackgroundColor" Value="Transparent"/>
+					<Setter Property="Padding" Value="0,10"/>
+				</Style>
+			</ResourceDictionary>
+		</StackLayout.Resources>
+		
+		<StackLayout x:Name="MaterialsStackLayout" Orientation="Horizontal" Style="{StaticResource LineStackLayoutStyle}">
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer x:Name="MaterialsStackLayoutTapGestureRecognizer"/>
 			</StackLayout.GestureRecognizers>
@@ -19,7 +28,7 @@
 			<Label x:Name="MaterialsMultiplierLabel"/>
 		</StackLayout>
 
-		<StackLayout x:Name="WorkStackLayout" Orientation="Horizontal">
+		<StackLayout x:Name="WorkStackLayout" Orientation="Horizontal" Style="{StaticResource LineStackLayoutStyle}">
 			<StackLayout.GestureRecognizers>
 				<TapGestureRecognizer x:Name="WorkStackLayoutTapGestureRecognizer"/>
 			</StackLayout.GestureRecognizers>
@@ -29,7 +38,7 @@
 			<Label x:Name="WorkMultiplierLabel"/>
 		</StackLayout>
 
-		<StackLayout Orientation="Horizontal">
+		<StackLayout Orientation="Horizontal" Style="{StaticResource LineStackLayoutStyle}">
 			<Label Text="Sum:" HorizontalOptions="StartAndExpand"/>
 			<Label x:Name="SumCostLabel"/>
 		</StackLayout>
