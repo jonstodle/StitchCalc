@@ -45,6 +45,8 @@ namespace StitchCalc.Services.NavigationService
 		{
 			await (currentPage.ViewModel as INavigable)?.OnNavigatingFrom();
 
+			currentPage = navigation.NavigationStack[navigation.NavigationStack.Count - 1] as IViewFor;
+
 			var navStack = navigation.NavigationStack;
 			var prevPageIndex = navStack.Count - 2;
 			if (prevPageIndex >= 0)
