@@ -9,10 +9,12 @@ using System.Text;
 
 namespace StitchCalc.ViewModels.Models
 {
-    public class ProductViewModel : ViewModelBase
-    {
+	public class ProductViewModel : ViewModelBase
+	{
 		readonly Product model;
 		readonly ReactiveCommand<object> delete;
+		readonly ReactiveCommand<object> toggleChargeForMaterials;
+		readonly ReactiveCommand<object> toggleChargeForWork;
 		readonly IReactiveDerivedList<ProductMaterialViewModel> productMaterials;
 		readonly IReactiveDerivedList<WorkUnitViewModel> workUnits;
 		readonly IReactiveDerivedList<CustomPropertyViewModel> customProperties;
@@ -20,6 +22,8 @@ namespace StitchCalc.ViewModels.Models
 		readonly ObservableAsPropertyHelper<double> workInMinutes;
 		readonly ObservableAsPropertyHelper<double> workPrice;
 		readonly ObservableAsPropertyHelper<double> totalPrice;
+		readonly bool isMaterialsPriceMultiplied;
+		readonly bool isWorkPriceMultiplied;
 
 		public ProductViewModel(Product productModel)
 		{
@@ -27,10 +31,30 @@ namespace StitchCalc.ViewModels.Models
 			productMaterials = DataService.Current.GetProductMaterialsForProduct(model.Id);
 			workUnits = DataService.Current.GetWorkUnitsForProduct(model.Id);
 			customProperties = DataService.Current.GetCustomPropertiesForProduct(model.Id);
+			isMaterialsPriceMultiplied = model.MultiplierProperty == Product.SubProperty.MaterialCost && Multiplier > 0;
+			isWorkPriceMultiplied = model.MultiplierProperty == Product.SubProperty.WorkCharge && Multiplier > 0;
 
 			delete = ReactiveCommand.Create();
 			delete
 				.Subscribe(_ => DataService.Current.Remove(model));
+
+			toggleChargeForMaterials = ReactiveCommand.Create();
+			toggleChargeForMaterials
+				.Subscribe(_ =>
+				{
+					var m = CopyProduct(Model);
+					m.ChargeForMaterials = !m.ChargeForMaterials;
+					DataService.Current.Update(m);
+				});
+
+			toggleChargeForWork = ReactiveCommand.Create();
+			toggleChargeForWork
+				.Subscribe(_ =>
+				{
+					var m = CopyProduct(Model);
+					m.ChargeForWork = !m.ChargeForWork;
+					DataService.Current.Update(m);
+				});
 
 			productMaterials
 				.Changed
@@ -41,7 +65,7 @@ namespace StitchCalc.ViewModels.Models
 			workUnits
 				.Changed
 				.Select(_ => (double)workUnits.Sum(x => x.Minutes))
-				.StartWith((double)workUnits.Sum(x=> x.Minutes))
+				.StartWith((double)workUnits.Sum(x => x.Minutes))
 				.ToProperty(this, x => x.WorkInMinutes, out workInMinutes);
 
 			workUnits
@@ -51,7 +75,8 @@ namespace StitchCalc.ViewModels.Models
 				.ToProperty(this, x => x.WorkPrice, out workPrice);
 
 			this
-				.WhenAnyValue(x => x.MaterialsPrice, y => y.WorkPrice, (x, y) => x + y)
+				.WhenAnyValue(x => x.MaterialsPrice, y => y.WorkPrice, (x, y) => Tuple.Create(x,y))
+				.Select(x => CalculatePrice(x.Item1, x.Item2, model))
 				.ToProperty(this, x => x.TotalPrice, out totalPrice);
 		}
 
@@ -59,7 +84,19 @@ namespace StitchCalc.ViewModels.Models
 
 		public ReactiveCommand<object> Delete => delete;
 
+		public ReactiveCommand<object> ToggleChargeForMaterials => toggleChargeForMaterials;
+
+		public ReactiveCommand<object> ToggleChargeForWork => toggleChargeForWork;
+
 		public string Name => model.Name;
+
+		public bool ChargeForMaterials => model.ChargeForMaterials;
+
+		public bool ChargeForWork => model.ChargeForWork;
+
+		public double Multiplier => model.Multiplier;
+
+		public Product.SubProperty MultiplierProperty => model.MultiplierProperty;
 
 		public IReactiveDerivedList<ProductMaterialViewModel> Materials => productMaterials;
 
@@ -74,5 +111,55 @@ namespace StitchCalc.ViewModels.Models
 		public double WorkPrice => workPrice.Value;
 
 		public double TotalPrice => totalPrice.Value;
+
+		public bool IsMaterialsPriceMultiplied => isMaterialsPriceMultiplied;
+
+		public bool IsWorkPriceMultiplied => isWorkPriceMultiplied;
+
+
+
+		double CalculatePrice(double materialsPrice, double workPrice, Product product)
+		{
+			var sum = 0d;
+
+			if (product.ChargeForMaterials)
+			{
+				if (product.Multiplier > 0 && product.MultiplierProperty == Product.SubProperty.MaterialCost)
+				{
+					sum += materialsPrice * product.Multiplier;
+				}
+				else
+				{
+					sum += materialsPrice;
+				}
+			}
+
+			if (product.ChargeForWork)
+			{
+				if (product.Multiplier > 0 && product.MultiplierProperty == Product.SubProperty.WorkCharge)
+				{
+					sum += workPrice * product.Multiplier;
+				}
+				else
+				{
+					sum += workPrice;
+				}
+			}
+
+			return sum;
+		}
+
+		Product CopyProduct(Product product)
+		{
+			return new Product
+			{
+				Id = product.Id,
+				Name = product.Name,
+				ChargeForMaterials = product.ChargeForMaterials,
+				ChargeForWork = product.ChargeForWork,
+				Multiplier = product.Multiplier,
+				MultiplierProperty = product.MultiplierProperty
+			};
+		}
 	}
 }

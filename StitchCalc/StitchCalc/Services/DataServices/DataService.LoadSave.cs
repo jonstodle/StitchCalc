@@ -33,35 +33,35 @@ namespace StitchCalc.Services.DataServices
 			if (data == null) { return; }
 
 			using (products.SuppressChangeNotifications())
+			using (materials.SuppressChangeNotifications())
+			using (workUnits.SuppressChangeNotifications())
+			using (customProperties.SuppressChangeNotifications())
+			using (productMaterials.SuppressChangeNotifications())
 			{
 				var productsDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<Product>>>(data[nameof(products)].ToString());
 
 				if (productsDso != null) { products.AddRange(productsDso.Data); }
-			}
+			
 
-			using (materials.SuppressChangeNotifications())
-			{
+			
 				var materialDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<Material>>>(data[nameof(materials)].ToString());
 
 				if (materialDso != null) { materials.AddRange(materialDso.Data); }
-			}
+			
 
-			using (workUnits.SuppressChangeNotifications())
-			{
+			
 				var workUnitsDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<WorkUnit>>>(data[nameof(workUnits)].ToString());
 
 				if (workUnitsDso != null) { workUnits.AddRange(workUnitsDso.Data); }
-			}
+			
 
-			using (customProperties.SuppressChangeNotifications())
-			{
+			
 				var customPropertiesDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<CustomProperty>>>(data[nameof(customProperties)].ToString());
 
 				if (customPropertiesDso != null) { customProperties.AddRange(customPropertiesDso.Data); }
-			}
+			
 
-			using (productMaterials.SuppressChangeNotifications())
-			{
+			
 				var productMaterialsDso = JsonConvert.DeserializeObject<DataStorageObject<IEnumerable<ProductMaterial>>>(data[nameof(productMaterials)].ToString());
 
 				if (productMaterialsDso != null) { productMaterials.AddRange(productMaterialsDso.Data); }

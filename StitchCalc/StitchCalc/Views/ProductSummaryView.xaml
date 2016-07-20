@@ -9,14 +9,24 @@
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout>
-		<StackLayout Orientation="Horizontal">
+		<StackLayout x:Name="MaterialsStackLayout" Orientation="Horizontal">
+			<StackLayout.GestureRecognizers>
+				<TapGestureRecognizer x:Name="MaterialsStackLayoutTapGestureRecognizer"/>
+			</StackLayout.GestureRecognizers>
+
 			<Label Text="Materials cost:" HorizontalOptions="StartAndExpand"/>
 			<Label x:Name="MaterialsCostLabel"/>
+			<Label x:Name="MaterialsMultiplierLabel"/>
 		</StackLayout>
 
-		<StackLayout Orientation="Horizontal">
+		<StackLayout x:Name="WorkStackLayout" Orientation="Horizontal">
+			<StackLayout.GestureRecognizers>
+				<TapGestureRecognizer x:Name="WorkStackLayoutTapGestureRecognizer"/>
+			</StackLayout.GestureRecognizers>
+			
 			<Label Text="Work cost:" HorizontalOptions="StartAndExpand"/>
 			<Label x:Name="WorkCostLabel"/>
+			<Label x:Name="WorkMultiplierLabel"/>
 		</StackLayout>
 
 		<StackLayout Orientation="Horizontal">

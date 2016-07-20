@@ -40,6 +40,8 @@ namespace StitchCalc.ViewModels.Views
 				.Subscribe(async _ => await NavigationService.Current.NavigateTo<ProductView>(((ProductViewModel)selectedProduct).Model.Id));
 		}
 
+		public IReactiveDerivedList<ProductViewModel> Products => products;
+
 		public List<ProductViewModel> CollectionView => collectionView.Value;
 
 		public ReactiveCommand<object> NavigateToProductFormPage => navigateToProductFormPage;
