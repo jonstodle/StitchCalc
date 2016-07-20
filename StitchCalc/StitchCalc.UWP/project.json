@@ -6,6 +6,7 @@
     "reactiveui-events": "6.5.0",
     "reactiveui-xamforms": "6.5.0",
     "Splat": "1.6.2",
+    "Xam.Plugins.Settings": "2.1.0",
     "Xamarin.Forms": "2.3.0.107"
   },
   "frameworks": {

@@ -8,7 +8,7 @@ namespace StitchCalc.Services.SettingsServices
     {
 		public double DefaultHourlyCharge
 		{
-			get { return Read(nameof(DefaultHourlyCharge), 200); }
+			get { return Read(nameof(DefaultHourlyCharge), 200d); }
 			set { Write(nameof(DefaultHourlyCharge), value); }
 		}
 	}
