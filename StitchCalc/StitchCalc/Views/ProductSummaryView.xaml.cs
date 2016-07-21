@@ -43,16 +43,16 @@ namespace StitchCalc.Views
 		enum ChargeReasons { Materials, Work }
 		async void ShowActionSheet(string title, ChargeReasons reason)
 		{
-			var actions = new string[] { "Cancel", "Toggle", "Multiply" };
+			var actions = new string[] {reason.ToString(), "Cancel", "Toggle", "Multiply" };
 
-			var result = await DisplayActionSheet("", actions[0], null, actions[1], actions[2]);
+			var result = await DisplayActionSheet(actions[0], actions[1], null, actions[2], actions[3]);
 
-			if (result == actions[1])
+			if (result == actions[2])
 			{
 				if (reason == ChargeReasons.Materials) { ViewModel.Model.ToggleChargeForMaterials.Execute(null); }
 				else if(reason == ChargeReasons.Work) { ViewModel.Model.ToggleChargeForWork.Execute(null); }
 			}
-			else if (result == actions[2])
+			else if (result == actions[3])
 			{
 				
 			}
