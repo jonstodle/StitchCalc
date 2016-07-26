@@ -12,7 +12,7 @@ namespace StitchCalc.Services.DataServices
     {
 		readonly ReactiveList<CustomProperty> customProperties = new ReactiveList<CustomProperty>();
 		public IReactiveDerivedList<CustomPropertyViewModel> GetCustomProperties() => customProperties.CreateDerivedCollection(x => new CustomPropertyViewModel(x));
-		public IReactiveDerivedList<CustomPropertyViewModel> GetCustomPropertiesForProduct(Guid productId) => customProperties.CreateDerivedCollection(x => new CustomPropertyViewModel(x), x => x.ParentId == productId);
+		public IReactiveDerivedList<CustomPropertyViewModel> GetCustomPropertiesForParent(Guid parentId) => customProperties.CreateDerivedCollection(x => new CustomPropertyViewModel(x), x => x.ParentId == parentId);
 		public CustomPropertyViewModel GetCustomProperty(Guid customPropertyId)
 		{
 			var cp = customProperties.FirstOrDefault(x => x.Id == customPropertyId);
