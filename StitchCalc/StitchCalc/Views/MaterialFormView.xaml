@@ -12,26 +12,21 @@
 			<Entry x:Name="NameEntry"/>
 		</StackLayout>
 
-			<Grid>
+			<Grid RowSpacing="0">
 				<Grid.ColumnDefinitions>
 					<ColumnDefinition/>
 					<ColumnDefinition/>
 				</Grid.ColumnDefinitions>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
 
-				<StackLayout Spacing="0">
 					<Label Text="Price"/>
-					<Entry x:Name="PriceEntry" Placeholder="(per meter)" Keyboard="Numeric"/>
-				</StackLayout>
+					<Entry x:Name="PriceEntry" Placeholder="(per meter)" Keyboard="Numeric" Grid.Row="1"/>
 
-				<StackLayout Spacing="0" Grid.Column="1">
-					<Label Text="Width"/>
-					<Entry x:Name="WidthEntry" Placeholder="(in meters)" Keyboard="Numeric"/>
-				</StackLayout>
+					<Label Text="Width" Grid.Column="1"/>
+					<Entry x:Name="WidthEntry" Placeholder="(in meters)" Keyboard="Numeric" Grid.Row="1" Grid.Column="1"/>
 			</Grid>
-
-		<StackLayout Spacing="0">
-			<Label Text="Description"/>
-			<Editor x:Name="DescriptionEditor" HeightRequest="100" Keyboard="Text"/>
-		</StackLayout>
 	</StackLayout>
 </ContentPage>

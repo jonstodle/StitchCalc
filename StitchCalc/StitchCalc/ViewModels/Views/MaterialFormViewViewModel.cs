@@ -63,12 +63,6 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref price, value); }
 		}
 
-		public string Description
-		{
-			get { return description; }
-			set { this.RaiseAndSetIfChanged(ref description, value); }
-		}
-
 		private async void SaveImpl()
 		{
 			var mtrl = new Material
@@ -76,8 +70,7 @@ namespace StitchCalc.ViewModels.Views
 				Id = material?.Model.Id ?? default(Guid),
 				Name = Name,
 				Width = double.Parse(Width),
-				Price = double.Parse(Price),
-				Description = Description
+				Price = double.Parse(Price)
 			};
 			
 			if(material == null) { DataService.Current.Add(mtrl); }
@@ -98,7 +91,6 @@ namespace StitchCalc.ViewModels.Views
 				Name = material.Model.Name;
 				Width = material.Model.Width.ToString();
 				Price = material.Model.Price.ToString();
-				Description = material.Model.Description;
 			}
 			else
 			{
@@ -108,7 +100,6 @@ namespace StitchCalc.ViewModels.Views
 				Name = string.Empty;
 				Width = string.Empty;
 				Price = string.Empty;
-				Description = string.Empty;
 			}
 
 			return Task.CompletedTask;
