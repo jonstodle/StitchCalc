@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Acr.UserDialogs;
+using ReactiveUI;
 using StitchCalc.ViewModels.Views;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,13 @@ namespace StitchCalc.Views
 			}
 			else if (result == actions[3])
 			{
-				
+				var multiplyResult = await UserDialogs.Instance.PromptAsync($"Multiply {reason.ToString()}", "Multiply", "OK", "Cancel", "0 to remove multiplier", inputType: InputType.Number);
+
+				if (multiplyResult.Ok)
+				{
+					if (reason == ChargeReasons.Materials) { ViewModel.Model.SetMaterialsMultiplier.Execute(multiplyResult.Value); }
+					else if (reason == ChargeReasons.Work) { ViewModel.Model.SetWorkMultiplier.Execute(multiplyResult.Value); }
+				}
 			}
 		}
 

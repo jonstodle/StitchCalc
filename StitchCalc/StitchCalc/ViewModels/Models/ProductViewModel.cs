@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using StitchCalc.Extras;
 using StitchCalc.Models;
 using StitchCalc.Services.DataServices;
 using System;
@@ -15,6 +16,8 @@ namespace StitchCalc.ViewModels.Models
 		readonly ReactiveCommand<object> delete;
 		readonly ReactiveCommand<object> toggleChargeForMaterials;
 		readonly ReactiveCommand<object> toggleChargeForWork;
+		readonly ReactiveCommand<object> setMaterialsMultiplier;
+		readonly ReactiveCommand<object> setWorkMultiplier;
 		readonly IReactiveDerivedList<ProductMaterialViewModel> productMaterials;
 		readonly IReactiveDerivedList<WorkUnitViewModel> workUnits;
 		readonly IReactiveDerivedList<CustomPropertyViewModel> customProperties;
@@ -56,6 +59,32 @@ namespace StitchCalc.ViewModels.Models
 					DataService.Current.Update(m);
 				});
 
+			setMaterialsMultiplier = ReactiveCommand.Create();
+			setMaterialsMultiplier
+				.Cast<string>()
+				.Where(x => x.IsValidDouble())
+				.Select(x => double.Parse(x))
+				.Where(x => x >= 0)
+				.Subscribe(x =>
+				{
+					var m = CopyProduct(Model);
+					m.MaterialsMultiplier = x;
+					DataService.Current.Update(m);
+				});
+
+			setWorkMultiplier = ReactiveCommand.Create();
+			setWorkMultiplier
+				.Cast<string>()
+				.Where(x => x.IsValidDouble())
+				.Select(x => double.Parse(x))
+				.Where(x => x >= 0)
+				.Subscribe(x =>
+				{
+					var m = CopyProduct(Model);
+					m.WorkMultiplier = x;
+					DataService.Current.Update(m);
+				});
+
 			productMaterials
 				.Changed
 				.Select(_ => productMaterials.Sum(x => x.Price))
@@ -87,6 +116,10 @@ namespace StitchCalc.ViewModels.Models
 		public ReactiveCommand<object> ToggleChargeForMaterials => toggleChargeForMaterials;
 
 		public ReactiveCommand<object> ToggleChargeForWork => toggleChargeForWork;
+
+		public ReactiveCommand<object> SetMaterialsMultiplier => setMaterialsMultiplier;
+
+		public ReactiveCommand<object> SetWorkMultiplier => setWorkMultiplier;
 
 		public string Name => model.Name;
 
