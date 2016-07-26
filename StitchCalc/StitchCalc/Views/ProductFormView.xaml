@@ -5,43 +5,9 @@
 	<ContentPage.ToolbarItems>
 		<ToolbarItem x:Name="SaveProductToolbarItem" Text="Save" Icon="save.png"/>
 	</ContentPage.ToolbarItems>
-
-	<StackLayout>
-		<StackLayout Spacing="0" Padding="10">
-			<Label Text="Name"/>
-			<Entry x:Name="NameEntry" Keyboard="Text"/>
-		</StackLayout>
-
-		<Grid RowSpacing="0" Padding="10,10,10,0">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition/>
-				<ColumnDefinition/>
-				<ColumnDefinition Width="Auto"/>
-			</Grid.ColumnDefinitions>
-			<Grid.RowDefinitions>
-				<RowDefinition Height="Auto"/>
-				<RowDefinition Height="Auto"/>
-			</Grid.RowDefinitions>
-
-			<Label Text="Property name"/>
-			<Entry x:Name="CustomPropertyNameEntry" Keyboard="Text" Grid.Row="1"/>
-
-			<Label Text="Value" Grid.Column="1"/>
-			<Entry x:Name="CustomPropertyValueEntry" Keyboard="Text" Grid.Column="1" Grid.Row="1"/>
-
-			<Button x:Name="CustomPropertyAddButton" Text="Add" Grid.Column="2" Grid.Row="1"/>
-		</Grid>
 	
-		<ListView x:Name="CustomPropertiesListView" VerticalOptions="StartAndExpand">
-			<ListView.ItemTemplate>
-				<DataTemplate>
-					<TextCell Text="{Binding Name}" Detail="{Binding Value}">
-						<TextCell.ContextActions>
-							<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>
-						</TextCell.ContextActions>
-					</TextCell>
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>
+	<StackLayout Spacing="0" Padding="10">
+		<Label Text="Name"/>
+		<Entry x:Name="NameEntry" Keyboard="Text"/>
 	</StackLayout>
 </ContentPage>
