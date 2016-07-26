@@ -45,7 +45,7 @@ namespace StitchCalc.Services.DataServices
 			{
 				foreach (var wu in workUnits.Where(x => x.ProductId == p.Id)) { Remove(wu); }
 				foreach (var pm in productMaterials.Where(x => x.ProductId == p.Id)) { Remove(pm); }
-				foreach (var cp in customProperties.Where(x => x.ProductId == p.Id)) { Remove(cp); }
+				foreach (var cp in customProperties.Where(x => x.ParentId == p.Id)) { Remove(cp); }
 
 
 				return products.Remove(p);

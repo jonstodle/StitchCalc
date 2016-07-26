@@ -12,7 +12,7 @@ namespace StitchCalc.Services.DataServices
     {
 		readonly ReactiveList<CustomProperty> customProperties = new ReactiveList<CustomProperty>();
 		public IReactiveDerivedList<CustomPropertyViewModel> GetCustomProperties() => customProperties.CreateDerivedCollection(x => new CustomPropertyViewModel(x));
-		public IReactiveDerivedList<CustomPropertyViewModel> GetCustomPropertiesForProduct(Guid productId) => customProperties.CreateDerivedCollection(x => new CustomPropertyViewModel(x), x => x.ProductId == productId);
+		public IReactiveDerivedList<CustomPropertyViewModel> GetCustomPropertiesForProduct(Guid productId) => customProperties.CreateDerivedCollection(x => new CustomPropertyViewModel(x), x => x.ParentId == productId);
 		public CustomPropertyViewModel GetCustomProperty(Guid customPropertyId)
 		{
 			var cp = customProperties.FirstOrDefault(x => x.Id == customPropertyId);
@@ -25,7 +25,7 @@ namespace StitchCalc.Services.DataServices
 		{
 			customProperty.Id = Guid.NewGuid();
 
-			if (customProperty.ProductId == default(Guid)) { throw new ArgumentNullException(nameof(customProperty.ProductId)); }
+			if (customProperty.ParentId == default(Guid)) { throw new ArgumentNullException(nameof(customProperty.ParentId)); }
 
 			if (string.IsNullOrWhiteSpace(customProperty.Name)) { throw new ArgumentNullException(nameof(customProperty.Name)); }
 
