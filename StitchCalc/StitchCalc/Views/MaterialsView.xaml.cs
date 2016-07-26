@@ -19,7 +19,7 @@ namespace StitchCalc.Views
 
 			this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialToolbarItem);
 			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.MaterialsSearchBar.Text);
-			this.OneWayBind(ViewModel, vm => vm.Materials, v => v.MaterialsListView.ItemsSource);
+			this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.MaterialsListView.ItemsSource);
 			this.Bind(ViewModel, vm => vm.SelectedMaterial, v => v.MaterialsListView.SelectedItem);
 
 			Observable.FromEventPattern(MaterialsListView, nameof(ListView.ItemTapped))
