@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StitchCalc.Views.MaterialFormView">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="SaveToolbarItem" Text="Save" icon="save.png"/>
+		<ToolbarItem x:Name="SaveToolbarItem" Text="Save" Icon="save.png"/>
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout>
