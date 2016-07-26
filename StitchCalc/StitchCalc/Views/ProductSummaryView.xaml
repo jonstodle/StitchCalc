@@ -5,7 +5,7 @@
 						 Icon="menu.png"
 						 Title="Summary">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="EditProductToolbarItem" Text="Edit"/>
+		<ToolbarItem x:Name="EditProductToolbarItem" Text="Edit" Icon="edit.png"/>
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout Spacing="0">

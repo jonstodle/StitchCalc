@@ -6,7 +6,7 @@
 						 Title="Products">
 
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="AddProductToolbarItem" Text="Add"/>
+		<ToolbarItem x:Name="AddProductToolbarItem" Text="Add" Icon="add.png"/>
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout Spacing="10">

@@ -5,7 +5,7 @@
 						 Icon="cloth.png"
 						 Title="Materials">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="AddMaterialToolbarItem" Text="Add"/>
+		<ToolbarItem x:Name="AddMaterialToolbarItem" Text="Add" Icon="add.png"/>
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout>
@@ -14,7 +14,7 @@
 		<ListView x:Name="MaterialsListView">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<TextCell Text="{Binding Name}">
+					<TextCell Text="{Binding Name}" Detail="{Binding PricePerMeter, StringFormat='{}{0:N2} per meter'}">
 						<TextCell.ContextActions>
 							<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>
 						</TextCell.ContextActions>
