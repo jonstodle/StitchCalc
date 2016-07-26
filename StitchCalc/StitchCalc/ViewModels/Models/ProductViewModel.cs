@@ -33,7 +33,7 @@ namespace StitchCalc.ViewModels.Models
 			model = productModel;
 			productMaterials = DataService.Current.GetProductMaterialsForProduct(model.Id);
 			workUnits = DataService.Current.GetWorkUnitsForProduct(model.Id);
-			customProperties = DataService.Current.GetCustomPropertiesForProduct(model.Id);
+			customProperties = DataService.Current.GetCustomPropertiesForParent(model.Id);
 			isMaterialsPriceMultiplied = model.MaterialsMultiplier > 0;
 			isWorkPriceMultiplied = model.WorkMultiplier > 0;
 

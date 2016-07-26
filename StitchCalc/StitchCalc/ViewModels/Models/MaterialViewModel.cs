@@ -11,19 +11,23 @@ namespace StitchCalc.ViewModels.Models
     {
 		readonly Material model;
 		readonly ReactiveCommand<object> delete;
+		readonly IReactiveDerivedList<CustomPropertyViewModel> customProperties;
 
 		public MaterialViewModel(Material material)
 		{
 			model = material;
+			customProperties = DataService.Current.GetCustomPropertiesForParent(model.Id);
 
 			delete = ReactiveCommand.Create();
 			delete
 				.Subscribe(_ => DataService.Current.Remove(model));
 		}
 
+		public ReactiveCommand<object> Delete => delete;
+
 		public Material Model => model;
 
-		public ReactiveCommand<object> Delete => delete;
+		public IReactiveDerivedList<CustomPropertyViewModel> CustomProperties => customProperties;
 
 		public string Name => model.Name;
 
