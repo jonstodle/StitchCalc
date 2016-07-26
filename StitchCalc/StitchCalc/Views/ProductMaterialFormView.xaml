@@ -6,7 +6,7 @@
 		<ToolbarItem x:Name="SaveToolbarItem" Text="Save" Icon="save.png"/>
 	</ContentPage.ToolbarItems>
 
-	<StackLayout>
+	<StackLayout Padding="10">
 		<StackLayout Spacing="0">
 			<Label Text="Material"/>
 			<StackLayout Orientation="Horizontal">
