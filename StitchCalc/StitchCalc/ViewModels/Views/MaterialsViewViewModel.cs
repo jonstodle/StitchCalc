@@ -33,13 +33,13 @@ namespace StitchCalc.ViewModels.Views
 
 			navigateToMaterialFormView = ReactiveCommand.Create();
 			navigateToMaterialFormView
-				.Subscribe(_ => NavigationService.Current.NavigateTo<MaterialFormView>());
+				.Subscribe(async _ => await NavigationService.Current.NavigateTo<MaterialFormView>());
 
 			edit = ReactiveCommand.Create();
 			edit
 				.Select(_ => selectedMaterial)
 				.Cast<MaterialViewModel>()
-				.Subscribe(item => NavigationService.Current.NavigateTo<MaterialFormView>(item.Model.Id));
+				.Subscribe(async item => await NavigationService.Current.NavigateTo<MaterialFormView>(item.Model.Id));
 		}
 
 		public IReactiveDerivedList<MaterialViewModel> Materials => materials;

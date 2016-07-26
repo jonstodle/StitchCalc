@@ -28,7 +28,7 @@ namespace StitchCalc.ViewModels.Views
 			edit
 				.Select(x => selectedWorkUnit)
 				.Cast<WorkUnitViewModel>()
-				.Subscribe(item => NavigationService.Current.NavigateTo<WorkUnitFormView>(Tuple.Create(product.Model.Id, item.Model.Id)));
+				.Subscribe(async item => await NavigationService.Current.NavigateTo<WorkUnitFormView>(Tuple.Create(product.Model.Id, item.Model.Id)));
 		}
 
 		public ReactiveCommand<object> NavigateToWorkUnitFormView => navigateToWorkUnitFormView;

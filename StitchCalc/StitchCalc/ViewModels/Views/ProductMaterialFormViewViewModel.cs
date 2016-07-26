@@ -33,7 +33,7 @@ namespace StitchCalc.ViewModels.Views
 
 			navigateToMaterialFormView = ReactiveCommand.Create();
 			navigateToMaterialFormView
-				.Subscribe(_ => NavigationService.Current.NavigateTo<MaterialFormView>());
+				.Subscribe(async _ => await NavigationService.Current.NavigateTo<MaterialFormView>());
 		}
 
 		public string PageTitle
