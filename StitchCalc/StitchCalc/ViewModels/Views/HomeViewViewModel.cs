@@ -73,7 +73,7 @@ namespace StitchCalc.ViewModels.Views
 			}
 			else
 			{
-				return Products.CreateDerivedCollection(x => x, x => x.Name.Contains(searchString), orderFunc);
+				return Products.CreateDerivedCollection(x => x, x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), orderFunc);
 			}
 		}
 
