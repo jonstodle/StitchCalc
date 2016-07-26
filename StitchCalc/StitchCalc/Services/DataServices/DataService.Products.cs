@@ -8,8 +8,8 @@ using System.Text;
 
 namespace StitchCalc.Services.DataServices
 {
-    public partial class DataService
-    {
+	public partial class DataService
+	{
 		readonly ReactiveList<Product> products = new ReactiveList<Product>();
 		public IReactiveDerivedList<ProductViewModel> GetProducts() => products.CreateDerivedCollection(x => new ProductViewModel(x));
 		public ProductViewModel GetProduct(Guid productId)
@@ -37,7 +37,19 @@ namespace StitchCalc.Services.DataServices
 
 			if (p == default(Product)) { throw new ArgumentException("Product id not found"); }
 
-			return products.Remove(p);
+
+			using (products.SuppressChangeNotifications())
+			using (workUnits.SuppressChangeNotifications())
+			using (productMaterials.SuppressChangeNotifications())
+			using (customProperties.SuppressChangeNotifications())
+			{
+				foreach (var wu in workUnits.Where(x => x.ProductId == p.Id)) { Remove(wu); }
+				foreach (var pm in productMaterials.Where(x => x.ProductId == p.Id)) { Remove(pm); }
+				foreach (var cp in customProperties.Where(x => x.ProductId == p.Id)) { Remove(cp); }
+
+
+				return products.Remove(p);
+			}
 		}
 
 		public Product Update(Product product)
