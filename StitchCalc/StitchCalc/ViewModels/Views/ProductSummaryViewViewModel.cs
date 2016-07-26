@@ -21,7 +21,7 @@ namespace StitchCalc.ViewModels.Views
 		{
 			edit = ReactiveCommand.Create();
 			edit
-				.Subscribe(_ => NavigationService.Current.NavigateTo<ProductFormView>(model.Model.Id));
+				.Subscribe(async _ => await NavigationService.Current.NavigateTo<ProductFormView>(model.Model.Id));
 		}
 
 		public ReactiveCommand<object> Edit => edit;
