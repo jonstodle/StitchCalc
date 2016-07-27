@@ -190,6 +190,8 @@ namespace StitchCalc.ViewModels.Views
 				Name = string.Empty;
 				Width = string.Empty;
 				Price = string.Empty;
+
+				ShowAddGrid = true;
 			}
 
 			return Task.CompletedTask;
