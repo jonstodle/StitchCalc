@@ -2,13 +2,11 @@
 using StitchCalc.Models;
 using StitchCalc.Services.DataServices;
 using System;
-using System.Collections.Generic;
 using System.Reactive.Linq;
-using System.Text;
 
 namespace StitchCalc.ViewModels.Models
 {
-    public class ProductMaterialViewModel : ViewModelBase
+	public class ProductMaterialViewModel : ViewModelBase
     {
 		readonly ProductMaterial model;
 		readonly ReactiveCommand<object> delete;

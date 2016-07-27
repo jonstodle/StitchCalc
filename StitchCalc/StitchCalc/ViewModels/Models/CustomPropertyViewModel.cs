@@ -2,12 +2,10 @@
 using StitchCalc.Models;
 using StitchCalc.Services.DataServices;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StitchCalc.ViewModels.Models
 {
-    public class CustomPropertyViewModel
+	public class CustomPropertyViewModel
     {
 		readonly CustomProperty model;
 		readonly ReactiveCommand<object> delete;

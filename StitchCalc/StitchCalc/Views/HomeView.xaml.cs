@@ -1,12 +1,5 @@
 ﻿using ReactiveUI;
-using ReactiveUI.XamForms;
 using StitchCalc.ViewModels.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 

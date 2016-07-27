@@ -6,8 +6,6 @@ using StitchCalc.Services.NavigationService;
 using StitchCalc.Services.SettingsServices;
 using StitchCalc.ViewModels.Models;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels.Views

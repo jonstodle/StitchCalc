@@ -2,10 +2,7 @@
 using StitchCalc.Models;
 using StitchCalc.ViewModels.Models;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace StitchCalc.Services.DataServices
 {

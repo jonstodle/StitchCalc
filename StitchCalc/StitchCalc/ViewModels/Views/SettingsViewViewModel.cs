@@ -4,9 +4,7 @@ using StitchCalc.Extras;
 using StitchCalc.Services.NavigationService;
 using StitchCalc.Services.SettingsServices;
 using System;
-using System.Collections.Generic;
 using System.Reactive.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels.Views

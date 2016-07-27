@@ -1,13 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace StitchCalc.Services.FileServices
 {
-    public partial class FileService
+	public partial class FileService
     {
 #if !WINDOWS_UWP
 		public async static Task<bool> WriteDataAsync<T>(string name, T data)

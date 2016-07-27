@@ -2,13 +2,11 @@
 using StitchCalc.Models;
 using StitchCalc.ViewModels.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace StitchCalc.Services.DataServices
 {
-    public partial class DataService
+	public partial class DataService
     {
 		readonly ReactiveList<WorkUnit> workUnits = new ReactiveList<WorkUnit>();
 		public IReactiveDerivedList<WorkUnitViewModel> GetWorkUnits() => workUnits.CreateDerivedCollection(x => new WorkUnitViewModel(x));

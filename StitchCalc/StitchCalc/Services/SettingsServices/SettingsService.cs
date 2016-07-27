@@ -1,13 +1,8 @@
-﻿using Newtonsoft.Json;
-using Plugin.Settings;
+﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
-using StitchCalc.Services.FileServices;
 using System;
 using System.Collections.Generic;
-using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StitchCalc.Services.SettingsServices
 {

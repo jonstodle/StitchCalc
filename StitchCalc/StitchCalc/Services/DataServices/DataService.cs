@@ -1,11 +1,5 @@
-﻿using ReactiveUI;
-using StitchCalc.Models;
-using StitchCalc.Services.FileServices;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Reactive.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace StitchCalc.Services.DataServices
 {

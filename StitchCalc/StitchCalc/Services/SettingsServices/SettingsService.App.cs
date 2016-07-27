@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace StitchCalc.Services.SettingsServices
+﻿namespace StitchCalc.Services.SettingsServices
 {
-    public partial class SettingsService
+	public partial class SettingsService
     {
 		public bool IsFirstRun
 		{
