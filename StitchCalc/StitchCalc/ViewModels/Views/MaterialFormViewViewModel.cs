@@ -23,7 +23,6 @@ namespace StitchCalc.ViewModels.Views
 		string name;
 		string width;
 		string price;
-		string description;
 		bool showAddGrid;
 		string customPropertyName;
 		string customPropertyValue;
