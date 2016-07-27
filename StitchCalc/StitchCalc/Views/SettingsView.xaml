@@ -22,7 +22,7 @@
 				
 				<StackLayout>
 					<Label Text="Version" Opacity=".5"/>
-					<Label Text="0.9.0"/>
+					<Label x:Name="AppVersionLabel"/>
 				</StackLayout>
 
 				<StackLayout>

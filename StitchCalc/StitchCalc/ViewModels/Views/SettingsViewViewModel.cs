@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using Acr.DeviceInfo;
+using ReactiveUI;
 using StitchCalc.Extras;
 using StitchCalc.Services.NavigationService;
 using StitchCalc.Services.SettingsServices;
@@ -13,10 +14,12 @@ namespace StitchCalc.ViewModels.Views
 	public class SettingsViewViewModel : ViewModelBase, INavigable
 	{
 		string defaultHourlyCharge;
+		string appVersion;
 
 		public SettingsViewViewModel()
 		{
 			defaultHourlyCharge = SettingsService.Current.DefaultHourlyCharge.ToString();
+			appVersion = DeviceInfo.App.Version;
 
 			this
 				.WhenAnyValue(x => x.DefaultHourlyCharge)
@@ -32,6 +35,7 @@ namespace StitchCalc.ViewModels.Views
 				.Subscribe(x => DefaultHourlyCharge = x.ToString());
 		}
 
+		public string AppVersion => appVersion;
 		public string DefaultHourlyCharge
 		{
 			get { return defaultHourlyCharge; }
