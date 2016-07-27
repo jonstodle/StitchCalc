@@ -2,6 +2,7 @@
 using StitchCalc.Models;
 using StitchCalc.ViewModels.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,10 +44,26 @@ namespace StitchCalc.Services.DataServices
 			using (productMaterials.SuppressChangeNotifications())
 			using (customProperties.SuppressChangeNotifications())
 			{
-				foreach (var wu in workUnits.Where(x => x.ProductId == p.Id)) { Remove(wu); }
-				foreach (var pm in productMaterials.Where(x => x.ProductId == p.Id)) { Remove(pm); }
-				foreach (var cp in customProperties.Where(x => x.ParentId == p.Id)) { Remove(cp); }
+				for (int i = workUnits.Count - 1; i >= 0; i--)
+				{
+					var item = workUnits[i];
 
+					if (item.ProductId == p.Id) { Remove(item); }
+				}
+
+				for (int i = productMaterials.Count - 1; i >= 0; i--)
+				{
+					var item = productMaterials[i];
+
+					if (item.ProductId == p.Id) { Remove(item); }
+				}
+
+				for (int i = customProperties.Count - 1; i >= 0; i--)
+				{
+					var item = customProperties[i];
+
+					if (item.ParentId == p.Id) { Remove(item); }
+				}
 
 				return products.Remove(p);
 			}
@@ -60,7 +77,7 @@ namespace StitchCalc.Services.DataServices
 
 			using (products.SuppressChangeNotifications())
 			{
-				Remove(p);
+				products.Remove(p);
 				Add(product).Id = p.Id;
 			}
 
