@@ -10,6 +10,31 @@
 				<Label Text="Default Hourly Charge"/>
 				<Entry x:Name="DefaultHourlyChargeEntry"/>
 			</StackLayout>
+
+			<StackLayout Spacing="30" Margin="0,50,0,0">
+				<StackLayout.Resources>
+					<Style TargetType="StackLayout">
+						<Setter Property="Spacing" Value="0"/>
+					</Style>
+				</StackLayout.Resources>
+				
+				<StackLayout>
+					<Label Text="Version" Opacity=".5"/>
+					<Label Text="0.9.0"/>
+				</StackLayout>
+
+				<StackLayout>
+					<Label Text="Developed by" Opacity=".5"/>
+					<Label Text="Jon Stødle"/>
+				</StackLayout>
+
+				<StackLayout>
+					<Label Text="Thanks to" Opacity=".5"/>
+					<Label Text="ACR User Dialogs"/>
+					<Label Text="JSON.Net"/>
+					<Label Text="Xamarin"/>
+				</StackLayout>
+			</StackLayout>
 		</StackLayout>
 	</ScrollView>
 </ContentPage>
