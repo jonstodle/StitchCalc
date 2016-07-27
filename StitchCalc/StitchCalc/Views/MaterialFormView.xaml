@@ -65,6 +65,10 @@
 				</Grid>
 
 				<ListView x:Name="CustomPropertiesListView">
+					<ListView.Margin>
+						<OnPlatform x:TypeArguments="Thickness" iOS="-10,0"/>
+					</ListView.Margin>
+					
 					<ListView.ItemTemplate>
 						<DataTemplate>
 							<TextCell Text="{Binding Name}" Detail="{Binding Value}">
