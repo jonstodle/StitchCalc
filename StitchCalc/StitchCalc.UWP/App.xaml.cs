@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -59,6 +60,8 @@ namespace StitchCalc.UWP
 				rootFrame.NavigationFailed += OnNavigationFailed;
 
 				Xamarin.Forms.Forms.Init(e);
+
+				ApplicationView.GetForCurrentView().SetPreferredMinSize(new Size(250, 300));
 
 				if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
 				{
