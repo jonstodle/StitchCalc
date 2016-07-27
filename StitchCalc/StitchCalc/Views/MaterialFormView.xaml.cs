@@ -21,6 +21,14 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.Width, v => v.WidthEntry.Text);
 			this.Bind(ViewModel, vm => vm.Price, v => v.PriceEntry.Text);
 			this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
+			this.OneWayBind(ViewModel, vm => vm.CanAddProperty, v => v.CustomPropertiesStackLayout.IsVisible);
+			this.OneWayBind(ViewModel, vm => vm.ToggleAddGridText, v => v.CustomPropertyToggleAddGridButton.Text);
+			this.BindCommand(ViewModel, vm => vm.ToggleShowAddGrid, v => v.CustomPropertyToggleAddGridButton);
+			this.OneWayBind(ViewModel, vm => vm.ShowAddGrid, v => v.CustomPropertyAddGrid.IsVisible);
+			this.Bind(ViewModel, vm => vm.CustomPropertyName, v => v.CustomPropertyNameEntry.Text);
+			this.Bind(ViewModel, vm => vm.CustomPropertyValue, v => v.CustomPropertyValueEntry.Text);
+			this.BindCommand(ViewModel, vm => vm.AddProperty, v => v.CustomPropertyAddButton);
+			this.OneWayBind(ViewModel, vm => vm.CustomProperties, v => v.CustomPropertiesListView.ItemsSource);
 		}
 
 		public MaterialFormViewViewModel ViewModel
