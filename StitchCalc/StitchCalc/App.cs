@@ -13,6 +13,8 @@ namespace StitchCalc
 	{
 		public App ()
 		{
+			AddGlobalResources(); 
+
 			// The root page of your application
 			MainPage = new NavigationPage(new HomeTabsView());
 			new NavigationService(MainPage.Navigation);
@@ -31,6 +33,17 @@ namespace StitchCalc
 		protected override void OnResume ()
 		{
 			// Handle when your app resumes
+		}
+
+
+
+		void AddGlobalResources()
+		{
+			Resources = new ResourceDictionary();
+
+			Resources.Add("StandardPadding", new Thickness(
+				Device.OnPlatform(10, 10, 0),
+				Device.OnPlatform(10, 10, 0)));
 		}
 	}
 }

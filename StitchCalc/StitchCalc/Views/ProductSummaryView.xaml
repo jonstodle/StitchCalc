@@ -5,10 +5,14 @@
 						 Icon="menu.png"
 						 Title="Summary">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="EditProductToolbarItem" Text="Edit" Icon="edit.png"/>
+		<ToolbarItem x:Name="EditProductToolbarItem" Text="Edit">
+			<ToolbarItem.Icon>
+				<OnPlatform x:TypeArguments="FileImageSource" Android="edit.png" WinPhone="edit.png"/>
+			</ToolbarItem.Icon>
+		</ToolbarItem>
 	</ContentPage.ToolbarItems>
 	
-	<StackLayout Spacing="0">
+	<StackLayout Spacing="0" Padding="{StaticResource StandardPadding}">
 		<StackLayout.Resources>
 			<ResourceDictionary>
 				<Style TargetType="StackLayout" x:Key="LineStackLayoutStyle">
