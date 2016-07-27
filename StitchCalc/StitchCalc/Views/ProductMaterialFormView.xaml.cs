@@ -23,6 +23,10 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text);
 			this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton);
 
+			Observable
+				.FromEventPattern(AmountEntry, nameof(Entry.Completed))
+				.InvokeCommand(ViewModel, x => x.Save);
+
 			ViewModel
 				.Materials
 				.Changed

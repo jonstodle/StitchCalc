@@ -3,6 +3,7 @@ using StitchCalc.ViewModels.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,10 @@ namespace StitchCalc.Views
 			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
 			this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
 			this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem);
+
+			Observable
+				.FromEventPattern(NameEntry, nameof(Entry.Completed))
+				.InvokeCommand(ViewModel, x => x.Save);
 		}
 
 		public ProductFormViewViewModel ViewModel

@@ -3,6 +3,7 @@ using StitchCalc.ViewModels.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +30,19 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.CustomPropertyValue, v => v.CustomPropertyValueEntry.Text);
 			this.BindCommand(ViewModel, vm => vm.AddProperty, v => v.CustomPropertyAddButton);
 			this.OneWayBind(ViewModel, vm => vm.CustomProperties, v => v.CustomPropertiesListView.ItemsSource);
+
+			Observable
+				.Merge(
+				Observable.FromEventPattern(NameEntry, nameof(Entry.Completed)),
+				Observable.FromEventPattern(WidthEntry, nameof(Entry.Completed)),
+				Observable.FromEventPattern(PriceEntry, nameof(Entry.Completed)))
+				.InvokeCommand(ViewModel, x => x.Save);
+
+			Observable
+				.Merge(
+				Observable.FromEventPattern(CustomPropertyNameEntry, nameof(Entry.Completed)),
+				Observable.FromEventPattern(CustomPropertyValueEntry, nameof(Entry.Completed)))
+				.InvokeCommand(ViewModel, x => x.AddProperty);
 		}
 
 		public MaterialFormViewViewModel ViewModel

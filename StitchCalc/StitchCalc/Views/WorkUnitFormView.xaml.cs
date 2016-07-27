@@ -3,6 +3,7 @@ using StitchCalc.ViewModels.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,6 +22,13 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.Minutes, v => v.MinutesEntry.Text);
 			this.Bind(ViewModel, vm => vm.Charge, v => v.ChargeEntry.Text);
 			this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
+
+			Observable
+				.Merge(
+				Observable.FromEventPattern(NameEntry, nameof(Entry.Completed)),
+				Observable.FromEventPattern(MinutesEntry, nameof(Entry.Completed)),
+				Observable.FromEventPattern(ChargeEntry, nameof(Entry.Completed)))
+				.InvokeCommand(ViewModel, x => x.Save);
 		}
 
 		public WorkUnitFormViewViewModel ViewModel
