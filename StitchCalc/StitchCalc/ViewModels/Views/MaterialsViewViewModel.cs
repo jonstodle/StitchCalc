@@ -4,8 +4,10 @@ using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace StitchCalc.ViewModels.Views
 {
@@ -16,7 +18,6 @@ namespace StitchCalc.ViewModels.Views
 		readonly ReactiveCommand<object> navigateToMaterialFormView;
 		readonly ReactiveCommand<object> edit;
 		string searchTerm;
-		object selectedMaterial;
 
 		public MaterialsViewViewModel()
 		{
@@ -35,7 +36,8 @@ namespace StitchCalc.ViewModels.Views
 
 			edit = ReactiveCommand.Create();
 			edit
-				.Select(_ => selectedMaterial)
+				.Cast<EventPattern<ItemTappedEventArgs>>()
+				.Select(x => x.EventArgs.Item)
 				.Cast<MaterialViewModel>()
 				.Subscribe(async item => await NavigationService.Current.NavigateTo<MaterialFormView>(item.Model.Id));
 		}
@@ -48,12 +50,6 @@ namespace StitchCalc.ViewModels.Views
 		{
 			get { return searchTerm; }
 			set { this.RaiseAndSetIfChanged(ref searchTerm, value); }
-		}
-
-		public object SelectedMaterial
-		{
-			get { return selectedMaterial; }
-			set { this.RaiseAndSetIfChanged(ref selectedMaterial, value); }
 		}
 
 		public ReactiveCommand<object> NavigateToMaterialFormView => navigateToMaterialFormView;

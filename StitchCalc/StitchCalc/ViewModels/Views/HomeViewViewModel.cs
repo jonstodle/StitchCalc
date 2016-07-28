@@ -5,8 +5,10 @@ using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace StitchCalc.ViewModels.Views
 {
@@ -17,7 +19,6 @@ namespace StitchCalc.ViewModels.Views
 		readonly ReactiveCommand<object> navigateToProductFormPage;
 		readonly ReactiveCommand<object> navigateToProductPage;
 		string searchTerm;
-		object selectedProduct;
 
 		public HomeViewViewModel()
 		{
@@ -36,7 +37,10 @@ namespace StitchCalc.ViewModels.Views
 
 			navigateToProductPage = ReactiveCommand.Create();
 			navigateToProductPage
-				.Subscribe(async _ => await NavigationService.Current.NavigateTo<ProductView>(((ProductViewModel)selectedProduct).Model.Id));
+				.Cast<EventPattern<ItemTappedEventArgs>>()
+				.Select(x => x.EventArgs.Item)
+				.Cast<ProductViewModel>()
+				.Subscribe(async x => await NavigationService.Current.NavigateTo<ProductView>(x.Model.Id));
 		}
 
 		public IReactiveDerivedList<ProductViewModel> Products => products;
@@ -51,12 +55,6 @@ namespace StitchCalc.ViewModels.Views
 		{
 			get { return searchTerm; }
 			set { this.RaiseAndSetIfChanged(ref searchTerm, value); }
-		}
-
-		public object SelectedProduct
-		{
-			get { return selectedProduct; }
-			set { this.RaiseAndSetIfChanged(ref selectedProduct, value); }
 		}
 
 

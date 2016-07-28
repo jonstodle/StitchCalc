@@ -1,5 +1,6 @@
 ﻿using ReactiveUI;
 using StitchCalc.ViewModels.Views;
+using System;
 using System.Reactive.Linq;
 
 using Xamarin.Forms;
@@ -15,10 +16,10 @@ namespace StitchCalc.Views
 			this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialToolbarItem);
 			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.MaterialsSearchBar.Text);
 			this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.MaterialsListView.ItemsSource);
-			this.Bind(ViewModel, vm => vm.SelectedMaterial, v => v.MaterialsListView.SelectedItem);
+			this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped));
 
-			Observable.FromEventPattern(MaterialsListView, nameof(ListView.ItemTapped))
-				.InvokeCommand(ViewModel, x => x.Edit);
+			Observable.FromEventPattern(MaterialsListView, nameof(ListView.ItemSelected))
+				.Subscribe(_ => MaterialsListView.SelectedItem = null);
 		}
 
 		public MaterialsViewViewModel ViewModel

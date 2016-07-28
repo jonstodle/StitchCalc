@@ -4,8 +4,10 @@ using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace StitchCalc.ViewModels.Views
 {
@@ -14,7 +16,6 @@ namespace StitchCalc.ViewModels.Views
 		readonly ReactiveCommand<object> navigateToWorkUnitFormView;
 		readonly ReactiveCommand<object> edit;
 		ProductViewModel product;
-		object selectedWorkUnit;
 
 		public ProductWorkUnitsViewViewModel()
 		{
@@ -24,7 +25,8 @@ namespace StitchCalc.ViewModels.Views
 
 			edit = ReactiveCommand.Create();
 			edit
-				.Select(x => selectedWorkUnit)
+				.Cast<EventPattern<ItemTappedEventArgs>>()
+				.Select(x => x.EventArgs.Item)
 				.Cast<WorkUnitViewModel>()
 				.Subscribe(async item => await NavigationService.Current.NavigateTo<WorkUnitFormView>(Tuple.Create(product.Model.Id, item.Model.Id)));
 		}
@@ -37,12 +39,6 @@ namespace StitchCalc.ViewModels.Views
 		{
 			get { return product; }
 			set { this.RaiseAndSetIfChanged(ref product, value); }
-		}
-
-		public object SelectedWorkUnit
-		{
-			get { return selectedWorkUnit; }
-			set { this.RaiseAndSetIfChanged(ref selectedWorkUnit, value); }
 		}
 
 

@@ -4,8 +4,10 @@ using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace StitchCalc.ViewModels.Views
 {
@@ -14,7 +16,6 @@ namespace StitchCalc.ViewModels.Views
 		readonly ReactiveCommand<object> navigateToMaterialFormView;
 		readonly ReactiveCommand<object> edit;
 		ProductViewModel product;
-		object selectedProductMaterial;
 
 		public ProductMaterialsViewViewModel()
 		{
@@ -24,7 +25,8 @@ namespace StitchCalc.ViewModels.Views
 
 			edit = ReactiveCommand.Create();
 			edit
-				.Select(_ => selectedProductMaterial)
+				.Cast<EventPattern<ItemTappedEventArgs>>()
+				.Select(x => x.EventArgs.Item)
 				.Cast<ProductMaterialViewModel>()
 				.Subscribe(async item => await NavigationService.Current.NavigateTo<ProductMaterialFormView>(Tuple.Create(product.Model.Id, item.Model.Id)));
 		}
@@ -39,11 +41,7 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref product, value); }
 		}
 
-		public object SelectedProductMaterial
-		{
-			get { return selectedProductMaterial; }
-			set { this.RaiseAndSetIfChanged(ref selectedProductMaterial, value); }
-		}
+
 
 		public Task OnNavigatedTo(object parameter, NavigationDirection direction)
 		{
