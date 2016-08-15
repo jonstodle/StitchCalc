@@ -25,6 +25,7 @@ namespace StitchCalc.ViewModels.Views
 
 			this
 				.WhenAnyValue(x => x.SearchTerm)
+				.Merge(materials.Changed.Select(_ => ""))
 				.Throttle(TimeSpan.FromMilliseconds(500), RxApp.TaskpoolScheduler)
 				.Select(x => CreateDerivedList(x))
 				.ObserveOn(RxApp.MainThreadScheduler)

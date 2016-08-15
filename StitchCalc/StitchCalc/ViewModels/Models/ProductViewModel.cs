@@ -16,9 +16,9 @@ namespace StitchCalc.ViewModels.Models
 		readonly ReactiveCommand<object> toggleChargeForWork;
 		readonly ReactiveCommand<object> setMaterialsMultiplier;
 		readonly ReactiveCommand<object> setWorkMultiplier;
-		readonly IReactiveDerivedList<ProductMaterialViewModel> productMaterials;
-		readonly IReactiveDerivedList<WorkUnitViewModel> workUnits;
-		readonly IReactiveDerivedList<CustomPropertyViewModel> customProperties;
+		readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductMaterialViewModel>> productMaterials;
+		readonly ObservableAsPropertyHelper<IReactiveDerivedList<WorkUnitViewModel>> workUnits;
+		readonly ObservableAsPropertyHelper<IReactiveDerivedList<CustomPropertyViewModel>> customProperties;
 		readonly ObservableAsPropertyHelper<double> materialsPrice;
 		readonly ObservableAsPropertyHelper<double> workInMinutes;
 		readonly ObservableAsPropertyHelper<double> workPrice;
@@ -29,11 +29,26 @@ namespace StitchCalc.ViewModels.Models
 		public ProductViewModel(Product productModel)
 		{
 			model = productModel;
-			productMaterials = DataService.Current.GetProductMaterialsForProduct(model.Id);
-			workUnits = DataService.Current.GetWorkUnitsForProduct(model.Id);
-			customProperties = DataService.Current.GetCustomPropertiesForParent(model.Id);
 			isMaterialsPriceMultiplied = model.MaterialsMultiplier > 0;
 			isWorkPriceMultiplied = model.WorkMultiplier > 0;
+
+			DataService.Current.GetProductMaterials()
+				.Changed
+				.Select(_ => DataService.Current.GetProductMaterialsForProduct(model.Id))
+				.StartWith(DataService.Current.GetProductMaterialsForProduct(model.Id))
+				.ToProperty(this, x => x.Materials, out productMaterials);
+
+			DataService.Current.GetWorkUnits()
+				.Changed
+				.Select(_ => DataService.Current.GetWorkUnitsForProduct(model.Id))
+				.StartWith(DataService.Current.GetWorkUnitsForProduct(model.Id))
+				.ToProperty(this, x => x.WorkUnits, out workUnits);
+
+			DataService.Current.GetCustomProperties()
+				.Changed
+				.Select(_ => DataService.Current.GetCustomPropertiesForParent(model.Id))
+				.StartWith(DataService.Current.GetCustomPropertiesForParent(model.Id))
+				.ToProperty(this, x => x.CustomProperties, out customProperties);
 
 			delete = ReactiveCommand.Create();
 			delete
@@ -83,22 +98,22 @@ namespace StitchCalc.ViewModels.Models
 					DataService.Current.Update(m);
 				});
 
-			productMaterials
-				.Changed
-				.Select(_ => productMaterials.Sum(x => x.Price))
-				.StartWith(productMaterials.Sum(x => x.Price))
+			this
+				.WhenAnyValue(x => x.Materials)
+				.Select(_ => Materials.Sum(x => x.Price))
+				.StartWith(Materials.Sum(x => x.Price))
 				.ToProperty(this, x => x.MaterialsPrice, out materialsPrice);
 
-			workUnits
-				.Changed
-				.Select(_ => (double)workUnits.Sum(x => x.Minutes))
-				.StartWith((double)workUnits.Sum(x => x.Minutes))
+			this
+				.WhenAnyValue(x => x.WorkUnits)
+				.Select(_ => (double)WorkUnits.Sum(x => x.Minutes))
+				.StartWith((double)WorkUnits.Sum(x => x.Minutes))
 				.ToProperty(this, x => x.WorkInMinutes, out workInMinutes);
 
-			workUnits
-				.Changed
-				.Select(_ => workUnits.Sum(x => x.TotalCharge))
-				.StartWith(workUnits.Sum(x => x.TotalCharge))
+			this
+				.WhenAnyValue(x => x.WorkUnits)
+				.Select(_ => WorkUnits.Sum(x => x.TotalCharge))
+				.StartWith(WorkUnits.Sum(x => x.TotalCharge))
 				.ToProperty(this, x => x.WorkPrice, out workPrice);
 
 			this
@@ -129,11 +144,11 @@ namespace StitchCalc.ViewModels.Models
 
 		public double WorkMultiplier => model.WorkMultiplier;
 
-		public IReactiveDerivedList<ProductMaterialViewModel> Materials => productMaterials;
+		public IReactiveDerivedList<ProductMaterialViewModel> Materials => productMaterials.Value;
 
-		public IReactiveDerivedList<WorkUnitViewModel> WorkUnits => workUnits;
+		public IReactiveDerivedList<WorkUnitViewModel> WorkUnits => workUnits.Value;
 
-		public IReactiveDerivedList<CustomPropertyViewModel> CustomProperties => customProperties;
+		public IReactiveDerivedList<CustomPropertyViewModel> CustomProperties => customProperties.Value;
 
 		public double MaterialsPrice => materialsPrice.Value;
 
