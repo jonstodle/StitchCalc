@@ -1,4 +1,5 @@
 ﻿using ReactiveUI;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
@@ -11,7 +12,8 @@ namespace StitchCalc.Services.NavigationService
 
 
 		INavigation navigation;
-		IViewFor currentPage;
+		IViewFor currentPage => navigation.NavigationStack.LastOrDefault() as IViewFor;
+		IViewFor previousPage => navigation.NavigationStack.Reverse().Skip(1).FirstOrDefault() as IViewFor;
 
 		public NavigationService(INavigation navigation)
 		{
@@ -25,33 +27,31 @@ namespace StitchCalc.Services.NavigationService
 
 		private async Task NavigateTo<TView>(object parameter, bool removeCurrentPageFromBackStack) where TView : class, IViewFor, new()
 		{
-			if (currentPage?.ViewModel is INavigable) { await(currentPage.ViewModel as INavigable).OnNavigatingFrom(); }
+			await(currentPage.ViewModel as INavigable)?.OnNavigatingFrom();
 
-			this.currentPage = new TView();
-			if (this.currentPage.ViewModel is INavigable) { await(this.currentPage.ViewModel as INavigable).OnNavigatedTo(parameter, NavigationDirection.Forwards); }
+			var newPage = new TView();
+			await(newPage.ViewModel as INavigable).OnNavigatedTo(parameter, NavigationDirection.Forwards);
 
 			if (removeCurrentPageFromBackStack && currentPage != null)
 			{
-				navigation.InsertPageBefore(this.currentPage as Page, navigation.NavigationStack[navigation.NavigationStack.Count -1]);
+				navigation.InsertPageBefore(newPage as Page, navigation.NavigationStack.Last());
 				await navigation.PopAsync();
 			}
-			else { await navigation.PushAsync(this.currentPage as Page); }
+			else { await navigation.PushAsync(newPage as Page); }
 		}
 
 		public async Task GoBack()
 		{
 			await (currentPage.ViewModel as INavigable)?.OnNavigatingFrom();
 
-			currentPage = navigation.NavigationStack[navigation.NavigationStack.Count - 1] as IViewFor;
-
-			var navStack = navigation.NavigationStack;
-			var prevPageIndex = navStack.Count - 2;
-			if (prevPageIndex >= 0)
-			{
-				await ((navStack[prevPageIndex] as IViewFor)?.ViewModel as INavigable)?.OnNavigatedTo(null, NavigationDirection.Backwards);
-			}
+			await (previousPage.ViewModel as INavigable)?.OnNavigatedTo(null, NavigationDirection.Backwards);
 
 			await navigation.PopAsync();
+		}
+
+		public async Task GoHome()
+		{
+			await navigation.PopToRootAsync();
 		}
 	}
 }
