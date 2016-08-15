@@ -1,6 +1,8 @@
 ﻿using ReactiveUI;
+using StitchCalc.ViewModels.Models;
 using StitchCalc.ViewModels.Views;
 using System.Reactive.Linq;
+using System;
 
 using Xamarin.Forms;
 
@@ -25,6 +27,12 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.CustomPropertyValue, v => v.CustomPropertyValueEntry.Text);
 			this.BindCommand(ViewModel, vm => vm.AddProperty, v => v.CustomPropertyAddButton);
 			this.OneWayBind(ViewModel, vm => vm.CustomProperties, v => v.CustomPropertiesListView.ItemsSource);
+
+			Observable
+				.FromEventPattern<ItemTappedEventArgs>(CustomPropertiesListView, nameof(ListView.ItemTapped))
+				.Select(e => e.EventArgs.Item)
+				.Cast<CustomPropertyViewModel>()
+				.Subscribe(item => item.Delete.Execute(null));
 
 			Observable
 				.Merge(
