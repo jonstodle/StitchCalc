@@ -73,7 +73,7 @@
 						<DataTemplate>
 							<TextCell Text="{Binding Name}" Detail="{Binding Value}">
 								<TextCell.ContextActions>
-									<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>
+									<!--<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>-->
 								</TextCell.ContextActions>
 							</TextCell>
 						</DataTemplate>
