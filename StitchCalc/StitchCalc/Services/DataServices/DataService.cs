@@ -12,18 +12,16 @@ namespace StitchCalc.Services.DataServices
 
 		DataService()
 		{
-#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
-			LoadDataFromDisk();
-
-			Observable.Merge(
-				products.Changed,
-				materials.Changed,
-				workUnits.Changed,
-				customProperties.Changed,
-				productMaterials.Changed)
-				.Throttle(TimeSpan.FromSeconds(1))
-				.Subscribe(_ => SaveDataToDisk());
-#pragma warning restore 4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+			Observable.FromAsync(() => LoadDataFromDisk())
+				.Take(1)
+				.Subscribe(_ => Observable.Merge(
+					products.Changed,
+					materials.Changed,
+					workUnits.Changed,
+					customProperties.Changed,
+					productMaterials.Changed)
+					.Throttle(TimeSpan.FromSeconds(1))
+					.Subscribe(async __ => await SaveDataToDisk()));
 		}
 	}
 }
