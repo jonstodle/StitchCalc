@@ -99,11 +99,9 @@ namespace StitchCalc.ViewModels.Views
 				if (parameter is Guid)
 				{
 					product = DataService.Current.GetProduct((Guid)parameter);
-					productMaterial = null;
 
 					PageTitle = "Add Material";
 					SelectedMaterialIndex = materials.Count > 0 ? 0 : default(int);
-					Amount = string.Empty;
 				}
 				else
 				{

@@ -62,10 +62,7 @@ namespace StitchCalc.ViewModels.Views
 			}
 			else
 			{
-				product = null;
-
 				PageTitle = "Add Product";
-				Name = string.Empty;
 			}
 
 			return Task.CompletedTask;

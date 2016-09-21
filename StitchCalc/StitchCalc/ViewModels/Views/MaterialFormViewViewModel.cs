@@ -181,13 +181,7 @@ namespace StitchCalc.ViewModels.Views
 			}
 			else
 			{
-				material = null;
-
 				PageTitle = "Add Material";
-				Name = string.Empty;
-				Width = string.Empty;
-				Price = string.Empty;
-
 				ShowAddGrid = true;
 			}
 
