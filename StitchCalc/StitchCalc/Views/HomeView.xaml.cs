@@ -12,14 +12,19 @@ namespace StitchCalc.Views
 		{
 			InitializeComponent ();
 
-			this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem);
+			ViewModel = new HomeViewViewModel();
+
 			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text);
 			this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.ProductListView.ItemsSource);
-			this.BindCommand(ViewModel, vm => vm.NavigateToProductPage, v => v.ProductListView, nameof(ListView.ItemTapped));
 
-			Observable
-				.FromEventPattern(ProductListView, nameof(ListView.ItemSelected))
-				.Subscribe(_ => ProductListView.SelectedItem = null);
+			this.WhenActivated(d =>
+			{
+				d(this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem));
+				d(this.BindCommand(ViewModel, vm => vm.NavigateToProductPage, v => v.ProductListView, nameof(ListView.ItemTapped)));
+				d(Observable
+					.FromEventPattern(ProductListView, nameof(ListView.ItemSelected))
+					.Subscribe(_ => ProductListView.SelectedItem = null));
+			});
 		}
 
 		public HomeViewViewModel ViewModel
@@ -28,7 +33,7 @@ namespace StitchCalc.Views
 			set { SetValue(ViewModelProperty, value); }
 		}
 
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(HomeViewViewModel), typeof(HomeView), new HomeViewViewModel());
+		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(HomeViewViewModel), typeof(HomeView), null);
 
 		object IViewFor.ViewModel
 		{

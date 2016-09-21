@@ -9,17 +9,24 @@ namespace StitchCalc.Views
 {
 	public partial class ProductWorkUnitsView : ContentPage, IViewFor<ProductWorkUnitsViewViewModel>
 	{
-		public ProductWorkUnitsView ()
+		public ProductWorkUnitsView()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 
-			this.BindCommand(ViewModel, vm => vm.NavigateToWorkUnitFormView, v => v.AddWorkUnitToolbarItem);
+			ViewModel = new ProductWorkUnitsViewViewModel();
+
 			this.OneWayBind(ViewModel, vm => vm.Model.WorkUnits, v => v.WorkUnitsListView.ItemsSource);
 			this.OneWayBind(ViewModel, vm => vm.Model.WorkPrice, v => v.SumLabel.Text, x => x.ToString("N2"));
-			this.BindCommand(ViewModel, vm => vm.Edit, v => v.WorkUnitsListView, nameof(ListView.ItemTapped));
 
-			Observable.FromEventPattern(WorkUnitsListView, nameof(ListView.ItemSelected))
-				.Subscribe(_ => WorkUnitsListView.SelectedItem = null);
+			this.WhenActivated(d =>
+			{
+				d(this.BindCommand(ViewModel, vm => vm.NavigateToWorkUnitFormView, v => v.AddWorkUnitToolbarItem));
+				d(this.BindCommand(ViewModel, vm => vm.Edit, v => v.WorkUnitsListView, nameof(ListView.ItemTapped)));
+				d(Observable.FromEventPattern(WorkUnitsListView, nameof(ListView.ItemSelected))
+					.Subscribe(_ => WorkUnitsListView.SelectedItem = null));
+			});
+
+
 		}
 
 		public ProductWorkUnitsViewViewModel ViewModel
@@ -28,7 +35,7 @@ namespace StitchCalc.Views
 			set { SetValue(ViewModelProperty, value); }
 		}
 
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductWorkUnitsViewViewModel), typeof(ProductWorkUnitsView), new ProductWorkUnitsViewViewModel());
+		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductWorkUnitsViewViewModel), typeof(ProductWorkUnitsView), null);
 
 		object IViewFor.ViewModel
 		{

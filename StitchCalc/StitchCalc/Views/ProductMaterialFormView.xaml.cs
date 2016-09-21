@@ -14,29 +14,33 @@ namespace StitchCalc.Views
 		{
 			InitializeComponent ();
 
-			this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
+			ViewModel = new ProductMaterialFormViewViewModel();
+
 			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
 			this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex);
 			this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text);
-			this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton);
 
-			Observable
-				.FromEventPattern(AmountEntry, nameof(Entry.Completed))
-				.InvokeCommand(ViewModel, x => x.Save);
-
-			ViewModel
-				.Materials
-				.Changed
-				.Select(_ => ViewModel.Materials)
-				.StartWith(ViewModel.Materials)
-				.Subscribe(items =>
-				{
-					MaterialPicker.Items.Clear();
-					foreach (var item in items)
+			this.WhenActivated(d =>
+			{
+				d(this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem));
+				d(this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton));
+				d(Observable
+					.FromEventPattern(AmountEntry, nameof(Entry.Completed))
+					.InvokeCommand(ViewModel, x => x.Save));
+				d(ViewModel
+					.Materials
+					.Changed
+					.Select(_ => ViewModel.Materials)
+					.StartWith(ViewModel.Materials)
+					.Subscribe(items =>
 					{
-						MaterialPicker.Items.Add(item.Name);
-					}
-				});
+						MaterialPicker.Items.Clear();
+						foreach (var item in items)
+						{
+							MaterialPicker.Items.Add(item.Name);
+						}
+					}));
+			});
 		}
 
 		public ProductMaterialFormViewViewModel ViewModel
@@ -45,7 +49,7 @@ namespace StitchCalc.Views
 			set { SetValue(ViewModelProperty, value); }
 		}
 
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductMaterialFormViewViewModel), typeof(ProductMaterialFormView), new ProductMaterialFormViewViewModel());
+		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductMaterialFormViewViewModel), typeof(ProductMaterialFormView), null);
 
 		object IViewFor.ViewModel
 		{

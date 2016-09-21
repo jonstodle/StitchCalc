@@ -8,17 +8,22 @@ namespace StitchCalc.Views
 {
 	public partial class ProductFormView : ContentPage, IViewFor<ProductFormViewViewModel>
 	{
-		public ProductFormView ()
+		public ProductFormView()
 		{
-			InitializeComponent ();
+			InitializeComponent();
+
+			ViewModel = new ProductFormViewViewModel();
 
 			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
 			this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
-			this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem);
 
-			Observable
-				.FromEventPattern(NameEntry, nameof(Entry.Completed))
-				.InvokeCommand(ViewModel, x => x.Save);
+			this.WhenActivated(d =>
+			{
+				d(this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem));
+				d(Observable
+					.FromEventPattern(NameEntry, nameof(Entry.Completed))
+					.InvokeCommand(ViewModel, x => x.Save));
+			});
 		}
 
 		public ProductFormViewViewModel ViewModel
@@ -27,7 +32,7 @@ namespace StitchCalc.Views
 			set { SetValue(ViewModelProperty, value); }
 		}
 
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductFormViewViewModel), typeof(ProductFormView), new ProductFormViewViewModel());
+		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductFormViewViewModel), typeof(ProductFormView), null);
 
 		object IViewFor.ViewModel
 		{

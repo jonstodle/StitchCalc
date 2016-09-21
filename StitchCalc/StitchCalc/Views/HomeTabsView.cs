@@ -12,19 +12,24 @@ namespace StitchCalc.Views
 	{
 		public HomeTabsView ()
 		{
+			ViewModel = new HomeTabsViewViewModel();
+
 			Title = "StitchCalc";
 
-			ViewModel
-				.Pages
-				.Changed
-				.Throttle(TimeSpan.FromMilliseconds(10))
-				.Select(_ => ViewModel.Pages)
-				.StartWith(ViewModel.Pages)
-				.Subscribe(pages =>
-				{
-					Children.Clear();
-					foreach (var page in pages) { Children.Add(page); }
-				});
+			this.WhenActivated(d =>
+			{
+				d(ViewModel
+					.Pages
+					.Changed
+					.Throttle(TimeSpan.FromMilliseconds(10))
+					.Select(_ => ViewModel.Pages)
+					.StartWith(ViewModel.Pages)
+					.Subscribe(pages =>
+					{
+						Children.Clear();
+						foreach (var page in pages) { Children.Add(page); }
+					}));
+			});
 		}
 
 		public HomeTabsViewViewModel ViewModel
@@ -33,7 +38,7 @@ namespace StitchCalc.Views
 			set { SetValue(ViewModelProperty, value); }
 		}
 
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(HomeTabsViewViewModel), typeof(HomeTabsView), new HomeTabsViewViewModel());
+		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(HomeTabsViewViewModel), typeof(HomeTabsView), null);
 
 		object IViewFor.ViewModel
 		{

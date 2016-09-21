@@ -14,6 +14,8 @@ namespace StitchCalc.Views
 		{
 			InitializeComponent ();
 
+			ViewModel = new ProductSummaryViewViewModel();
+
 			this.BindCommand(ViewModel, vm => vm.Edit, v => v.EditProductToolbarItem);
 
 			this.OneWayBind(ViewModel, vm => vm.Model.ChargeForMaterials, v => v.MaterialsStackLayout.Opacity, x=> x ? 1 : .2);
@@ -28,13 +30,19 @@ namespace StitchCalc.Views
 
 			this.OneWayBind(ViewModel, vm => vm.Model.TotalPrice, v => v.SumCostLabel.Text, x => x.ToString("N2"));
 
-			Observable
-				.FromEventPattern(MaterialsStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-				.Subscribe(_ => ShowActionSheet("Materials", ChargeReasons.Materials));
+			this.WhenActivated(d =>
+			{
+				d(Observable
+					.FromEventPattern(MaterialsStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
+					.Subscribe(_ => ShowActionSheet("Materials", ChargeReasons.Materials)));
+				d(Observable
+					.FromEventPattern(WorkStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
+					.Subscribe(_ => ShowActionSheet("Work", ChargeReasons.Work)));
+			});
 
-			Observable
-				.FromEventPattern(WorkStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-				.Subscribe(_ => ShowActionSheet("Work", ChargeReasons.Work));
+			
+
+			
 		}
 
 		enum ChargeReasons { Materials, Work }
@@ -69,7 +77,7 @@ namespace StitchCalc.Views
 			set { SetValue(ViewModelProperty, value); }
 		}
 
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductSummaryViewViewModel), typeof(ProductSummaryView), new ProductSummaryViewViewModel());
+		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductSummaryViewViewModel), typeof(ProductSummaryView), null);
 
 		object IViewFor.ViewModel
 		{

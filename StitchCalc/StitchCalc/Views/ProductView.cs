@@ -12,23 +12,27 @@ namespace StitchCalc.Views
 	{
 		public ProductView ()
 		{
-			ViewModel.Pages
-				.Changed
-				.Throttle(TimeSpan.FromMilliseconds(10))
-				.Select(_ => ViewModel.Pages)
-				.StartWith(ViewModel.Pages)
-				.Subscribe(pages =>
-				{
-					Children.Clear();
-					foreach (var page in pages) { Children.Add(page); }
-				});
-
-			ViewModel.WhenAnyValue(x => x.SelectedPageIndex)
-				.Where(x => x >= 0 && x < Children.Count)
-				.Select(x => Children[x])
-				.Subscribe(x => SelectedItem = x);
+			ViewModel = new ProductViewViewModel();
 
 			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
+
+			this.WhenActivated(d =>
+			{
+				d(ViewModel.Pages
+					.Changed
+					.Throttle(TimeSpan.FromMilliseconds(10))
+					.Select(_ => ViewModel.Pages)
+					.StartWith(ViewModel.Pages)
+					.Subscribe(pages =>
+					{
+						Children.Clear();
+						foreach (var page in pages) { Children.Add(page); }
+					}));
+				d(ViewModel.WhenAnyValue(x => x.SelectedPageIndex)
+					.Where(x => x >= 0 && x < Children.Count)
+					.Select(x => Children[x])
+					.Subscribe(x => SelectedItem = x));
+			});
 		}
 
 		public ProductViewViewModel ViewModel
@@ -37,7 +41,7 @@ namespace StitchCalc.Views
 			set { SetValue(ViewModelProperty, value); }
 		}
 
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductViewViewModel), typeof(ProductView), new ProductViewViewModel());
+		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductViewViewModel), typeof(ProductView), null);
 
 		object IViewFor.ViewModel
 		{

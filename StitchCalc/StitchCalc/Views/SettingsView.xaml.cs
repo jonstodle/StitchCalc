@@ -11,6 +11,8 @@ namespace StitchCalc.Views
 		{
 			InitializeComponent ();
 
+			ViewModel = new SettingsViewViewModel();
+
 			this.Bind(ViewModel, vm => vm.DefaultHourlyCharge, v => v.DefaultHourlyChargeEntry.Text);
 			this.OneWayBind(ViewModel, vm => vm.AppVersion, v => v.AppVersionLabel.Text);
 		}
@@ -21,7 +23,7 @@ namespace StitchCalc.Views
 			set { SetValue(ViewModelProperty, value); }
 		}
 
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(SettingsViewViewModel), typeof(SettingsView), new SettingsViewViewModel());
+		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(SettingsViewViewModel), typeof(SettingsView), null);
 
 		object IViewFor.ViewModel
 		{
