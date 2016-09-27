@@ -21,7 +21,7 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.Width, v => v.WidthEntry.Text);
 			this.Bind(ViewModel, vm => vm.Price, v => v.PriceEntry.Text);
 			this.OneWayBind(ViewModel, vm => vm.CanAddProperty, v => v.CustomPropertiesStackLayout.IsVisible);
-			this.OneWayBind(ViewModel, vm => vm.ToggleAddGridText, v => v.CustomPropertyToggleAddGridButton.Text);
+			this.OneWayBind(ViewModel, vm => vm.ShowAddGrid, v => v.CustomPropertyToggleAddGridButton.Text, x => x ? "\u25B3" : "\u25BD");
 			this.OneWayBind(ViewModel, vm => vm.ShowAddGrid, v => v.CustomPropertyAddGrid.IsVisible);
 			this.Bind(ViewModel, vm => vm.CustomPropertyName, v => v.CustomPropertyNameEntry.Text);
 			this.Bind(ViewModel, vm => vm.CustomPropertyValue, v => v.CustomPropertyValueEntry.Text);

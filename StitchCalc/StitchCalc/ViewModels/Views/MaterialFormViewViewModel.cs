@@ -15,7 +15,6 @@ namespace StitchCalc.ViewModels.Views
 		readonly ReactiveCommand<object> addProperty;
 		readonly ReactiveCommand<object> toggleShowAddGrid;
 		readonly ObservableAsPropertyHelper<bool> canAddProperty;
-		readonly ObservableAsPropertyHelper<string> toggleAddGridText;
 		IReactiveDerivedList<CustomPropertyViewModel> customProperties;
 		string pageTitle;
 		string name;
@@ -55,11 +54,6 @@ namespace StitchCalc.ViewModels.Views
 			toggleShowAddGrid
 				.Select(_ => !ShowAddGrid)
 				.Subscribe(x => ShowAddGrid = x);
-
-			this
-				.WhenAnyValue(x => x.ShowAddGrid)
-				.Select(x => x ? "\u25B3" : "\u25BD")
-				.ToProperty(this, x => x.ToggleAddGridText, out toggleAddGridText);
 		}
 
 		public ReactiveCommand<object> Save => save;
@@ -69,8 +63,6 @@ namespace StitchCalc.ViewModels.Views
 		public ReactiveCommand<object> ToggleShowAddGrid => toggleShowAddGrid;
 
 		public bool CanAddProperty => canAddProperty.Value;
-
-		public string ToggleAddGridText => toggleAddGridText.Value;
 
 		public IReactiveDerivedList<CustomPropertyViewModel> CustomProperties
 		{
