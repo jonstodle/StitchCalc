@@ -1,6 +1,5 @@
 ﻿using Acr.DeviceInfo;
 using ReactiveUI;
-using StitchCalc.Extras;
 using StitchCalc.Services.NavigationService;
 using StitchCalc.Services.SettingsServices;
 using System;
