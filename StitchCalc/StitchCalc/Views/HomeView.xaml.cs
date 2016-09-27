@@ -17,14 +17,11 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text);
 			this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.ProductListView.ItemsSource);
 
-			this.WhenActivated(d =>
-			{
-				d(this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem));
-				d(this.BindCommand(ViewModel, vm => vm.NavigateToProductPage, v => v.ProductListView, nameof(ListView.ItemTapped)));
-				d(Observable
+				this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem);
+				this.BindCommand(ViewModel, vm => vm.NavigateToProductPage, v => v.ProductListView, nameof(ListView.ItemTapped));
+				Observable
 					.FromEventPattern(ProductListView, nameof(ListView.ItemSelected))
-					.Subscribe(_ => ProductListView.SelectedItem = null));
-			});
+					.Subscribe(_ => ProductListView.SelectedItem = null);
 		}
 
 		public HomeViewViewModel ViewModel

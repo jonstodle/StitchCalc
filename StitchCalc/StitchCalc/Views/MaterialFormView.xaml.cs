@@ -28,28 +28,25 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.CustomPropertyValue, v => v.CustomPropertyValueEntry.Text);
 			this.OneWayBind(ViewModel, vm => vm.CustomProperties, v => v.CustomPropertiesListView.ItemsSource);
 
-			this.WhenActivated(d =>
-			{
-				d(this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem));
-				d(this.BindCommand(ViewModel, vm => vm.ToggleShowAddGrid, v => v.CustomPropertyToggleAddGridButton));
-				d(this.BindCommand(ViewModel, vm => vm.AddProperty, v => v.CustomPropertyAddButton));
-				d(Observable
+				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
+				this.BindCommand(ViewModel, vm => vm.ToggleShowAddGrid, v => v.CustomPropertyToggleAddGridButton);
+				this.BindCommand(ViewModel, vm => vm.AddProperty, v => v.CustomPropertyAddButton);
+				Observable
 					.FromEventPattern<ItemTappedEventArgs>(CustomPropertiesListView, nameof(ListView.ItemTapped))
 					.Select(e => e.EventArgs.Item)
 					.Cast<CustomPropertyViewModel>()
-					.Subscribe(item => Observable.Return(Unit.Default).InvokeCommand(item.Delete)));
-				d(Observable
+					.Subscribe(item => Observable.Return(Unit.Default).InvokeCommand(item.Delete));
+				Observable
 					.Merge(
 					Observable.FromEventPattern(NameEntry, nameof(Entry.Completed)),
 					Observable.FromEventPattern(WidthEntry, nameof(Entry.Completed)),
 					Observable.FromEventPattern(PriceEntry, nameof(Entry.Completed)))
-					.InvokeCommand(ViewModel, x => x.Save));
-				d(Observable
+					.InvokeCommand(ViewModel, x => x.Save);
+				Observable
 					.Merge(
 					Observable.FromEventPattern(CustomPropertyNameEntry, nameof(Entry.Completed)),
 					Observable.FromEventPattern(CustomPropertyValueEntry, nameof(Entry.Completed)))
-					.InvokeCommand(ViewModel, x => x.AddProperty));
-			});
+					.InvokeCommand(ViewModel, x => x.AddProperty);
 		}
 
 		public MaterialFormViewViewModel ViewModel

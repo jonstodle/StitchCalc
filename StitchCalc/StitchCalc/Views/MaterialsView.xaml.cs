@@ -18,13 +18,10 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.MaterialsSearchBar.Text);
 			this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.MaterialsListView.ItemsSource);
 
-			this.WhenActivated(d =>
-			{
-				d(this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialToolbarItem));
-				d(this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped)));
-				d(Observable.FromEventPattern(MaterialsListView, nameof(ListView.ItemSelected))
-					.Subscribe(_ => MaterialsListView.SelectedItem = null));
-			});
+				this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialToolbarItem);
+				this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped));
+				Observable.FromEventPattern(MaterialsListView, nameof(ListView.ItemSelected))
+					.Subscribe(_ => MaterialsListView.SelectedItem = null);
 		}
 
 		public MaterialsViewViewModel ViewModel

@@ -16,9 +16,7 @@ namespace StitchCalc.Views
 
 			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
 
-			this.WhenActivated(d =>
-			{
-				d(ViewModel.Pages
+				ViewModel.Pages
 					.Changed
 					.Throttle(TimeSpan.FromMilliseconds(10))
 					.Select(_ => ViewModel.Pages)
@@ -27,12 +25,11 @@ namespace StitchCalc.Views
 					{
 						Children.Clear();
 						foreach (var page in pages) { Children.Add(page); }
-					}));
-				d(ViewModel.WhenAnyValue(x => x.SelectedPageIndex)
+					});
+				ViewModel.WhenAnyValue(x => x.SelectedPageIndex)
 					.Where(x => x >= 0 && x < Children.Count)
 					.Select(x => Children[x])
-					.Subscribe(x => SelectedItem = x));
-			});
+					.Subscribe(x => SelectedItem = x);
 		}
 
 		public ProductViewViewModel ViewModel

@@ -20,14 +20,12 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex);
 			this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text);
 
-			this.WhenActivated(d =>
-			{
-				d(this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem));
-				d(this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton));
-				d(Observable
+				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
+				this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton);
+			Observable
 					.FromEventPattern(AmountEntry, nameof(Entry.Completed))
-					.InvokeCommand(ViewModel, x => x.Save));
-				d(ViewModel
+					.InvokeCommand(ViewModel, x => x.Save);
+				ViewModel
 					.Materials
 					.Changed
 					.Select(_ => ViewModel.Materials)
@@ -39,8 +37,7 @@ namespace StitchCalc.Views
 						{
 							MaterialPicker.Items.Add(item.Name);
 						}
-					}));
-			});
+					});
 		}
 
 		public ProductMaterialFormViewViewModel ViewModel

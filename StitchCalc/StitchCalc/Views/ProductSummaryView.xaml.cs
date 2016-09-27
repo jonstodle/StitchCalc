@@ -31,19 +31,12 @@ namespace StitchCalc.Views
 
 			this.OneWayBind(ViewModel, vm => vm.Model.TotalPrice, v => v.SumCostLabel.Text, x => x.ToString("N2"));
 
-			this.WhenActivated(d =>
-			{
-				d(Observable
+				Observable
 					.FromEventPattern(MaterialsStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-					.Subscribe(_ => ShowActionSheet("Materials", ChargeReasons.Materials)));
-				d(Observable
+					.Subscribe(_ => ShowActionSheet("Materials", ChargeReasons.Materials));
+				Observable
 					.FromEventPattern(WorkStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-					.Subscribe(_ => ShowActionSheet("Work", ChargeReasons.Work)));
-			});
-
-			
-
-			
+					.Subscribe(_ => ShowActionSheet("Work", ChargeReasons.Work));
 		}
 
 		enum ChargeReasons { Materials, Work }

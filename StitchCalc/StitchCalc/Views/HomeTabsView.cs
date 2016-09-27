@@ -16,9 +16,7 @@ namespace StitchCalc.Views
 
 			Title = "StitchCalc";
 
-			this.WhenActivated(d =>
-			{
-				d(ViewModel
+				ViewModel
 					.Pages
 					.Changed
 					.Throttle(TimeSpan.FromMilliseconds(10))
@@ -28,8 +26,7 @@ namespace StitchCalc.Views
 					{
 						Children.Clear();
 						foreach (var page in pages) { Children.Add(page); }
-					}));
-			});
+					});
 		}
 
 		public HomeTabsViewViewModel ViewModel

@@ -17,13 +17,10 @@ namespace StitchCalc.Views
 			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
 			this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
 
-			this.WhenActivated(d =>
-			{
-				d(this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem));
-				d(Observable
+				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem);
+				Observable
 					.FromEventPattern(NameEntry, nameof(Entry.Completed))
-					.InvokeCommand(ViewModel, x => x.Save));
-			});
+					.InvokeCommand(ViewModel, x => x.Save);
 		}
 
 		public ProductFormViewViewModel ViewModel
