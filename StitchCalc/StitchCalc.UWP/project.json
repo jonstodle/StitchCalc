@@ -1,15 +1,14 @@
 ﻿{
   "dependencies": {
-    "Acr.DeviceInfo": "4.0.1",
-    "Acr.UserDialogs": "6.0.1",
-    "Microsoft.NETCore.UniversalWindowsPlatform": "5.1.0",
+    "Acr.DeviceInfo": "4.0.2",
+    "Acr.UserDialogs": "6.2.3",
+    "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
     "Newtonsoft.Json": "9.0.1",
-    "reactiveui": "6.5.0",
-    "reactiveui-events": "6.5.0",
-    "reactiveui-xamforms": "6.5.0",
+    "reactiveui": "7.0.0.1474320879",
+    "reactiveui-events": "7.0.0.1474320879",
     "Splat": "1.6.2",
-    "Xam.Plugins.Settings": "2.1.0",
-    "Xamarin.Forms": "2.3.0.107"
+    "Xam.Plugins.Settings": "2.5.1",
+    "Xamarin.Forms": "2.3.2.127"
   },
   "frameworks": {
     "uap10.0": {}
