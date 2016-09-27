@@ -34,6 +34,7 @@
 					<Label Text="Thanks to" Opacity=".5"/>
 					<Label Text="ACR User Dialogs"/>
 					<Label Text="Json.NET"/>
+					<Label Text="ReactiveUI"/>
 					<Label Text="Xamarin"/>
 				</StackLayout>
 			</StackLayout>
