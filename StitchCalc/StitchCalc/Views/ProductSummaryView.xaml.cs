@@ -2,6 +2,7 @@
 using ReactiveUI;
 using StitchCalc.ViewModels.Views;
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
 
 using Xamarin.Forms;
@@ -54,8 +55,8 @@ namespace StitchCalc.Views
 
 			if (result == actions[2])
 			{
-				if (reason == ChargeReasons.Materials) { ViewModel.Model.ToggleChargeForMaterials.Execute(null); }
-				else if(reason == ChargeReasons.Work) { ViewModel.Model.ToggleChargeForWork.Execute(null); }
+				if (reason == ChargeReasons.Materials) { Observable.Return(Unit.Default).InvokeCommand(ViewModel.Model.ToggleChargeForMaterials); }
+				else if(reason == ChargeReasons.Work) { Observable.Return(Unit.Default).InvokeCommand(ViewModel.Model.ToggleChargeForWork); }
 			}
 			else if (result == actions[3])
 			{
@@ -63,8 +64,8 @@ namespace StitchCalc.Views
 
 				if (multiplyResult.Ok)
 				{
-					if (reason == ChargeReasons.Materials) { ViewModel.Model.SetMaterialsMultiplier.Execute(multiplyResult.Value); }
-					else if (reason == ChargeReasons.Work) { ViewModel.Model.SetWorkMultiplier.Execute(multiplyResult.Value); }
+					if (reason == ChargeReasons.Materials) { Observable.Return(multiplyResult.Value).InvokeCommand<string>(ViewModel.Model.SetMaterialsMultiplier); }
+					else if (reason == ChargeReasons.Work) { Observable.Return(multiplyResult.Value).InvokeCommand<string>(ViewModel.Model.SetWorkMultiplier); }
 				}
 			}
 		}

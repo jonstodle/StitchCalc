@@ -2,26 +2,25 @@
 using StitchCalc.Models;
 using StitchCalc.Services.DataServices;
 using System;
+using System.Reactive;
 
 namespace StitchCalc.ViewModels.Models
 {
 	public class WorkUnitViewModel : ViewModelBase
     {
 		readonly WorkUnit model;
-		readonly ReactiveCommand<object> delete;
+		readonly ReactiveCommand<Unit, Unit> delete;
 
 		public WorkUnitViewModel(WorkUnit workUnit)
 		{
 			model = workUnit;
 
-			delete = ReactiveCommand.Create();
-			delete
-				.Subscribe(_ => DataService.Current.Remove(model));
+			delete = ReactiveCommand.Create(() => { DataService.Current.Remove(model); });
 		}
 
 		public WorkUnit Model => model;
 
-		public ReactiveCommand<object> Delete => delete;
+		public ReactiveCommand Delete => delete;
 
 		public string Name => model.Name;
 

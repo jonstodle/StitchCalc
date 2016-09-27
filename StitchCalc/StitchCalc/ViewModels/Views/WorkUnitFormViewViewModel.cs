@@ -5,13 +5,14 @@ using StitchCalc.Services.NavigationService;
 using StitchCalc.Services.SettingsServices;
 using StitchCalc.ViewModels.Models;
 using System;
+using System.Reactive;
 using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels.Views
 {
 	public class WorkUnitFormViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<object> save;
+		readonly ReactiveCommand<Unit, Unit> save;
 		string pageTitle;
 		string name;
 		string minutes;
@@ -22,18 +23,17 @@ namespace StitchCalc.ViewModels.Views
 
 		public WorkUnitFormViewViewModel()
 		{
-			save = ReactiveCommand.Create(this.WhenAnyValue(x => x.Name, y => y.Minutes, z => z.Charge, (x, y, z) =>
+			save = ReactiveCommand.Create(
+				() => SaveImpl(),
+				this.WhenAnyValue(x => x.Name, y => y.Minutes, z => z.Charge, (x, y, z) =>
 				!string.IsNullOrWhiteSpace(x)
 				&& !string.IsNullOrWhiteSpace(y)
 				&& !string.IsNullOrWhiteSpace(z)
 				&& y.IsValidDouble()
 				&& z.IsValidDouble()));
-			save
-				.Subscribe(_ => SaveImpl());
-
 		}
 
-		public ReactiveCommand<object> Save => save;
+		public ReactiveCommand Save => save;
 
 		public string PageTitle
 		{

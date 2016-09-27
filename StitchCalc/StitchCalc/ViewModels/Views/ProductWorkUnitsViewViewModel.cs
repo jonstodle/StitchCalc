@@ -13,27 +13,20 @@ namespace StitchCalc.ViewModels.Views
 {
 	public class ProductWorkUnitsViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<object> navigateToWorkUnitFormView;
-		readonly ReactiveCommand<object> edit;
+		readonly ReactiveCommand<Unit, Unit> navigateToWorkUnitFormView;
+		readonly ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> edit;
 		ProductViewModel product;
 
 		public ProductWorkUnitsViewViewModel()
 		{
-			navigateToWorkUnitFormView = ReactiveCommand.Create();
-			navigateToWorkUnitFormView
-				.Subscribe(async _ => await NavigationService.Current.NavigateTo<WorkUnitFormView>(product.Model.Id));
+			navigateToWorkUnitFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<WorkUnitFormView>(product.Model.Id));
 
-			edit = ReactiveCommand.Create();
-			edit
-				.Cast<EventPattern<ItemTappedEventArgs>>()
-				.Select(x => x.EventArgs.Item)
-				.Cast<WorkUnitViewModel>()
-				.Subscribe(async item => await NavigationService.Current.NavigateTo<WorkUnitFormView>(Tuple.Create(product.Model.Id, item.Model.Id)));
+			edit = ReactiveCommand.CreateFromTask<EventPattern<ItemTappedEventArgs>, Unit>(async x => { await NavigationService.Current.NavigateTo<WorkUnitFormView>(Tuple.Create(product.Model.Id, (x.EventArgs.Item as WorkUnitViewModel)?.Model.Id)); return Unit.Default; });
 		}
 
-		public ReactiveCommand<object> NavigateToWorkUnitFormView => navigateToWorkUnitFormView;
+		public ReactiveCommand NavigateToWorkUnitFormView => navigateToWorkUnitFormView;
 
-		public ReactiveCommand<object> Edit => edit;
+		public ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> Edit => edit;
 
 		public ProductViewModel Model
 		{

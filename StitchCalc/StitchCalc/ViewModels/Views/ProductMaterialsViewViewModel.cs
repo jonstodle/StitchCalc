@@ -13,27 +13,20 @@ namespace StitchCalc.ViewModels.Views
 {
 	public class ProductMaterialsViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<object> navigateToMaterialFormView;
-		readonly ReactiveCommand<object> edit;
+		readonly ReactiveCommand<Unit, Unit> navigateToMaterialFormView;
+		readonly ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> edit;
 		ProductViewModel product;
 
 		public ProductMaterialsViewViewModel()
 		{
-			navigateToMaterialFormView = ReactiveCommand.Create();
-			navigateToMaterialFormView
-				.Subscribe(async _ => await NavigationService.Current.NavigateTo<ProductMaterialFormView>(product.Model.Id));
+			navigateToMaterialFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductMaterialFormView>(product.Model.Id));
 
-			edit = ReactiveCommand.Create();
-			edit
-				.Cast<EventPattern<ItemTappedEventArgs>>()
-				.Select(x => x.EventArgs.Item)
-				.Cast<ProductMaterialViewModel>()
-				.Subscribe(async item => await NavigationService.Current.NavigateTo<ProductMaterialFormView>(Tuple.Create(product.Model.Id, item.Model.Id)));
+			edit = ReactiveCommand.CreateFromTask<EventPattern<ItemTappedEventArgs>, Unit>(async x => { await NavigationService.Current.NavigateTo<ProductMaterialFormView>(Tuple.Create(product.Model.Id, (x.EventArgs.Item as ProductMaterialViewModel)?.Model.Id)); return Unit.Default; });
 		}
 
-		public ReactiveCommand<object> NavigateToProductMaterialFormView => navigateToMaterialFormView;
+		public ReactiveCommand NavigateToProductMaterialFormView => navigateToMaterialFormView;
 
-		public ReactiveCommand<object> Edit => edit;
+		public ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> Edit => edit;
 
 		public ProductViewModel Product
 		{

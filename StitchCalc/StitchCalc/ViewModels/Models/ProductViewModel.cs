@@ -3,6 +3,7 @@ using StitchCalc.Models;
 using StitchCalc.Services.DataServices;
 using System;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 
 namespace StitchCalc.ViewModels.Models
@@ -10,11 +11,11 @@ namespace StitchCalc.ViewModels.Models
 	public class ProductViewModel : ViewModelBase
 	{
 		readonly Product model;
-		readonly ReactiveCommand<object> delete;
-		readonly ReactiveCommand<object> toggleChargeForMaterials;
-		readonly ReactiveCommand<object> toggleChargeForWork;
-		readonly ReactiveCommand<object> setMaterialsMultiplier;
-		readonly ReactiveCommand<object> setWorkMultiplier;
+		readonly ReactiveCommand<Unit, Unit> delete;
+		readonly ReactiveCommand<Unit, Unit> toggleChargeForMaterials;
+		readonly ReactiveCommand<Unit, Unit> toggleChargeForWork;
+		readonly ReactiveCommand<object, object> setMaterialsMultiplier;
+		readonly ReactiveCommand<object, object> setWorkMultiplier;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductMaterialViewModel>> productMaterials;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<WorkUnitViewModel>> workUnits;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<CustomPropertyViewModel>> customProperties;
@@ -49,29 +50,23 @@ namespace StitchCalc.ViewModels.Models
 				.StartWith(DataService.Current.GetCustomPropertiesForParent(model.Id))
 				.ToProperty(this, x => x.CustomProperties, out customProperties);
 
-			delete = ReactiveCommand.Create();
-			delete
-				.Subscribe(_ => DataService.Current.Remove(model));
+			delete = ReactiveCommand.Create(() => { DataService.Current.Remove(model); });
 
-			toggleChargeForMaterials = ReactiveCommand.Create();
-			toggleChargeForMaterials
-				.Subscribe(_ =>
-				{
-					var m = CopyProduct(Model);
-					m.ChargeForMaterials = !m.ChargeForMaterials;
-					DataService.Current.Update(m);
-				});
+			toggleChargeForMaterials = ReactiveCommand.Create(() =>
+			{
+				var m = CopyProduct(Model);
+				m.ChargeForMaterials = !m.ChargeForMaterials;
+				DataService.Current.Update(m);
+			});
 
-			toggleChargeForWork = ReactiveCommand.Create();
-			toggleChargeForWork
-				.Subscribe(_ =>
-				{
-					var m = CopyProduct(Model);
-					m.ChargeForWork = !m.ChargeForWork;
-					DataService.Current.Update(m);
-				});
+			toggleChargeForWork = ReactiveCommand.Create(() =>
+			{
+				var m = CopyProduct(Model);
+				m.ChargeForWork = !m.ChargeForWork;
+				DataService.Current.Update(m);
+			});
 
-			setMaterialsMultiplier = ReactiveCommand.Create();
+			setMaterialsMultiplier = ReactiveCommand.Create<object, object>(x => x);
 			setMaterialsMultiplier
 				.Cast<string>()
 				.Where(x => x.IsValidDouble())
@@ -84,7 +79,7 @@ namespace StitchCalc.ViewModels.Models
 					DataService.Current.Update(m);
 				});
 
-			setWorkMultiplier = ReactiveCommand.Create();
+			setWorkMultiplier = ReactiveCommand.Create<object, object>(x => x);
 			setWorkMultiplier
 				.Cast<string>()
 				.Where(x => x.IsValidDouble())
@@ -116,22 +111,22 @@ namespace StitchCalc.ViewModels.Models
 				.ToProperty(this, x => x.WorkPrice, out workPrice);
 
 			this
-				.WhenAnyValue(x => x.MaterialsPrice, y => y.WorkPrice, (x, y) => Tuple.Create(x,y))
+				.WhenAnyValue(x => x.MaterialsPrice, y => y.WorkPrice, (x, y) => Tuple.Create(x, y))
 				.Select(x => CalculatePrice(x.Item1, x.Item2, model))
 				.ToProperty(this, x => x.TotalPrice, out totalPrice);
 		}
 
 		public Product Model => model;
 
-		public ReactiveCommand<object> Delete => delete;
+		public ReactiveCommand Delete => delete;
 
-		public ReactiveCommand<object> ToggleChargeForMaterials => toggleChargeForMaterials;
+		public ReactiveCommand ToggleChargeForMaterials => toggleChargeForMaterials;
 
-		public ReactiveCommand<object> ToggleChargeForWork => toggleChargeForWork;
+		public ReactiveCommand ToggleChargeForWork => toggleChargeForWork;
 
-		public ReactiveCommand<object> SetMaterialsMultiplier => setMaterialsMultiplier;
+		public ReactiveCommand<object, object> SetMaterialsMultiplier => setMaterialsMultiplier;
 
-		public ReactiveCommand<object> SetWorkMultiplier => setWorkMultiplier;
+		public ReactiveCommand<object, object> SetWorkMultiplier => setWorkMultiplier;
 
 		public string Name => model.Name;
 

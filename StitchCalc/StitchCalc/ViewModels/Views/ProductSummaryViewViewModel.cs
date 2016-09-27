@@ -4,6 +4,7 @@ using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
@@ -11,17 +12,15 @@ namespace StitchCalc.ViewModels.Views
 {
 	public class ProductSummaryViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<object> edit;
+		readonly ReactiveCommand<Unit, Unit> edit;
 		ProductViewModel model;
 
 		public ProductSummaryViewViewModel()
 		{
-			edit = ReactiveCommand.Create();
-			edit
-				.Subscribe(async _ => await NavigationService.Current.NavigateTo<ProductFormView>(model.Model.Id));
+			edit = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductFormView>(model.Model.Id));
 		}
 
-		public ReactiveCommand<object> Edit => edit;
+		public ReactiveCommand Edit => edit;
 
 		public ProductViewModel Model
 		{

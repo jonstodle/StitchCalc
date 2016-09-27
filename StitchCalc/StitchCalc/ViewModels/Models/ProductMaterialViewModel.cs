@@ -2,6 +2,7 @@
 using StitchCalc.Models;
 using StitchCalc.Services.DataServices;
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
 
 namespace StitchCalc.ViewModels.Models
@@ -9,7 +10,7 @@ namespace StitchCalc.ViewModels.Models
 	public class ProductMaterialViewModel : ViewModelBase
     {
 		readonly ProductMaterial model;
-		readonly ReactiveCommand<object> delete;
+		readonly ReactiveCommand<Unit, Unit> delete;
 		readonly IReactiveDerivedList<MaterialViewModel> materials;
 		ObservableAsPropertyHelper<MaterialViewModel> material;
 		ObservableAsPropertyHelper<string> name;
@@ -21,9 +22,7 @@ namespace StitchCalc.ViewModels.Models
 			model = productMaterial;
 			materials = DataService.Current.GetMaterials();
 
-			delete = ReactiveCommand.Create();
-			delete
-				.Subscribe(_ => DataService.Current.Remove(model));
+			delete = ReactiveCommand.Create(() => { DataService.Current.Remove(model); });
 
 			materials
 				.Changed
@@ -47,7 +46,7 @@ namespace StitchCalc.ViewModels.Models
 
 		public ProductMaterial Model => model;
 
-		public ReactiveCommand<object> Delete => delete;
+		public ReactiveCommand Delete => delete;
 
 		public MaterialViewModel Material => material.Value;
 

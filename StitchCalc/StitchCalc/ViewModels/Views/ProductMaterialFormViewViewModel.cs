@@ -6,6 +6,7 @@ using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
 using System.Linq;
+using System.Reactive;
 using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels.Views
@@ -13,8 +14,8 @@ namespace StitchCalc.ViewModels.Views
 	public class ProductMaterialFormViewViewModel : ViewModelBase, INavigable
 	{
 		readonly IReactiveDerivedList<MaterialViewModel> materials;
-		readonly ReactiveCommand<object> save;
-		readonly ReactiveCommand<object> navigateToMaterialFormView;
+		readonly ReactiveCommand<Unit, Unit> save;
+		readonly ReactiveCommand<Unit, Unit> navigateToMaterialFormView;
 		string pageTitle;
 		int selectedMaterialIndex;
 		string amount;
@@ -25,13 +26,11 @@ namespace StitchCalc.ViewModels.Views
 		{
 			materials = DataService.Current.GetMaterials();
 
-			save = ReactiveCommand.Create(this.WhenAnyValue(x => x.SelectedMaterialIndex, y => y.Amount, (x, y) => x >= 0 && !string.IsNullOrWhiteSpace(y) && GetLengthFromAmountString(y) > 0));
-			save
-				.Subscribe(_ => SaveImpl());
+			save = ReactiveCommand.Create(
+				() => SaveImpl(),
+				this.WhenAnyValue(x => x.SelectedMaterialIndex, y => y.Amount, (x, y) => x >= 0 && !string.IsNullOrWhiteSpace(y) && GetLengthFromAmountString(y) > 0));
 
-			navigateToMaterialFormView = ReactiveCommand.Create();
-			navigateToMaterialFormView
-				.Subscribe(async _ => await NavigationService.Current.NavigateTo<MaterialFormView>());
+			navigateToMaterialFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<MaterialFormView>());
 		}
 
 		public string PageTitle
@@ -40,9 +39,9 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref pageTitle, value); }
 		}
 
-		public ReactiveCommand<object> Save => save;
+		public ReactiveCommand Save => save;
 
-		public ReactiveCommand<object> NavigateToMaterialFormView => navigateToMaterialFormView;
+		public ReactiveCommand NavigateToMaterialFormView => navigateToMaterialFormView;
 
 		public IReactiveDerivedList<MaterialViewModel> Materials => materials;
 

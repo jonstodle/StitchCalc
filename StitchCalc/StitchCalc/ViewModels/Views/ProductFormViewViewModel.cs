@@ -5,25 +5,26 @@ using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
+using System.Reactive;
 using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels.Views
 {
 	public class ProductFormViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<object> save;
+		readonly ReactiveCommand<Unit, Unit> save;
 		string pageTitle;
 		ProductViewModel product;
 		string name;
 
 		public ProductFormViewViewModel()
 		{
-			save = ReactiveCommand.Create(this.WhenAnyValue(x => x.Name, x => !string.IsNullOrWhiteSpace(x)));
-			save
-				.Subscribe(_ => AddMaterialsImpl());
+			save = ReactiveCommand.Create(
+				() => AddMaterialsImpl(),
+				this.WhenAnyValue(x => x.Name, x => !string.IsNullOrWhiteSpace(x)));
 		}
 
-		public ReactiveCommand<object> Save => save;
+		public ReactiveCommand Save => save;
 
 		public string PageTitle
 		{

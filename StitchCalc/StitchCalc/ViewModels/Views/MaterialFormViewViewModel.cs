@@ -4,6 +4,7 @@ using StitchCalc.Services.DataServices;
 using StitchCalc.Services.NavigationService;
 using StitchCalc.ViewModels.Models;
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
@@ -11,9 +12,9 @@ namespace StitchCalc.ViewModels.Views
 {
 	public class MaterialFormViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<object> save;
-		readonly ReactiveCommand<object> addProperty;
-		readonly ReactiveCommand<object> toggleShowAddGrid;
+		readonly ReactiveCommand<Unit, Unit> save;
+		readonly ReactiveCommand<Unit, Unit> addProperty;
+		readonly ReactiveCommand<Unit, Unit> toggleShowAddGrid;
 		readonly ObservableAsPropertyHelper<bool> canAddProperty;
 		IReactiveDerivedList<CustomPropertyViewModel> customProperties;
 		string pageTitle;
@@ -29,38 +30,35 @@ namespace StitchCalc.ViewModels.Views
 		{
 			customProperties = DataService.Current.GetCustomPropertiesForParent(new Guid());
 
-			save = ReactiveCommand.Create(this.WhenAnyValue(a => a.Name, b => b.Width, c => c.Price, (a, b, c) =>
-			{
-				double amnt, prc = default(double);
-				return !string.IsNullOrWhiteSpace(a)
-				&& !string.IsNullOrWhiteSpace(b)
-				&& !string.IsNullOrWhiteSpace(b)
-				&& double.TryParse(b, out amnt)
-				&& double.TryParse(c, out prc)
-				&& amnt > 0
-				&& prc > 0;
-			}));
+			save = ReactiveCommand.Create(
+				() => SaveImpl(),
+				this.WhenAnyValue(a => a.Name, b => b.Width, c => c.Price, (a, b, c) =>
+				{
+					double amnt, prc = default(double);
+					return !string.IsNullOrWhiteSpace(a)
+					&& !string.IsNullOrWhiteSpace(b)
+					&& !string.IsNullOrWhiteSpace(b)
+					&& double.TryParse(b, out amnt)
+					&& double.TryParse(c, out prc)
+					&& amnt > 0
+					&& prc > 0;
+				}));
 			save
-				.Subscribe(_ => SaveImpl());
-			save
-				.CanExecuteObservable
+				.CanExecute
 				.ToProperty(this, x => x.CanAddProperty, out canAddProperty);
 
-			addProperty = ReactiveCommand.Create(this.WhenAnyValue(x => x.CustomPropertyName, y=> y.CustomPropertyValue, z => z.CanAddProperty, (x,y,z)=> !string.IsNullOrWhiteSpace(x) && !string.IsNullOrWhiteSpace(y) && z));
-			addProperty
-				.Subscribe(_ => AddPropertyImpl());
+			addProperty = ReactiveCommand.Create(
+				() => AddPropertyImpl(),
+				this.WhenAnyValue(x => x.CustomPropertyName, y=> y.CustomPropertyValue, z => z.CanAddProperty, (x,y,z)=> !string.IsNullOrWhiteSpace(x) && !string.IsNullOrWhiteSpace(y) && z));
 
-			toggleShowAddGrid = ReactiveCommand.Create();
-			toggleShowAddGrid
-				.Select(_ => !ShowAddGrid)
-				.Subscribe(x => ShowAddGrid = x);
+			toggleShowAddGrid = ReactiveCommand.Create(() => { ShowAddGrid = !ShowAddGrid; });
 		}
 
-		public ReactiveCommand<object> Save => save;
+		public ReactiveCommand Save => save;
 
-		public ReactiveCommand<object> AddProperty => addProperty;
+		public ReactiveCommand AddProperty => addProperty;
 
-		public ReactiveCommand<object> ToggleShowAddGrid => toggleShowAddGrid;
+		public ReactiveCommand ToggleShowAddGrid => toggleShowAddGrid;
 
 		public bool CanAddProperty => canAddProperty.Value;
 

@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System;
 
 using Xamarin.Forms;
+using System.Reactive;
 
 namespace StitchCalc.Views
 {
@@ -36,7 +37,7 @@ namespace StitchCalc.Views
 					.FromEventPattern<ItemTappedEventArgs>(CustomPropertiesListView, nameof(ListView.ItemTapped))
 					.Select(e => e.EventArgs.Item)
 					.Cast<CustomPropertyViewModel>()
-					.Subscribe(item => item.Delete.Execute(null)));
+					.Subscribe(item => Observable.Return(Unit.Default).InvokeCommand(item.Delete)));
 				d(Observable
 					.Merge(
 					Observable.FromEventPattern(NameEntry, nameof(Entry.Completed)),

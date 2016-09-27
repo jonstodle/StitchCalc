@@ -16,8 +16,8 @@ namespace StitchCalc.ViewModels.Views
 	{
 		readonly IReactiveDerivedList<ProductViewModel> products;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductViewModel>> collectionView;
-		readonly ReactiveCommand<object> navigateToProductFormPage;
-		readonly ReactiveCommand<object> navigateToProductPage;
+		readonly ReactiveCommand<Unit, Unit> navigateToProductFormPage;
+		readonly ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> navigateToProductPage;
 		string searchTerm;
 
 		public HomeViewViewModel()
@@ -32,25 +32,18 @@ namespace StitchCalc.ViewModels.Views
 				.ObserveOn(RxApp.MainThreadScheduler)
 				.ToProperty(this, x => x.CollectionView, out collectionView);
 
-			navigateToProductFormPage = ReactiveCommand.Create();
-			navigateToProductFormPage
-				.Subscribe(async _ => await NavigationService.Current.NavigateTo<ProductFormView>());
+			navigateToProductFormPage = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductFormView>());
 
-			navigateToProductPage = ReactiveCommand.Create();
-			navigateToProductPage
-				.Cast<EventPattern<ItemTappedEventArgs>>()
-				.Select(x => x.EventArgs.Item)
-				.Cast<ProductViewModel>()
-				.Subscribe(async x => await NavigationService.Current.NavigateTo<ProductView>(x.Model.Id));
+			navigateToProductPage = ReactiveCommand.CreateFromTask<EventPattern<ItemTappedEventArgs>, Unit>(async x => { await NavigationService.Current.NavigateTo<ProductView>((x.EventArgs.Item as ProductViewModel)?.Model.Id); return Unit.Default; });
 		}
 
 		public IReactiveDerivedList<ProductViewModel> Products => products;
 
 		public IReactiveDerivedList<ProductViewModel> CollectionView => collectionView.Value;
 
-		public ReactiveCommand<object> NavigateToProductFormPage => navigateToProductFormPage;
+		public ReactiveCommand NavigateToProductFormPage => navigateToProductFormPage;
 
-		public ReactiveCommand<object> NavigateToProductPage => navigateToProductPage;
+		public ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> NavigateToProductPage => navigateToProductPage;
 
 		public string SearchTerm
 		{

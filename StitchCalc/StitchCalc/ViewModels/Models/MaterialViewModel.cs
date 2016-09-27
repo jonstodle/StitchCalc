@@ -2,13 +2,14 @@
 using StitchCalc.Models;
 using StitchCalc.Services.DataServices;
 using System;
+using System.Reactive;
 
 namespace StitchCalc.ViewModels.Models
 {
 	public class MaterialViewModel : ViewModelBase
     {
 		readonly Material model;
-		readonly ReactiveCommand<object> delete;
+		readonly ReactiveCommand<Unit, Unit> delete;
 		readonly IReactiveDerivedList<CustomPropertyViewModel> customProperties;
 
 		public MaterialViewModel(Material material)
@@ -16,12 +17,10 @@ namespace StitchCalc.ViewModels.Models
 			model = material;
 			customProperties = DataService.Current.GetCustomPropertiesForParent(model.Id);
 
-			delete = ReactiveCommand.Create();
-			delete
-				.Subscribe(_ => DataService.Current.Remove(model));
+			delete = ReactiveCommand.Create(() => { DataService.Current.Remove(model); });
 		}
 
-		public ReactiveCommand<object> Delete => delete;
+		public ReactiveCommand Delete => delete;
 
 		public Material Model => model;
 
