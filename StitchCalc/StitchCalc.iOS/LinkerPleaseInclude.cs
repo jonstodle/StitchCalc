@@ -5,7 +5,7 @@ namespace StitchCalc.iOS
 	{
 		public void Include()
 		{
-			var x = new System.ComponentModel.ReferenceConverter(typeof(void));
+			throw new Exception(new System.ComponentModel.ReferenceConverter(typeof(void)).ToString());
 		}
 	}
 }
