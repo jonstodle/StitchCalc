@@ -14,24 +14,34 @@ namespace StitchCalc.ViewModels.Views
 	public class ProductMaterialsViewViewModel : ViewModelBase, INavigable
 	{
 		readonly ReactiveCommand<Unit, Unit> navigateToMaterialFormView;
-		readonly ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> edit;
+		readonly ReactiveCommand<Unit, Unit> edit;
 		ProductViewModel product;
+		object selectedProductMaterial;
 
 		public ProductMaterialsViewViewModel()
 		{
 			navigateToMaterialFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductMaterialFormView>(product.Model.Id));
 
-			edit = ReactiveCommand.CreateFromTask<EventPattern<ItemTappedEventArgs>, Unit>(async x => { await NavigationService.Current.NavigateTo<ProductMaterialFormView>(Tuple.Create(product.Model.Id, (x.EventArgs.Item as ProductMaterialViewModel)?.Model.Id)); return Unit.Default; });
+			edit = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<ProductMaterialFormView>(Tuple.Create(product.Model.Id, (selectedProductMaterial as ProductMaterialViewModel).Model.Id)));
+			edit
+				.ThrownExceptions
+				.Subscribe(ex => System.Diagnostics.Debug.WriteLine(ex.Message));
 		}
 
 		public ReactiveCommand NavigateToProductMaterialFormView => navigateToMaterialFormView;
 
-		public ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> Edit => edit;
+		public ReactiveCommand Edit => edit;
 
 		public ProductViewModel Product
 		{
 			get { return product; }
 			set { this.RaiseAndSetIfChanged(ref product, value); }
+		}
+
+		public object SelectedProductMaterial
+		{
+			get { return selectedProductMaterial; }
+			set { this.RaiseAndSetIfChanged(ref selectedProductMaterial, value); }
 		}
 
 

@@ -17,8 +17,9 @@ namespace StitchCalc.ViewModels.Views
 		readonly IReactiveDerivedList<ProductViewModel> products;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductViewModel>> collectionView;
 		readonly ReactiveCommand<Unit, Unit> navigateToProductFormPage;
-		readonly ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> navigateToProductPage;
+		readonly ReactiveCommand<Unit, Unit> navigateToProductPage;
 		string searchTerm;
+		object selectedProduct;
 
 		public HomeViewViewModel()
 		{
@@ -34,7 +35,7 @@ namespace StitchCalc.ViewModels.Views
 
 			navigateToProductFormPage = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductFormView>());
 
-			navigateToProductPage = ReactiveCommand.CreateFromTask<EventPattern<ItemTappedEventArgs>, Unit>(async x => { await NavigationService.Current.NavigateTo<ProductView>((x.EventArgs.Item as ProductViewModel)?.Model.Id); return Unit.Default; });
+			navigateToProductPage = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<ProductView>((selectedProduct as ProductViewModel).Model.Id));
 		}
 
 		public IReactiveDerivedList<ProductViewModel> Products => products;
@@ -43,12 +44,18 @@ namespace StitchCalc.ViewModels.Views
 
 		public ReactiveCommand NavigateToProductFormPage => navigateToProductFormPage;
 
-		public ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> NavigateToProductPage => navigateToProductPage;
+		public ReactiveCommand NavigateToProductPage => navigateToProductPage;
 
 		public string SearchTerm
 		{
 			get { return searchTerm; }
 			set { this.RaiseAndSetIfChanged(ref searchTerm, value); }
+		}
+
+		public object SelectedProduct
+		{
+			get { return selectedProduct; }
+			set { this.RaiseAndSetIfChanged(ref selectedProduct, value); }
 		}
 
 

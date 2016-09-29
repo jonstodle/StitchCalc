@@ -16,8 +16,9 @@ namespace StitchCalc.ViewModels.Views
 		readonly IReactiveDerivedList<MaterialViewModel> materials;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<MaterialViewModel>> collectionView;
 		readonly ReactiveCommand<Unit, Unit> navigateToMaterialFormView;
-		readonly ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> edit;
+		readonly ReactiveCommand<Unit, Unit> edit;
 		string searchTerm;
+		object selectedMaterial;
 
 		public MaterialsViewViewModel()
 		{
@@ -33,7 +34,7 @@ namespace StitchCalc.ViewModels.Views
 
 			navigateToMaterialFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<MaterialFormView>());
 
-			edit = ReactiveCommand.CreateFromTask<EventPattern<ItemTappedEventArgs>, Unit>(async x => { await NavigationService.Current.NavigateTo<MaterialFormView>((x.EventArgs.Item as MaterialViewModel)?.Model.Id); return Unit.Default; });
+			edit = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<MaterialFormView>((selectedMaterial as MaterialViewModel).Model.Id));
 		}
 
 		public IReactiveDerivedList<MaterialViewModel> Materials => materials;
@@ -46,9 +47,15 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref searchTerm, value); }
 		}
 
+		public object SelectedMaterial
+		{
+			get { return selectedMaterial; }
+			set { this.RaiseAndSetIfChanged(ref selectedMaterial, value); }
+		}
+
 		public ReactiveCommand NavigateToMaterialFormView => navigateToMaterialFormView;
 
-		public ReactiveCommand<EventPattern<ItemTappedEventArgs>, Unit> Edit => edit;
+		public ReactiveCommand Edit => edit;
 
 
 

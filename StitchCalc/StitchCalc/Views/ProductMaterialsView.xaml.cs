@@ -9,19 +9,18 @@ namespace StitchCalc.Views
 {
 	public partial class ProductMaterialsView : ContentPage, IViewFor<ProductMaterialsViewViewModel>
 	{
-		public ProductMaterialsView ()
+		public ProductMaterialsView()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 
 			ViewModel = new ProductMaterialsViewViewModel();
 
 			this.OneWayBind(ViewModel, vm => vm.Product.Materials, v => v.MaterialsListView.ItemsSource);
 			this.OneWayBind(ViewModel, vm => vm.Product.MaterialsPrice, v => v.SumLabel.Text, x => x.ToString("N2"));
+			this.Bind(ViewModel, vm => vm.SelectedProductMaterial, v => v.MaterialsListView.SelectedItem);
 
-				this.BindCommand(ViewModel, vm => vm.NavigateToProductMaterialFormView, v => v.AddProductMaterialsToolbarItem);
-				this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped));
-				Observable.FromEventPattern(MaterialsListView, nameof(ListView.ItemSelected))
-					.Subscribe(_ => MaterialsListView.SelectedItem = null);
+			this.BindCommand(ViewModel, vm => vm.NavigateToProductMaterialFormView, v => v.AddProductMaterialsToolbarItem);
+			this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped));
 		}
 
 		public ProductMaterialsViewViewModel ViewModel
