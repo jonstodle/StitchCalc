@@ -93,6 +93,7 @@
       <DependentUpon>WorkUnitFormView.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemReactiveLinqExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\HomeView.xaml">
