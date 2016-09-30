@@ -94,20 +94,20 @@ namespace StitchCalc.ViewModels.Models
 
 			this
 				.WhenAnyValue(x => x.Materials)
+				.WhereNotNull()
 				.Select(_ => Materials.Sum(x => x.Price))
-				.StartWith(Materials.Sum(x => x.Price))
 				.ToProperty(this, x => x.MaterialsPrice, out materialsPrice);
 
 			this
 				.WhenAnyValue(x => x.WorkUnits)
+				.WhereNotNull()
 				.Select(_ => (double)WorkUnits.Sum(x => x.Minutes))
-				.StartWith((double)WorkUnits.Sum(x => x.Minutes))
 				.ToProperty(this, x => x.WorkInMinutes, out workInMinutes);
 
 			this
 				.WhenAnyValue(x => x.WorkUnits)
+				.WhereNotNull()
 				.Select(_ => WorkUnits.Sum(x => x.TotalCharge))
-				.StartWith(WorkUnits.Sum(x => x.TotalCharge))
 				.ToProperty(this, x => x.WorkPrice, out workPrice);
 
 			this
