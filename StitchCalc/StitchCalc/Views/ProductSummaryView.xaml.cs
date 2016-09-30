@@ -24,7 +24,7 @@ namespace StitchCalc.Views
 			this.OneWayBind(ViewModel, vm => vm.Model.IsMaterialsPriceMultiplied, v => v.MaterialsMultiplierLabel.IsVisible);
 			this.OneWayBind(ViewModel, vm => vm.Model.MaterialsMultiplier, v => v.MaterialsMultiplierLabel.Text, x => $"x{x}");
 
-			this.OneWayBind(ViewModel, vm => vm.Model.ChargeForWork, v => v.WorkStackLayout.Opacity, x => x ? 1: .5);
+			this.OneWayBind(ViewModel, vm => vm.Model.ChargeForWork, v => v.WorkStackLayout.Opacity, x => x ? 1: .2);
 			this.OneWayBind(ViewModel, vm => vm.Model.WorkPrice, v => v.WorkCostLabel.Text, x => x.ToString("N2"));
 			this.OneWayBind(ViewModel, vm => vm.Model.IsWorkPriceMultiplied, v => v.WorkMultiplierLabel.IsVisible);
 			this.OneWayBind(ViewModel, vm => vm.Model.WorkMultiplier, v => v.WorkMultiplierLabel.Text, x=> $"x{x}");
