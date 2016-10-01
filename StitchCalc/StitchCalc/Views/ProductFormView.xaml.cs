@@ -20,6 +20,7 @@ namespace StitchCalc.Views
 				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem);
 				Observable
 					.FromEventPattern(NameEntry, nameof(Entry.Completed))
+					.ToSignal()
 					.InvokeCommand(ViewModel, x => x.Save);
 		}
 

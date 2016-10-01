@@ -25,6 +25,7 @@ namespace StitchCalc.Views
 				Observable.FromEventPattern(NameEntry, nameof(Entry.Completed)),
 				Observable.FromEventPattern(MinutesEntry, nameof(Entry.Completed)),
 				Observable.FromEventPattern(ChargeEntry, nameof(Entry.Completed)))
+				.ToSignal()
 				.InvokeCommand(ViewModel, x => x.Save);
 		}
 

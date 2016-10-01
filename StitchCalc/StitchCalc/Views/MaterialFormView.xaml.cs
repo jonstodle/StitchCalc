@@ -41,11 +41,13 @@ namespace StitchCalc.Views
 					Observable.FromEventPattern(NameEntry, nameof(Entry.Completed)),
 					Observable.FromEventPattern(WidthEntry, nameof(Entry.Completed)),
 					Observable.FromEventPattern(PriceEntry, nameof(Entry.Completed)))
+					.ToSignal()
 					.InvokeCommand(ViewModel, x => x.Save);
 				Observable
 					.Merge(
 					Observable.FromEventPattern(CustomPropertyNameEntry, nameof(Entry.Completed)),
 					Observable.FromEventPattern(CustomPropertyValueEntry, nameof(Entry.Completed)))
+					.ToSignal()
 					.InvokeCommand(ViewModel, x => x.AddProperty);
 		}
 

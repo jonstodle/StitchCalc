@@ -24,6 +24,7 @@ namespace StitchCalc.Views
 				this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton);
 			Observable
 					.FromEventPattern(AmountEntry, nameof(Entry.Completed))
+					.ToSignal()
 					.InvokeCommand(ViewModel, x => x.Save);
 				ViewModel
 					.Materials
