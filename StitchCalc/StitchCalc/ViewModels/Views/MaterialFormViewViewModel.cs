@@ -16,7 +16,7 @@ namespace StitchCalc.ViewModels.Views
 		readonly ReactiveCommand<Unit, Unit> addProperty;
 		readonly ReactiveCommand<Unit, Unit> toggleShowAddGrid;
 		readonly ObservableAsPropertyHelper<bool> canAddProperty;
-		IReactiveDerivedList<CustomPropertyViewModel> customProperties;
+		readonly ObservableAsPropertyHelper<IReactiveDerivedList<CustomPropertyViewModel>> customProperties;
 		string pageTitle;
 		string name;
 		string width;
@@ -28,9 +28,7 @@ namespace StitchCalc.ViewModels.Views
 
 		public MaterialFormViewViewModel()
 		{
-			customProperties = DataService.Current.GetCustomPropertiesForParent(new Guid());
-
-			save = ReactiveCommand.Create(
+			save = ReactiveCommand.CreateFromTask(
 				() => SaveImpl(),
 				this.WhenAnyValue(a => a.Name, b => b.Width, c => c.Price, (a, b, c) =>
 				{
@@ -52,6 +50,11 @@ namespace StitchCalc.ViewModels.Views
 				this.WhenAnyValue(x => x.CustomPropertyName, y=> y.CustomPropertyValue, z => z.CanAddProperty, (x,y,z)=> !string.IsNullOrWhiteSpace(x) && !string.IsNullOrWhiteSpace(y) && z));
 
 			toggleShowAddGrid = ReactiveCommand.Create(() => { ShowAddGrid = !ShowAddGrid; });
+
+			customProperties = Observable.Merge(
+				this.WhenAnyValue(x => x.Material).WhereNotNull().Select(x => DataService.Current.GetCustomPropertiesForParent(x.Model.Id)),
+				DataService.Current.GetCustomProperties().Changed.Select(x => DataService.Current.GetCustomPropertiesForParent(Material.Model.Id)))
+				.ToProperty(this, x => x.CustomProperties, DataService.Current.GetCustomPropertiesForParent(new Guid()));
 		}
 
 		public ReactiveCommand Save => save;
@@ -62,11 +65,7 @@ namespace StitchCalc.ViewModels.Views
 
 		public bool CanAddProperty => canAddProperty.Value;
 
-		public IReactiveDerivedList<CustomPropertyViewModel> CustomProperties
-		{
-			get { return customProperties; }
-			set { this.RaiseAndSetIfChanged(ref customProperties, value); }
-		}
+		public IReactiveDerivedList<CustomPropertyViewModel> CustomProperties => customProperties.Value;
 
 		public string PageTitle
 		{
@@ -110,9 +109,15 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref customPropertyValue, value); }
 		}
 
+		public MaterialViewModel Material
+		{
+			get { return material; }
+			set { this.RaiseAndSetIfChanged(ref material, value); }
+		}
 
 
-		async void SaveImpl()
+
+		async Task SaveImpl()
 		{
 			SaveMaterial();
 
@@ -121,10 +126,9 @@ namespace StitchCalc.ViewModels.Views
 
 		void AddPropertyImpl()
 		{
-			if (material == null)
+			if (Material == null)
 			{
-				material = DataService.Current.GetMaterial(SaveMaterial().Id);
-				CustomProperties = DataService.Current.GetCustomPropertiesForParent(material.Model.Id);
+				Material = DataService.Current.GetMaterial(SaveMaterial().Id);
 			}
 
 			var cp = new CustomProperty
@@ -150,7 +154,7 @@ namespace StitchCalc.ViewModels.Views
 				Price = double.Parse(Price)
 			};
 
-			if (material == null) { return DataService.Current.Add(mtrl); }
+			if (Material == null) { return DataService.Current.Add(mtrl); }
 			else { return DataService.Current.Update(mtrl); }
 		}
 
@@ -160,9 +164,7 @@ namespace StitchCalc.ViewModels.Views
 		{
 			if (parameter is Guid)
 			{
-				material = DataService.Current.GetMaterial((Guid)parameter);
-
-				CustomProperties = DataService.Current.GetCustomPropertiesForParent(material.Model.Id);
+				Material = DataService.Current.GetMaterial((Guid)parameter);
 
 				PageTitle = "Edit Material";
 				Name = material.Model.Name;
