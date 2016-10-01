@@ -39,6 +39,8 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.1</string>
+	<string>1.0.2</string>
+	<key>CFBundleName</key>
+	<string>StitchCalc</string>
 </dict>
 </plist>
