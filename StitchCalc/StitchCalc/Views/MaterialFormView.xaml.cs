@@ -21,6 +21,7 @@ namespace StitchCalc.Views
 			this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
 			this.Bind(ViewModel, vm => vm.Width, v => v.WidthEntry.Text);
 			this.Bind(ViewModel, vm => vm.Price, v => v.PriceEntry.Text);
+			this.Bind(ViewModel, vm => vm.Notes, v => v.NotesEditor.Text);
 
 				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
 				Observable

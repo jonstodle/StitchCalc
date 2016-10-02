@@ -33,6 +33,11 @@
 				<Label Text="Width" Grid.Column="1"/>
 				<Entry x:Name="WidthEntry" Placeholder="(in meters)" Keyboard="Numeric" Grid.Row="1" Grid.Column="1"/>
 			</Grid>
+
+			<StackLayout Spacing="0">
+				<Label Text="Notes"/>
+				<Editor x:Name="NotesEditor" HeightRequest="300"/>
+			</StackLayout>
 		</StackLayout>
 	</ScrollView>
 </ContentPage>

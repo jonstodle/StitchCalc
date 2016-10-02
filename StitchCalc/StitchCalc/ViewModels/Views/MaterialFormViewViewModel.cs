@@ -17,6 +17,7 @@ namespace StitchCalc.ViewModels.Views
 		string name;
 		string width;
 		string price;
+		string notes;
 		MaterialViewModel material;
 
 		public MaterialFormViewViewModel()
@@ -62,6 +63,12 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref price, value); }
 		}
 
+		public string Notes
+		{
+			get { return notes; }
+			set { this.RaiseAndSetIfChanged(ref notes, value); }
+		}
+
 		public MaterialViewModel Material
 		{
 			get { return material; }
@@ -84,7 +91,8 @@ namespace StitchCalc.ViewModels.Views
 				Id = material?.Model.Id ?? default(Guid),
 				Name = Name,
 				Width = double.Parse(Width),
-				Price = double.Parse(Price)
+				Price = double.Parse(Price),
+				Notes = notes
 			};
 
 			if (Material == null) { return DataService.Current.Add(mtrl); }
@@ -103,6 +111,7 @@ namespace StitchCalc.ViewModels.Views
 				Name = material.Model.Name;
 				Width = material.Model.Width.ToString();
 				Price = material.Model.Price.ToString();
+		Notes = material.Model.Notes;
 			}
 			else
 			{
