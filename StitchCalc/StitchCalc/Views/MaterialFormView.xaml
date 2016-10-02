@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="StitchCalc.Views.MaterialFormView">
@@ -33,53 +33,6 @@
 				<Label Text="Width" Grid.Column="1"/>
 				<Entry x:Name="WidthEntry" Placeholder="(in meters)" Keyboard="Numeric" Grid.Row="1" Grid.Column="1"/>
 			</Grid>
-
-			<StackLayout x:Name="CustomPropertiesStackLayout" Margin="0,20,0,0">
-				<StackLayout Orientation="Horizontal">
-					<Label Text="Properties" FontSize="Small" HorizontalOptions="StartAndExpand"/>
-
-					<Button x:Name="CustomPropertyToggleAddGridButton"/>
-				</StackLayout>
-
-				<Grid x:Name="CustomPropertyAddGrid">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition/>
-						<ColumnDefinition/>
-					</Grid.ColumnDefinitions>
-					<Grid.RowDefinitions>
-						<RowDefinition Height="Auto"/>
-						<RowDefinition Height="Auto"/>
-					</Grid.RowDefinitions>
-
-					<StackLayout Spacing="0">
-						<Label Text="Name"/>
-						<Entry x:Name="CustomPropertyNameEntry"/>
-					</StackLayout>
-
-					<StackLayout Spacing="0" Grid.Column="1">
-						<Label Text="Value"/>
-						<Entry x:Name="CustomPropertyValueEntry"/>
-					</StackLayout>
-
-					<Button x:Name="CustomPropertyAddButton" Text="Add" HorizontalOptions="End" Grid.Row="1" Grid.Column="1"/>
-				</Grid>
-
-				<ListView x:Name="CustomPropertiesListView">
-					<ListView.Margin>
-						<OnPlatform x:TypeArguments="Thickness" iOS="-10,0"/>
-					</ListView.Margin>
-					
-					<ListView.ItemTemplate>
-						<DataTemplate>
-							<TextCell Text="{Binding Name}" Detail="{Binding Value}">
-								<TextCell.ContextActions>
-									<!--<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>-->
-								</TextCell.ContextActions>
-							</TextCell>
-						</DataTemplate>
-					</ListView.ItemTemplate>
-				</ListView>
-			</StackLayout>
 		</StackLayout>
 	</ScrollView>
 </ContentPage>

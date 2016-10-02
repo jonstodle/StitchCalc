@@ -18,7 +18,6 @@ namespace StitchCalc.ViewModels.Models
 		readonly ReactiveCommand<object, object> setWorkMultiplier;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductMaterialViewModel>> productMaterials;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<WorkUnitViewModel>> workUnits;
-		readonly ObservableAsPropertyHelper<IReactiveDerivedList<CustomPropertyViewModel>> customProperties;
 		readonly ObservableAsPropertyHelper<double> materialsPrice;
 		readonly ObservableAsPropertyHelper<double> workInMinutes;
 		readonly ObservableAsPropertyHelper<double> workPrice;
@@ -43,12 +42,6 @@ namespace StitchCalc.ViewModels.Models
 				.Select(_ => DataService.Current.GetWorkUnitsForProduct(model.Id))
 				.StartWith(DataService.Current.GetWorkUnitsForProduct(model.Id))
 				.ToProperty(this, x => x.WorkUnits, out workUnits);
-
-			DataService.Current.GetCustomProperties()
-				.Changed
-				.Select(_ => DataService.Current.GetCustomPropertiesForParent(model.Id))
-				.StartWith(DataService.Current.GetCustomPropertiesForParent(model.Id))
-				.ToProperty(this, x => x.CustomProperties, out customProperties);
 
 			delete = ReactiveCommand.Create(() => { DataService.Current.Remove(model); });
 
@@ -141,8 +134,6 @@ namespace StitchCalc.ViewModels.Models
 		public IReactiveDerivedList<ProductMaterialViewModel> Materials => productMaterials.Value;
 
 		public IReactiveDerivedList<WorkUnitViewModel> WorkUnits => workUnits.Value;
-
-		public IReactiveDerivedList<CustomPropertyViewModel> CustomProperties => customProperties.Value;
 
 		public double MaterialsPrice => materialsPrice.Value;
 

@@ -13,17 +13,10 @@ namespace StitchCalc.ViewModels.Views
 	public class MaterialFormViewViewModel : ViewModelBase, INavigable
 	{
 		readonly ReactiveCommand<Unit, Unit> save;
-		readonly ReactiveCommand<Unit, Unit> addProperty;
-		readonly ReactiveCommand<Unit, Unit> toggleShowAddGrid;
-		readonly ObservableAsPropertyHelper<bool> canAddProperty;
-		readonly ObservableAsPropertyHelper<IReactiveDerivedList<CustomPropertyViewModel>> customProperties;
 		string pageTitle;
 		string name;
 		string width;
 		string price;
-		bool showAddGrid;
-		string customPropertyName;
-		string customPropertyValue;
 		MaterialViewModel material;
 
 		public MaterialFormViewViewModel()
@@ -41,31 +34,9 @@ namespace StitchCalc.ViewModels.Views
 					&& amnt > 0
 					&& prc > 0;
 				}));
-			save
-				.CanExecute
-				.ToProperty(this, x => x.CanAddProperty, out canAddProperty);
-
-			addProperty = ReactiveCommand.Create(
-				() => AddPropertyImpl(),
-				this.WhenAnyValue(x => x.CustomPropertyName, y=> y.CustomPropertyValue, z => z.CanAddProperty, (x,y,z)=> !string.IsNullOrWhiteSpace(x) && !string.IsNullOrWhiteSpace(y) && z));
-
-			toggleShowAddGrid = ReactiveCommand.Create(() => { ShowAddGrid = !ShowAddGrid; });
-
-			customProperties = Observable.Merge(
-				this.WhenAnyValue(x => x.Material).WhereNotNull().Select(x => DataService.Current.GetCustomPropertiesForParent(x.Model.Id)),
-				DataService.Current.GetCustomProperties().Changed.Select(x => DataService.Current.GetCustomPropertiesForParent(Material.Model.Id)))
-				.ToProperty(this, x => x.CustomProperties, DataService.Current.GetCustomPropertiesForParent(new Guid()));
 		}
 
 		public ReactiveCommand Save => save;
-
-		public ReactiveCommand AddProperty => addProperty;
-
-		public ReactiveCommand ToggleShowAddGrid => toggleShowAddGrid;
-
-		public bool CanAddProperty => canAddProperty.Value;
-
-		public IReactiveDerivedList<CustomPropertyViewModel> CustomProperties => customProperties.Value;
 
 		public string PageTitle
 		{
@@ -91,24 +62,6 @@ namespace StitchCalc.ViewModels.Views
 			set { this.RaiseAndSetIfChanged(ref price, value); }
 		}
 
-		public bool ShowAddGrid
-		{
-			get { return showAddGrid; }
-			set { this.RaiseAndSetIfChanged(ref showAddGrid, value); }
-		}
-
-		public string CustomPropertyName
-		{
-			get { return customPropertyName; }
-			set { this.RaiseAndSetIfChanged(ref customPropertyName, value); }
-		}
-
-		public string CustomPropertyValue
-		{
-			get { return customPropertyValue; }
-			set { this.RaiseAndSetIfChanged(ref customPropertyValue, value); }
-		}
-
 		public MaterialViewModel Material
 		{
 			get { return material; }
@@ -122,26 +75,6 @@ namespace StitchCalc.ViewModels.Views
 			SaveMaterial();
 
 			await NavigationService.Current.GoBack();
-		}
-
-		void AddPropertyImpl()
-		{
-			if (Material == null)
-			{
-				Material = DataService.Current.GetMaterial(SaveMaterial().Id);
-			}
-
-			var cp = new CustomProperty
-			{
-				ParentId = material.Model.Id,
-				Name = CustomPropertyName,
-				Value = CustomPropertyValue
-			};
-
-			DataService.Current.Add(cp);
-
-			CustomPropertyName = string.Empty;
-			CustomPropertyValue = string.Empty;
 		}
 
 		Material SaveMaterial()
@@ -174,7 +107,6 @@ namespace StitchCalc.ViewModels.Views
 			else
 			{
 				PageTitle = "Add Material";
-				ShowAddGrid = true;
 			}
 
 			return Task.CompletedTask;

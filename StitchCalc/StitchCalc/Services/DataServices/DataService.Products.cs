@@ -39,7 +39,6 @@ namespace StitchCalc.Services.DataServices
 			using (products.SuppressChangeNotifications())
 			using (workUnits.SuppressChangeNotifications())
 			using (productMaterials.SuppressChangeNotifications())
-			using (customProperties.SuppressChangeNotifications())
 			{
 				for (int i = workUnits.Count - 1; i >= 0; i--)
 				{
@@ -53,13 +52,6 @@ namespace StitchCalc.Services.DataServices
 					var item = productMaterials[i];
 
 					if (item.ProductId == p.Id) { Remove(item); }
-				}
-
-				for (int i = customProperties.Count - 1; i >= 0; i--)
-				{
-					var item = customProperties[i];
-
-					if (item.ParentId == p.Id) { Remove(item); }
 				}
 
 				return products.Remove(p);

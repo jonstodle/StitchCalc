@@ -18,7 +18,6 @@ namespace StitchCalc.Services.DataServices
 					products.Changed,
 					materials.Changed,
 					workUnits.Changed,
-					customProperties.Changed,
 					productMaterials.Changed)
 					.Throttle(TimeSpan.FromSeconds(1))
 					.Subscribe(async __ => await SaveDataToDisk()));

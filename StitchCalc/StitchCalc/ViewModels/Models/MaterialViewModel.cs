@@ -10,12 +10,10 @@ namespace StitchCalc.ViewModels.Models
     {
 		readonly Material model;
 		readonly ReactiveCommand<Unit, Unit> delete;
-		readonly IReactiveDerivedList<CustomPropertyViewModel> customProperties;
 
 		public MaterialViewModel(Material material)
 		{
 			model = material;
-			customProperties = DataService.Current.GetCustomPropertiesForParent(model.Id);
 
 			delete = ReactiveCommand.Create(() => { DataService.Current.Remove(model); });
 		}
@@ -23,8 +21,6 @@ namespace StitchCalc.ViewModels.Models
 		public ReactiveCommand Delete => delete;
 
 		public Material Model => model;
-
-		public IReactiveDerivedList<CustomPropertyViewModel> CustomProperties => customProperties;
 
 		public string Name => model.Name;
 
