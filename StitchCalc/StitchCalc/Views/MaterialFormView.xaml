@@ -36,7 +36,9 @@
 
 			<StackLayout Spacing="0">
 				<Label Text="Notes"/>
+				<Frame OutlineColor="Gray" HasShadow="false">
 				<Editor x:Name="NotesEditor" HeightRequest="300"/>
+				</Frame>
 			</StackLayout>
 		</StackLayout>
 	</ScrollView>
