@@ -16,7 +16,7 @@ namespace StitchCalc.ViewModels.Views
 		public SettingsViewViewModel()
 		{
 			defaultHourlyCharge = SettingsService.Current.DefaultHourlyCharge.ToString();
-			appVersion = DeviceInfo.App.Version;
+			appVersion = DeviceInfo.App.ShortVersion;
 
 			this
 				.WhenAnyValue(x => x.DefaultHourlyCharge)
