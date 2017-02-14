@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace StitchCalc.ViewModels.Views
 {
-	public class ProductWorkUnitsViewViewModel : ViewModelBase, INavigable
+	public class ProductWorkUnitsViewViewModel : ViewViewModelBase, INavigable
 	{
 		readonly ReactiveCommand<Unit, Unit> navigateToWorkUnitFormView;
 		readonly ReactiveCommand<Unit, Unit> edit;

@@ -12,7 +12,7 @@ using Xamarin.Forms;
 
 namespace StitchCalc.ViewModels.Views
 {
-	public class HomeViewViewModel : ViewModelBase, INavigable
+	public class HomeViewViewModel : ViewViewModelBase, INavigable
 	{
 		readonly IReactiveDerivedList<ProductViewModel> products;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductViewModel>> collectionView;

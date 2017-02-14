@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace StitchCalc.ViewModels.Views
 {
-	public class MaterialsViewViewModel : ViewModelBase, INavigable
+	public class MaterialsViewViewModel : ViewViewModelBase, INavigable
 	{
 		readonly IReactiveDerivedList<MaterialViewModel> materials;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<MaterialViewModel>> collectionView;

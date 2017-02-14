@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels.Views
 {
-	public class SettingsViewViewModel : ViewModelBase, INavigable
+	public class SettingsViewViewModel : ViewViewModelBase, INavigable
 	{
 		string defaultHourlyCharge;
 		string appVersion;

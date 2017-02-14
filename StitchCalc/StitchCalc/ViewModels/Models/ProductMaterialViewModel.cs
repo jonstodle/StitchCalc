@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 
 namespace StitchCalc.ViewModels.Models
 {
-	public class ProductMaterialViewModel : ViewModelBase
+	public class ProductMaterialViewModel : ModelViewModelBase
     {
 		readonly ProductMaterial model;
 		readonly ReactiveCommand<Unit, Unit> delete;

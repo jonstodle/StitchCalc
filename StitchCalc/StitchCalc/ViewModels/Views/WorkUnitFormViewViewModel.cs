@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels.Views
 {
-	public class WorkUnitFormViewViewModel : ViewModelBase, INavigable
+	public class WorkUnitFormViewViewModel : ViewViewModelBase, INavigable
 	{
 		readonly ReactiveCommand<Unit, Unit> save;
 		string pageTitle;

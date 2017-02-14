@@ -10,7 +10,7 @@ using Xamarin.Forms;
 
 namespace StitchCalc.ViewModels.Views
 {
-	public class ProductViewViewModel : ViewModelBase, INavigable
+	public class ProductViewViewModel : ViewViewModelBase, INavigable
 	{
 		readonly ReactiveList<Page> pages;
 		readonly ObservableAsPropertyHelper<string> pageTitle;

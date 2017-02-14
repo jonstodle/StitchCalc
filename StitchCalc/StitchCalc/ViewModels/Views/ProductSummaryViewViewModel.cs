@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels.Views
 {
-	public class ProductSummaryViewViewModel : ViewModelBase, INavigable
+	public class ProductSummaryViewViewModel : ViewViewModelBase, INavigable
 	{
 		readonly ReactiveCommand<Unit, Unit> edit;
 		ProductViewModel model;

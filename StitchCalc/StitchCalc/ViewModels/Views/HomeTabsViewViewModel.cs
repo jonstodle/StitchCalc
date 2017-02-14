@@ -8,7 +8,7 @@ using System.Reactive.Linq;
 
 namespace StitchCalc.ViewModels.Views
 {
-	public class HomeTabsViewViewModel : ViewModelBase, INavigable
+	public class HomeTabsViewViewModel : ViewViewModelBase, INavigable
 	{
 		readonly ReactiveList<Page> pages;
 

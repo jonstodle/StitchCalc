@@ -91,6 +91,8 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemReactiveLinqExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\ModelViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ViewViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\HomeView.xaml">

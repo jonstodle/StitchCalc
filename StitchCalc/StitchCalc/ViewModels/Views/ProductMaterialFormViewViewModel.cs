@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels.Views
 {
-	public class ProductMaterialFormViewViewModel : ViewModelBase, INavigable
+	public class ProductMaterialFormViewViewModel : ViewViewModelBase, INavigable
 	{
 		readonly IReactiveDerivedList<MaterialViewModel> materials;
 		readonly ReactiveCommand<Unit, Unit> save;
