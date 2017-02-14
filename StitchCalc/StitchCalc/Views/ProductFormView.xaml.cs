@@ -21,11 +21,7 @@ namespace StitchCalc.Views
 				this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text).DisposeWith(disposables);
 
 				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem).DisposeWith(disposables);
-				Observable
-					.FromEventPattern(NameEntry, nameof(Entry.Completed))
-					.ToSignal()
-					.InvokeCommand(ViewModel, x => x.Save)
-					.DisposeWith(disposables);
+				this.BindCommand(ViewModel, vm => vm.Save, v => v.NameEntry, nameof(Entry.Completed)).DisposeWith(disposables);
 			});
 		}
 	}
