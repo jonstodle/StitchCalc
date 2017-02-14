@@ -8,6 +8,7 @@ using System.Reactive.Linq;
 using Xamarin.Forms;
 using System.Reactive.Disposables;
 using ReactiveUI.XamForms;
+using System.Threading.Tasks;
 
 namespace StitchCalc.Views
 {
@@ -36,17 +37,19 @@ namespace StitchCalc.Views
 
 				Observable
 					.FromEventPattern(MaterialsStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-					.Subscribe(_ => ShowActionSheet("Materials", ChargeReasons.Materials))
+					.SelectMany(_ => Observable.FromAsync(() => ShowActionSheet("Materials", ChargeReasons.Materials)))
+					.Subscribe()
 					.DisposeWith(disposables);
 				Observable
 					.FromEventPattern(WorkStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-					.Subscribe(_ => ShowActionSheet("Work", ChargeReasons.Work))
+					.SelectMany(_ => Observable.FromAsync(() => ShowActionSheet("Work", ChargeReasons.Work)))
+					.Subscribe()
 					.DisposeWith(disposables);
 			});
 		}
 
 		enum ChargeReasons { Materials, Work }
-		async void ShowActionSheet(string title, ChargeReasons reason)
+		async Task ShowActionSheet(string title, ChargeReasons reason)
 		{
 			var actions = new string[] {reason.ToString(), "Cancel", "Toggle", "Multiply" };
 
