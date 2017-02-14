@@ -2,12 +2,14 @@
 using StitchCalc.ViewModels.Views;
 using System;
 using System.Reactive.Linq;
+using System.Reactive.Disposables;
 
 using Xamarin.Forms;
+using ReactiveUI.XamForms;
 
 namespace StitchCalc.Views
 {
-	public partial class ProductMaterialsView : ContentPage, IViewFor<ProductMaterialsViewViewModel>
+	public partial class ProductMaterialsView : ReactiveContentPage<ProductMaterialsViewViewModel>
 	{
 		public ProductMaterialsView()
 		{
@@ -15,26 +17,14 @@ namespace StitchCalc.Views
 
 			ViewModel = new ProductMaterialsViewViewModel();
 
-			this.OneWayBind(ViewModel, vm => vm.Product.Materials, v => v.MaterialsListView.ItemsSource);
-			this.OneWayBind(ViewModel, vm => vm.Product.MaterialsPrice, v => v.SumLabel.Text, x => x.ToString("N2"));
-			this.Bind(ViewModel, vm => vm.SelectedProductMaterial, v => v.MaterialsListView.SelectedItem);
+			this.WhenActivated(disposables => {
+				this.OneWayBind(ViewModel, vm => vm.Product.Materials, v => v.MaterialsListView.ItemsSource).DisposeWith(disposables);
+				this.OneWayBind(ViewModel, vm => vm.Product.MaterialsPrice, v => v.SumLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
+				this.Bind(ViewModel, vm => vm.SelectedProductMaterial, v => v.MaterialsListView.SelectedItem).DisposeWith(disposables);
 
-			this.BindCommand(ViewModel, vm => vm.NavigateToProductMaterialFormView, v => v.AddProductMaterialsToolbarItem);
-			this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped));
-		}
-
-		public ProductMaterialsViewViewModel ViewModel
-		{
-			get { return (ProductMaterialsViewViewModel)GetValue(ViewModelProperty); }
-			set { SetValue(ViewModelProperty, value); }
-		}
-
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductMaterialsViewViewModel), typeof(ProductMaterialsView), null);
-
-		object IViewFor.ViewModel
-		{
-			get { return ViewModel; }
-			set { ViewModel = (ProductMaterialsViewViewModel)value; }
+				this.BindCommand(ViewModel, vm => vm.NavigateToProductMaterialFormView, v => v.AddProductMaterialsToolbarItem).DisposeWith(disposables);
+				this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
+			});
 		}
 	}
 }

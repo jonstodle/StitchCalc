@@ -2,12 +2,14 @@
 using StitchCalc.ViewModels.Views;
 using System;
 using System.Reactive.Linq;
+using System.Reactive.Disposables;
 
 using Xamarin.Forms;
+using ReactiveUI.XamForms;
 
 namespace StitchCalc.Views
 {
-	public partial class MaterialsView : ContentPage, IViewFor<MaterialsViewViewModel>
+	public partial class MaterialsView : ReactiveContentPage<MaterialsViewViewModel>
 	{
 		public MaterialsView ()
 		{
@@ -15,26 +17,14 @@ namespace StitchCalc.Views
 
 			ViewModel = new MaterialsViewViewModel();
 
-			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.MaterialsSearchBar.Text);
-			this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.MaterialsListView.ItemsSource);
-			this.Bind(ViewModel, vm => vm.SelectedMaterial, v => v.MaterialsListView.SelectedItem);
+			this.WhenActivated(disposables => {
+				this.Bind(ViewModel, vm => vm.SearchTerm, v => v.MaterialsSearchBar.Text).DisposeWith(disposables);
+				this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.MaterialsListView.ItemsSource).DisposeWith(disposables);
+				this.Bind(ViewModel, vm => vm.SelectedMaterial, v => v.MaterialsListView.SelectedItem).DisposeWith(disposables);
 
-				this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialToolbarItem);
-				this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped));
-		}
-
-		public MaterialsViewViewModel ViewModel
-		{
-			get { return (MaterialsViewViewModel)GetValue(ViewModelProperty); }
-			set { SetValue(ViewModelProperty, value); }
-		}
-
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(MaterialsViewViewModel), typeof(MaterialsView), null);
-
-		object IViewFor.ViewModel
-		{
-			get { return ViewModel; }
-			set { ViewModel = (MaterialsViewViewModel)value; }
+				this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialToolbarItem).DisposeWith(disposables);
+				this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
+			});
 		}
 	}
 }

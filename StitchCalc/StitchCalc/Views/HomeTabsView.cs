@@ -5,10 +5,12 @@ using System.Linq;
 using System.Reactive.Linq;
 
 using Xamarin.Forms;
+using System.Reactive.Disposables;
+using System.Reactive;
 
 namespace StitchCalc.Views
 {
-	public class HomeTabsView : TabbedPage, IViewFor<HomeTabsViewViewModel>
+	public class HomeTabsView : TabbedPage, IViewFor<HomeTabsViewViewModel>, ICanActivate
 	{
 		public HomeTabsView ()
 		{
@@ -16,6 +18,8 @@ namespace StitchCalc.Views
 
 			Title = "StitchCalc";
 
+			this.WhenActivated(disposables =>
+			{
 				ViewModel
 					.Pages
 					.Changed
@@ -26,7 +30,9 @@ namespace StitchCalc.Views
 					{
 						Children.Clear();
 						foreach (var page in pages) { Children.Add(page); }
-					});
+					})
+					.DisposeWith(disposables);
+			});
 		}
 
 		public HomeTabsViewViewModel ViewModel
@@ -42,5 +48,9 @@ namespace StitchCalc.Views
 			get { return ViewModel; }
 			set { ViewModel = (HomeTabsViewViewModel)value; }
 		}
+
+		public IObservable<Unit> Activated => Observable.FromEventPattern(this, nameof(this.Appearing)).ToSignal();
+
+		public IObservable<Unit> Deactivated => Observable.FromEventPattern(this, nameof(this.Disappearing)).ToSignal();
 	}
 }

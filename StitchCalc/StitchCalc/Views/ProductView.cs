@@ -5,10 +5,11 @@ using System.Linq;
 using System.Reactive.Linq;
 
 using Xamarin.Forms;
+using System.Reactive;
 
 namespace StitchCalc.Views
 {
-	public class ProductView : TabbedPage, IViewFor<ProductViewViewModel>
+	public class ProductView : TabbedPage, IViewFor<ProductViewViewModel>, ICanActivate
 	{
 		public ProductView ()
 		{
@@ -45,5 +46,9 @@ namespace StitchCalc.Views
 			get { return ViewModel; }
 			set { ViewModel = (ProductViewViewModel)value; }
 		}
+
+		public IObservable<Unit> Activated => Observable.FromEventPattern(this, nameof(this.Appearing)).ToSignal();
+
+		public IObservable<Unit> Deactivated => Observable.FromEventPattern(this, nameof(this.Disappearing)).ToSignal();
 	}
 }

@@ -3,10 +3,13 @@ using StitchCalc.ViewModels.Views;
 using System;
 using System.Reactive.Linq;
 using Xamarin.Forms;
+using System.Reactive.Disposables;
+using System.Reactive;
+using ReactiveUI.XamForms;
 
 namespace StitchCalc.Views
 {
-	public partial class HomeView : ContentPage, IViewFor<HomeViewViewModel>
+	public partial class HomeView : ReactiveContentPage<HomeViewViewModel>
 	{
 		public HomeView ()
 		{
@@ -14,26 +17,14 @@ namespace StitchCalc.Views
 
 			ViewModel = new HomeViewViewModel();
 
-			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text);
-			this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.ProductListView.ItemsSource);
-			this.Bind(ViewModel, vm => vm.SelectedProduct, v => v.ProductListView.SelectedItem);
+			this.WhenActivated(disposables => {
+				this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text).DisposeWith(disposables);
+				this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.ProductListView.ItemsSource).DisposeWith(disposables);
+				this.Bind(ViewModel, vm => vm.SelectedProduct, v => v.ProductListView.SelectedItem).DisposeWith(disposables);
 
-				this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem);
-				this.BindCommand(ViewModel, vm => vm.NavigateToProductPage, v => v.ProductListView, nameof(ListView.ItemTapped));
-		}
-
-		public HomeViewViewModel ViewModel
-		{
-			get { return (HomeViewViewModel)GetValue(ViewModelProperty); }
-			set { SetValue(ViewModelProperty, value); }
-		}
-
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(HomeViewViewModel), typeof(HomeView), null);
-
-		object IViewFor.ViewModel
-		{
-			get { return ViewModel; }
-			set { ViewModel = (HomeViewViewModel)value; }
+				this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem).DisposeWith(disposables);
+				this.BindCommand(ViewModel, vm => vm.NavigateToProductPage, v => v.ProductListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
+			});
 		}
 	}
 }

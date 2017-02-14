@@ -3,12 +3,14 @@ using StitchCalc.ViewModels.Views;
 using System;
 using System.Linq;
 using System.Reactive.Linq;
+using System.Reactive.Disposables;
 
 using Xamarin.Forms;
+using ReactiveUI.XamForms;
 
 namespace StitchCalc.Views
 {
-	public partial class ProductMaterialFormView : ContentPage, IViewFor<ProductMaterialFormViewViewModel>
+	public partial class ProductMaterialFormView : ReactiveContentPage<ProductMaterialFormViewViewModel>
 	{
 		public ProductMaterialFormView ()
 		{
@@ -16,16 +18,18 @@ namespace StitchCalc.Views
 
 			ViewModel = new ProductMaterialFormViewViewModel();
 
-			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
-			this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex);
-			this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text);
+			this.WhenActivated(disposables => {
+				this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title).DisposeWith(disposables);
+				this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex).DisposeWith(disposables);
+				this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text).DisposeWith(disposables);
 
-				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
-				this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton);
+				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem).DisposeWith(disposables);
+				this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton).DisposeWith(disposables);
 			Observable
 					.FromEventPattern(AmountEntry, nameof(Entry.Completed))
 					.ToSignal()
-					.InvokeCommand(ViewModel, x => x.Save);
+					.InvokeCommand(ViewModel, x => x.Save)
+					.DisposeWith(disposables);
 				ViewModel
 					.Materials
 					.Changed
@@ -38,21 +42,9 @@ namespace StitchCalc.Views
 						{
 							MaterialPicker.Items.Add(item.Name);
 						}
-					});
-		}
-
-		public ProductMaterialFormViewViewModel ViewModel
-		{
-			get { return (ProductMaterialFormViewViewModel)GetValue(ViewModelProperty); }
-			set { SetValue(ViewModelProperty, value); }
-		}
-
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductMaterialFormViewViewModel), typeof(ProductMaterialFormView), null);
-
-		object IViewFor.ViewModel
-		{
-			get { return ViewModel; }
-			set { ViewModel = (ProductMaterialFormViewViewModel)value; }
+					})
+					.DisposeWith(disposables);
+			});
 		}
 	}
 }

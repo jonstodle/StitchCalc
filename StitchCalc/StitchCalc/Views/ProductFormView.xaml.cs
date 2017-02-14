@@ -1,12 +1,14 @@
 ﻿using ReactiveUI;
 using StitchCalc.ViewModels.Views;
 using System.Reactive.Linq;
+using System.Reactive.Disposables;
 
 using Xamarin.Forms;
+using ReactiveUI.XamForms;
 
 namespace StitchCalc.Views
 {
-	public partial class ProductFormView : ContentPage, IViewFor<ProductFormViewViewModel>
+	public partial class ProductFormView : ReactiveContentPage<ProductFormViewViewModel>
 	{
 		public ProductFormView()
 		{
@@ -14,28 +16,17 @@ namespace StitchCalc.Views
 
 			ViewModel = new ProductFormViewViewModel();
 
-			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
-			this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
+			this.WhenActivated(disposables => {
+				this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title).DisposeWith(disposables);
+				this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text).DisposeWith(disposables);
 
-				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem);
+				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem).DisposeWith(disposables);
 				Observable
 					.FromEventPattern(NameEntry, nameof(Entry.Completed))
 					.ToSignal()
-					.InvokeCommand(ViewModel, x => x.Save);
-		}
-
-		public ProductFormViewViewModel ViewModel
-		{
-			get { return (ProductFormViewViewModel)GetValue(ViewModelProperty); }
-			set { SetValue(ViewModelProperty, value); }
-		}
-
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductFormViewViewModel), typeof(ProductFormView), null);
-
-		object IViewFor.ViewModel
-		{
-			get { return ViewModel; }
-			set { ViewModel = (ProductFormViewViewModel)value; }
+					.InvokeCommand(ViewModel, x => x.Save)
+					.DisposeWith(disposables);
+			});
 		}
 	}
 }

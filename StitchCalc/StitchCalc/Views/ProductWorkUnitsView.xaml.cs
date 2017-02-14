@@ -2,12 +2,14 @@
 using StitchCalc.ViewModels.Views;
 using System;
 using System.Reactive.Linq;
+using System.Reactive.Disposables;
 
 using Xamarin.Forms;
+using ReactiveUI.XamForms;
 
 namespace StitchCalc.Views
 {
-	public partial class ProductWorkUnitsView : ContentPage, IViewFor<ProductWorkUnitsViewViewModel>
+	public partial class ProductWorkUnitsView : ReactiveContentPage<ProductWorkUnitsViewViewModel>
 	{
 		public ProductWorkUnitsView()
 		{
@@ -15,26 +17,14 @@ namespace StitchCalc.Views
 
 			ViewModel = new ProductWorkUnitsViewViewModel();
 
-			this.OneWayBind(ViewModel, vm => vm.Model.WorkUnits, v => v.WorkUnitsListView.ItemsSource);
-			this.OneWayBind(ViewModel, vm => vm.Model.WorkPrice, v => v.SumLabel.Text, x => x.ToString("N2"));
-			this.Bind(ViewModel, vm => vm.SelectedWorkUnit, v => v.WorkUnitsListView.SelectedItem);
+			this.WhenActivated(disposables => {
+				this.OneWayBind(ViewModel, vm => vm.Model.WorkUnits, v => v.WorkUnitsListView.ItemsSource).DisposeWith(disposables);
+				this.OneWayBind(ViewModel, vm => vm.Model.WorkPrice, v => v.SumLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
+				this.Bind(ViewModel, vm => vm.SelectedWorkUnit, v => v.WorkUnitsListView.SelectedItem).DisposeWith(disposables);
 
-				this.BindCommand(ViewModel, vm => vm.NavigateToWorkUnitFormView, v => v.AddWorkUnitToolbarItem);
-				this.BindCommand(ViewModel, vm => vm.Edit, v => v.WorkUnitsListView, nameof(ListView.ItemTapped));
-		}
-
-		public ProductWorkUnitsViewViewModel ViewModel
-		{
-			get { return (ProductWorkUnitsViewViewModel)GetValue(ViewModelProperty); }
-			set { SetValue(ViewModelProperty, value); }
-		}
-
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductWorkUnitsViewViewModel), typeof(ProductWorkUnitsView), null);
-
-		object IViewFor.ViewModel
-		{
-			get { return ViewModel; }
-			set { ViewModel = (ProductWorkUnitsViewViewModel)value; }
+				this.BindCommand(ViewModel, vm => vm.NavigateToWorkUnitFormView, v => v.AddWorkUnitToolbarItem).DisposeWith(disposables);
+				this.BindCommand(ViewModel, vm => vm.Edit, v => v.WorkUnitsListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
+			});
 		}
 	}
 }
