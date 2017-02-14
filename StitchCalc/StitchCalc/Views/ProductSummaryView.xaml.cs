@@ -14,62 +14,72 @@ namespace StitchCalc.Views
 {
 	public partial class ProductSummaryView : ReactiveContentPage<ProductSummaryViewViewModel>
 	{
-		public ProductSummaryView ()
+		public ProductSummaryView()
 		{
-			InitializeComponent ();
+			InitializeComponent();
 
 			ViewModel = new ProductSummaryViewViewModel();
 
 			this.BindCommand(ViewModel, vm => vm.Edit, v => v.EditProductToolbarItem);
 
-			this.WhenActivated(disposables => {
-				this.OneWayBind(ViewModel, vm => vm.Model.ChargeForMaterials, v => v.MaterialsStackLayout.Opacity, x=> x ? 1 : .2).DisposeWith(disposables);
+			this.WhenActivated(disposables =>
+			{
+				this.OneWayBind(ViewModel, vm => vm.Model.ChargeForMaterials, v => v.MaterialsStackLayout.Opacity, x => x ? 1 : .2).DisposeWith(disposables);
 				this.OneWayBind(ViewModel, vm => vm.Model.MaterialsPrice, v => v.MaterialsCostLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
 				this.OneWayBind(ViewModel, vm => vm.Model.IsMaterialsPriceMultiplied, v => v.MaterialsMultiplierLabel.IsVisible).DisposeWith(disposables);
 				this.OneWayBind(ViewModel, vm => vm.Model.MaterialsMultiplier, v => v.MaterialsMultiplierLabel.Text, x => $"x{x}").DisposeWith(disposables);
 
-				this.OneWayBind(ViewModel, vm => vm.Model.ChargeForWork, v => v.WorkStackLayout.Opacity, x => x ? 1: .2).DisposeWith(disposables);
+				this.OneWayBind(ViewModel, vm => vm.Model.ChargeForWork, v => v.WorkStackLayout.Opacity, x => x ? 1 : .2).DisposeWith(disposables);
 				this.OneWayBind(ViewModel, vm => vm.Model.WorkPrice, v => v.WorkCostLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
 				this.OneWayBind(ViewModel, vm => vm.Model.IsWorkPriceMultiplied, v => v.WorkMultiplierLabel.IsVisible).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.Model.WorkMultiplier, v => v.WorkMultiplierLabel.Text, x=> $"x{x}").DisposeWith(disposables);
+				this.OneWayBind(ViewModel, vm => vm.Model.WorkMultiplier, v => v.WorkMultiplierLabel.Text, x => $"x{x}").DisposeWith(disposables);
 
 				this.OneWayBind(ViewModel, vm => vm.Model.TotalPrice, v => v.SumCostLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
 
-				Observable
-					.FromEventPattern(MaterialsStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-					.SelectMany(_ => Observable.FromAsync(() => ShowActionSheet("Materials", ChargeReasons.Materials)))
-					.Subscribe()
+				var materialsTaps = Observable.FromEventPattern(MaterialsStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
+											  .SelectMany(_ => Observable.FromAsync(() => DisplayActionSheet("Materials", _cancelString, _toggleString, _multiplyString)))
+				                              .Publish()
+				                              .RefCount();
+
+				materialsTaps
+					.Where(x => x == _toggleString)
+					.ToSignal()
+					.InvokeCommand(ViewModel.Model.ToggleChargeForMaterials)
 					.DisposeWith(disposables);
-				Observable
-					.FromEventPattern(WorkStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-					.SelectMany(_ => Observable.FromAsync(() => ShowActionSheet("Work", ChargeReasons.Work)))
-					.Subscribe()
+
+				materialsTaps
+					.Where(x => x == _multiplyString)
+					.SelectMany(_ => Observable.FromAsync(() => CreateMultiplyPrompt("Materials")))
+					.Where(x => x.Ok)
+					.Select(x => x.Value)
+					.InvokeCommand<string>(ViewModel.Model.SetMaterialsMultiplier)
+					.DisposeWith(disposables);
+
+				var workTaps = Observable.FromEventPattern(WorkStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
+										 .SelectMany(_ => Observable.FromAsync(() => DisplayActionSheet("Work", _cancelString, _toggleString, _multiplyString)))
+										 .Publish()
+										 .RefCount();
+
+				workTaps
+					.Where(x => x == _toggleString)
+					.ToSignal()
+					.InvokeCommand(ViewModel.Model.ToggleChargeForWork)
+					.DisposeWith(disposables);
+
+				workTaps
+					.Where(x => x == _multiplyString)
+					.SelectMany(_ => Observable.FromAsync(() => CreateMultiplyPrompt("Work")))
+					.Where(x => x.Ok)
+					.Select(x => x.Value)
+					.InvokeCommand<string>(ViewModel.Model.SetWorkMultiplier)
 					.DisposeWith(disposables);
 			});
 		}
 
 		enum ChargeReasons { Materials, Work }
-		async Task ShowActionSheet(string title, ChargeReasons reason)
-		{
-			var actions = new string[] {reason.ToString(), "Cancel", "Toggle", "Multiply" };
-
-			var result = await DisplayActionSheet(actions[0], actions[1], null, actions[2], actions[3]);
-
-			if (result == actions[2])
-			{
-				if (reason == ChargeReasons.Materials) { Observable.Return(Unit.Default).InvokeCommand(ViewModel.Model.ToggleChargeForMaterials); }
-				else if(reason == ChargeReasons.Work) { Observable.Return(Unit.Default).InvokeCommand(ViewModel.Model.ToggleChargeForWork); }
-			}
-			else if (result == actions[3])
-			{
-				var multiplyResult = await UserDialogs.Instance.PromptAsync($"Multiply {reason.ToString()}", "Multiply", "OK", "Cancel", "0 to remove multiplier", inputType: InputType.Number);
-
-				if (multiplyResult.Ok)
-				{
-					if (reason == ChargeReasons.Materials) { Observable.Return(multiplyResult.Value).InvokeCommand<string>(ViewModel.Model.SetMaterialsMultiplier); }
-					else if (reason == ChargeReasons.Work) { Observable.Return(multiplyResult.Value).InvokeCommand<string>(ViewModel.Model.SetWorkMultiplier); }
-				}
-			}
-		}
+		string _cancelString = "Cancel";
+		string _toggleString = "Toggle";
+		string _multiplyString = "Multiply";
+		Task<PromptResult> CreateMultiplyPrompt(string subjectToMultiply) => UserDialogs.Instance.PromptAsync($"Multiply {subjectToMultiply}", "Multiply", "OK", "Cancel", "0 to remove multiplier", inputType: InputType.Number);
 	}
 }
