@@ -26,6 +26,7 @@ namespace StitchCalc.Views
 				this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem).DisposeWith(disposables);
 				this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton).DisposeWith(disposables);
 				this.BindCommand(ViewModel, vm => vm.Save, v => v.AmountEntry, nameof(Entry.Completed)).DisposeWith(disposables);
+
 				ViewModel
 					.Materials
 					.Changed
