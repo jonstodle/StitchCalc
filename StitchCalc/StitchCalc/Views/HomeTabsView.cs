@@ -12,27 +12,23 @@ namespace StitchCalc.Views
 {
 	public class HomeTabsView : TabbedPage, IViewFor<HomeTabsViewViewModel>, ICanActivate
 	{
-		public HomeTabsView ()
+		public HomeTabsView()
 		{
 			ViewModel = new HomeTabsViewViewModel();
 
 			Title = "StitchCalc";
 
-			this.WhenActivated(disposables =>
-			{
-				ViewModel
-					.Pages
-					.Changed
-					.Throttle(TimeSpan.FromMilliseconds(10))
-					.Select(_ => ViewModel.Pages)
-					.StartWith(ViewModel.Pages)
-					.Subscribe(pages =>
-					{
-						Children.Clear();
-						foreach (var page in pages) { Children.Add(page); }
-					})
-					.DisposeWith(disposables);
-			});
+			ViewModel
+				.Pages
+				.Changed
+				.Throttle(TimeSpan.FromMilliseconds(10))
+				.Select(_ => ViewModel.Pages)
+				.StartWith(ViewModel.Pages)
+				.Subscribe(pages =>
+				{
+					Children.Clear();
+					foreach (var page in pages) { Children.Add(page); }
+				});
 		}
 
 		public HomeTabsViewViewModel ViewModel
