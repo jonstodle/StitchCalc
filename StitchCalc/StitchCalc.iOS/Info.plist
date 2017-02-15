@@ -20,13 +20,11 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>MinimumOSVersion</key>
-	<string>6.0</string>
+	<string>9.0</string>
 	<key>CFBundleDisplayName</key>
 	<string>StitchCalc</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.jonstodle.stitchcalc</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
 	<key>CFBundleIconFiles</key>
 	<array>
 		<string>Icon@2x.png</string>
@@ -39,8 +37,10 @@
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.1.0</string>
+	<string>1.1.1</string>
 	<key>CFBundleName</key>
 	<string>StitchCalc</string>
+	<key>CFBundleVersion</key>
+	<string>4</string>
 </dict>
 </plist>
