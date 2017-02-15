@@ -24,6 +24,8 @@ namespace StitchCalc.Views
 
 				this.BindCommand(ViewModel, vm => vm.NavigateToProductMaterialFormView, v => v.AddProductMaterialsToolbarItem).DisposeWith(disposables);
 				this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
+
+				MaterialsListView.SelectedItem = null;
 			});
 		}
 	}
