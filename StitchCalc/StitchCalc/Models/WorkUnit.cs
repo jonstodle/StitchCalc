@@ -1,11 +1,13 @@
 ﻿using System;
+using Realms;
 
 namespace StitchCalc.Models
 {
-	public class WorkUnit
+	public class WorkUnit : RealmObject
     {
+		[PrimaryKey]
 		public Guid Id { get; set; }
-		public Guid ProductId { get; set; }
+
 		public string Name { get; set; }
 		public double Charge { get; set; }
 		public int Minutes { get; set; }
