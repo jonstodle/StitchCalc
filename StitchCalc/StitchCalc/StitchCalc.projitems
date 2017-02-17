@@ -10,6 +10,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemCollectionsSpecializedExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\DataStorageObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Material.cs" />
