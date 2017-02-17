@@ -6,8 +6,8 @@ namespace StitchCalc.Models
 {
 	public class Product : RealmObject
     {
-		[PrimaryKey]
-		public Guid Id { get; set; }
+        [PrimaryKey]
+        public Guid Id { get; set; } = Guid.NewGuid();
 
 		public string Name { get; set; }
 		public bool ChargeForMaterials { get; set; } = true;
