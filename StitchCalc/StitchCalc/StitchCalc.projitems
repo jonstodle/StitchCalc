@@ -16,12 +16,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Product.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ProductMaterial.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\WorkUnit.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.Materials.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.LoadSave.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.ProductMaterial.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.Products.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\DataService.WorkUnits.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.IosAndroid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.Windows.cs" />
