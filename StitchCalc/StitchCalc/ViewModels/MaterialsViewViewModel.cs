@@ -6,13 +6,15 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Realms;
+using StitchCalc.Models;
 
 namespace StitchCalc.ViewModels
 {
 	public class MaterialsViewViewModel : ViewModelBase, INavigable
 	{
-		readonly IReactiveDerivedList<MaterialViewModel> materials;
-		readonly ObservableAsPropertyHelper<IReactiveDerivedList<MaterialViewModel>> collectionView;
+		readonly IRealmCollection<Material> materials;
+		readonly ObservableAsPropertyHelper<IRealmCollection<Material>> collectionView;
 		readonly ReactiveCommand<Unit, Unit> navigateToMaterialFormView;
 		readonly ReactiveCommand<Unit, Unit> edit;
 		string searchTerm;
@@ -35,9 +37,9 @@ namespace StitchCalc.ViewModels
 			edit = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<MaterialFormView>((selectedMaterial as MaterialViewModel).Model.Id));
 		}
 
-		public IReactiveDerivedList<MaterialViewModel> Materials => materials;
+		public IRealmCollection<Material> Materials => materials;
 
-		public IReactiveDerivedList<MaterialViewModel> CollectionView => collectionView.Value;
+		public IRealmCollection<Material> CollectionView => collectionView.Value;
 
 		public string SearchTerm
 		{
@@ -57,7 +59,7 @@ namespace StitchCalc.ViewModels
 
 
 
-		private IReactiveDerivedList<MaterialViewModel> CreateDerivedList(string searchString)
+		private IRealmCollection<Material> CreateDerivedList(string searchString)
 		{
 			var orderFunc = new Func<MaterialViewModel, MaterialViewModel, int>((item1, item2) => item1.Name.CompareTo(item2.Name));
 

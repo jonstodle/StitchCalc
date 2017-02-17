@@ -6,19 +6,20 @@ using System;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
+using Realms;
 
 namespace StitchCalc.ViewModels
 {
 	public class ProductMaterialFormViewViewModel : ViewModelBase, INavigable
 	{
-		readonly IReactiveDerivedList<MaterialViewModel> materials;
+		readonly IRealmCollection<Material> materials;
 		readonly ReactiveCommand<Unit, Unit> save;
 		readonly ReactiveCommand<Unit, Unit> navigateToMaterialFormView;
 		string pageTitle;
 		int selectedMaterialIndex;
 		string amount;
-		ProductViewModel product;
-		ProductMaterialViewModel productMaterial;
+		Product product;
+		ProductMaterial productMaterial;
 
 		public ProductMaterialFormViewViewModel()
 		{
@@ -41,7 +42,7 @@ namespace StitchCalc.ViewModels
 
 		public ReactiveCommand NavigateToMaterialFormView => navigateToMaterialFormView;
 
-		public IReactiveDerivedList<MaterialViewModel> Materials => materials;
+		public IRealmCollection<Material> Materials => materials;
 
 		public int SelectedMaterialIndex
 		{

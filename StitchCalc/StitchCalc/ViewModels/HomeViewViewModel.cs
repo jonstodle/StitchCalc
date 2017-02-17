@@ -7,13 +7,15 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using StitchCalc.Models;
+using Realms;
 
 namespace StitchCalc.ViewModels
 {
 	public class HomeViewViewModel : ViewModelBase, INavigable
 	{
-		readonly IReactiveDerivedList<ProductViewModel> products;
-		readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductViewModel>> collectionView;
+		readonly IRealmCollection<Product> products;
+		readonly ObservableAsPropertyHelper<IRealmCollection<Product>> collectionView;
 		readonly ReactiveCommand<Unit, Unit> navigateToProductFormPage;
 		readonly ReactiveCommand<Unit, Unit> navigateToProductPage;
 		string searchTerm;
@@ -36,9 +38,9 @@ namespace StitchCalc.ViewModels
 			navigateToProductPage = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<ProductView>((selectedProduct as ProductViewModel).Model.Id));
 		}
 
-		public IReactiveDerivedList<ProductViewModel> Products => products;
+		public IRealmCollection<Product> Products => products;
 
-		public IReactiveDerivedList<ProductViewModel> CollectionView => collectionView.Value;
+		public IRealmCollection<Product> CollectionView => collectionView.Value;
 
 		public ReactiveCommand NavigateToProductFormPage => navigateToProductFormPage;
 
@@ -58,7 +60,7 @@ namespace StitchCalc.ViewModels
 
 
 
-		private IReactiveDerivedList<ProductViewModel> CreateDerivedList(string searchString)
+		private IRealmCollection<Product> CreateDerivedList(string searchString)
 		{
 			var orderFunc = new Func<ProductViewModel, ProductViewModel, int>((item1, item2) => item1.Name.CompareTo(item2.Name));
 

@@ -16,7 +16,7 @@ namespace StitchCalc.ViewModels
 		string width;
 		string price;
 		string notes;
-		MaterialViewModel material;
+		Material material;
 
 		public MaterialFormViewViewModel()
 		{
@@ -67,7 +67,7 @@ namespace StitchCalc.ViewModels
 			set { this.RaiseAndSetIfChanged(ref notes, value); }
 		}
 
-		public MaterialViewModel Material
+		public Material Material
 		{
 			get { return material; }
 			set { this.RaiseAndSetIfChanged(ref material, value); }

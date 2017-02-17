@@ -5,6 +5,7 @@ using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using StitchCalc.Models;
 
 namespace StitchCalc.ViewModels
 {
@@ -12,7 +13,7 @@ namespace StitchCalc.ViewModels
 	{
 		readonly ReactiveList<Page> pages;
 		readonly ObservableAsPropertyHelper<string> pageTitle;
-		ProductViewModel model;
+		Product model;
 		int selectedPageIndex;
 
 		public ProductViewViewModel()
@@ -41,7 +42,7 @@ namespace StitchCalc.ViewModels
 
 		public string PageTitle => pageTitle.Value;
 
-		public ProductViewModel Model
+		public Product Model
 		{
 			get { return model; }
 			set { this.RaiseAndSetIfChanged(ref model, value); }

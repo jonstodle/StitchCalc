@@ -12,7 +12,7 @@ namespace StitchCalc.ViewModels
 	{
 		readonly ReactiveCommand<Unit, Unit> save;
 		string pageTitle;
-		ProductViewModel product;
+		Product product;
 		string name;
 
 		public ProductFormViewViewModel()

@@ -6,6 +6,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using StitchCalc.Models;
 
 namespace StitchCalc.ViewModels
 {
@@ -13,7 +14,7 @@ namespace StitchCalc.ViewModels
 	{
 		readonly ReactiveCommand<Unit, Unit> navigateToWorkUnitFormView;
 		readonly ReactiveCommand<Unit, Unit> edit;
-		ProductViewModel product;
+		Product product;
 		object selectedWorkUnit;
 
 		public ProductWorkUnitsViewViewModel()
@@ -27,7 +28,7 @@ namespace StitchCalc.ViewModels
 
 		public ReactiveCommand Edit => edit;
 
-		public ProductViewModel Model
+		public Product Model
 		{
 			get { return product; }
 			set { this.RaiseAndSetIfChanged(ref product, value); }

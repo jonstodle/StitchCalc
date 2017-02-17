@@ -15,8 +15,8 @@ namespace StitchCalc.ViewModels
 		string name;
 		string minutes;
 		string charge;
-		ProductViewModel product;
-		WorkUnitViewModel workUnit;
+		Product product;
+		WorkUnit workUnit;
 
 
 		public WorkUnitFormViewViewModel()

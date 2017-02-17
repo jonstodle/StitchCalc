@@ -5,13 +5,14 @@ using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using StitchCalc.Models;
 
 namespace StitchCalc.ViewModels
 {
 	public class ProductSummaryViewViewModel : ViewModelBase, INavigable
 	{
 		readonly ReactiveCommand<Unit, Unit> edit;
-		ProductViewModel model;
+		Product model;
 
 		public ProductSummaryViewViewModel()
 		{
@@ -20,7 +21,7 @@ namespace StitchCalc.ViewModels
 
 		public ReactiveCommand Edit => edit;
 
-		public ProductViewModel Model
+		public Product Model
 		{
 			get { return model; }
 			set { this.RaiseAndSetIfChanged(ref model, value); }
