@@ -1,9 +1,9 @@
 ﻿using ReactiveUI;
 using StitchCalc.Models;
-using StitchCalc.Services.DataServices;
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Linq;
 
 namespace StitchCalc.ViewModels.Models
 {

@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using StitchCalc.Models;
-using StitchCalc.Services.DataServices;
 using StitchCalc.Services.NavigationService;
 using StitchCalc.Services.SettingsServices;
 using StitchCalc.ViewModels.Models;

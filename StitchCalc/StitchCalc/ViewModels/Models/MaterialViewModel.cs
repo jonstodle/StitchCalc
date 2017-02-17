@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using StitchCalc.Models;
-using StitchCalc.Services.DataServices;
 using System;
 using System.Reactive;
 
