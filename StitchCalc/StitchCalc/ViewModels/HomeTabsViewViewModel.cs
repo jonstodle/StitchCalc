@@ -6,9 +6,9 @@ using Xamarin.Forms;
 using System.Threading.Tasks;
 using System.Reactive.Linq;
 
-namespace StitchCalc.ViewModels.Views
+namespace StitchCalc.ViewModels
 {
-	public class HomeTabsViewViewModel : ViewViewModelBase, INavigable
+	public class HomeTabsViewViewModel : ViewModelBase, INavigable
 	{
 		readonly ReactiveList<Page> pages;
 

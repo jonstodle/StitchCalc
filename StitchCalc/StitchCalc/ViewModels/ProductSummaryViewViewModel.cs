@@ -1,15 +1,14 @@
 ﻿using ReactiveUI;
 using StitchCalc.Services.NavigationService;
-using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
-namespace StitchCalc.ViewModels.Views
+namespace StitchCalc.ViewModels
 {
-	public class ProductSummaryViewViewModel : ViewViewModelBase, INavigable
+	public class ProductSummaryViewViewModel : ViewModelBase, INavigable
 	{
 		readonly ReactiveCommand<Unit, Unit> edit;
 		ProductViewModel model;

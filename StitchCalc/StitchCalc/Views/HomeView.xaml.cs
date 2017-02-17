@@ -1,11 +1,11 @@
 ﻿using ReactiveUI;
-using StitchCalc.ViewModels.Views;
 using System;
 using System.Reactive.Linq;
 using Xamarin.Forms;
 using System.Reactive.Disposables;
 using System.Reactive;
 using ReactiveUI.XamForms;
+using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {

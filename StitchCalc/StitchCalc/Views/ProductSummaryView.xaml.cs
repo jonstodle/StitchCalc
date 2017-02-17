@@ -1,6 +1,5 @@
 ﻿using Acr.UserDialogs;
 using ReactiveUI;
-using StitchCalc.ViewModels.Views;
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -9,6 +8,7 @@ using Xamarin.Forms;
 using System.Reactive.Disposables;
 using ReactiveUI.XamForms;
 using System.Threading.Tasks;
+using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {

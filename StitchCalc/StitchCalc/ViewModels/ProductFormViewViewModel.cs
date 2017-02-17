@@ -1,15 +1,14 @@
 ﻿using ReactiveUI;
 using StitchCalc.Models;
 using StitchCalc.Services.NavigationService;
-using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
 using System.Reactive;
 using System.Threading.Tasks;
 
-namespace StitchCalc.ViewModels.Views
+namespace StitchCalc.ViewModels
 {
-	public class ProductFormViewViewModel : ViewViewModelBase, INavigable
+	public class ProductFormViewViewModel : ViewModelBase, INavigable
 	{
 		readonly ReactiveCommand<Unit, Unit> save;
 		string pageTitle;

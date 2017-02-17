@@ -26,18 +26,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\HomeTabsViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\HomeViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\MaterialFormViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\MaterialsViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductFormViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductMaterialFormViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductMaterialsViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductSummaryViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ProductWorkUnitsViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\SettingsViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\WorkUnitFormViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\HomeTabsView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
@@ -81,9 +69,20 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemReactiveLinqExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ViewViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\JsonToRealmMigrationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DBService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HomeTabsViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HomeViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialFormViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialsViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductFormViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialFormViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialsViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductSummaryViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductWorkUnitsViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkUnitFormViewViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\HomeView.xaml">

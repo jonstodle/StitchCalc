@@ -1,16 +1,15 @@
 ﻿using ReactiveUI;
 using StitchCalc.Models;
 using StitchCalc.Services.NavigationService;
-using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
 using System.Linq;
 using System.Reactive;
 using System.Threading.Tasks;
 
-namespace StitchCalc.ViewModels.Views
+namespace StitchCalc.ViewModels
 {
-	public class ProductMaterialFormViewViewModel : ViewViewModelBase, INavigable
+	public class ProductMaterialFormViewViewModel : ViewModelBase, INavigable
 	{
 		readonly IReactiveDerivedList<MaterialViewModel> materials;
 		readonly ReactiveCommand<Unit, Unit> save;

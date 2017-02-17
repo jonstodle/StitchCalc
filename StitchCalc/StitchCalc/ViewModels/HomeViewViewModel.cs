@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using StitchCalc.Services.NavigationService;
-using StitchCalc.ViewModels.Models;
 using StitchCalc.Views;
 using System;
 using System.Linq;
@@ -9,9 +8,9 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace StitchCalc.ViewModels.Views
+namespace StitchCalc.ViewModels
 {
-	public class HomeViewViewModel : ViewViewModelBase, INavigable
+	public class HomeViewViewModel : ViewModelBase, INavigable
 	{
 		readonly IReactiveDerivedList<ProductViewModel> products;
 		readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductViewModel>> collectionView;

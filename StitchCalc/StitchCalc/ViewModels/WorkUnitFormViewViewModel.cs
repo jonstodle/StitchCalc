@@ -2,14 +2,13 @@
 using StitchCalc.Models;
 using StitchCalc.Services.NavigationService;
 using StitchCalc.Services.SettingsServices;
-using StitchCalc.ViewModels.Models;
 using System;
 using System.Reactive;
 using System.Threading.Tasks;
 
-namespace StitchCalc.ViewModels.Views
+namespace StitchCalc.ViewModels
 {
-	public class WorkUnitFormViewViewModel : ViewViewModelBase, INavigable
+	public class WorkUnitFormViewViewModel : ViewModelBase, INavigable
 	{
 		readonly ReactiveCommand<Unit, Unit> save;
 		string pageTitle;

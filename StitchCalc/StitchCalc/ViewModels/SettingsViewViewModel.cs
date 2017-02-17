@@ -6,9 +6,9 @@ using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 
-namespace StitchCalc.ViewModels.Views
+namespace StitchCalc.ViewModels
 {
-	public class SettingsViewViewModel : ViewViewModelBase, INavigable
+	public class SettingsViewViewModel : ViewModelBase, INavigable
 	{
 		string defaultHourlyCharge;
 		string appVersion;
