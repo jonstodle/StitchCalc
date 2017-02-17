@@ -19,7 +19,7 @@ namespace StitchCalc
 
 		public static IRealmCollection<T> Get<T>() where T : RealmObject => _realm.All<T>().AsRealmCollection();
 
-		public static IRealmCollection<T> Get<T, TKey>(Expression<Func<T, TKey>> orderFunction, bool sortAscending = true) where T : RealmObject
+		public static IRealmCollection<T> Get<T, TSortKey>(Expression<Func<T, TSortKey>> orderFunction, bool sortAscending = true) where T : RealmObject
 		{
 			if (sortAscending) return _realm.All<T>().OrderBy(orderFunction).AsRealmCollection();
 			else return _realm.All<T>().OrderByDescending(orderFunction).AsRealmCollection();
