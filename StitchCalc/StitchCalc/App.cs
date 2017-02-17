@@ -1,4 +1,5 @@
-﻿using StitchCalc.Services.NavigationService;
+﻿using System.IO;
+using StitchCalc.Services.NavigationService;
 using StitchCalc.Views;
 
 using Xamarin.Forms;
@@ -9,10 +10,12 @@ namespace StitchCalc
 	{
 		public App ()
 		{
-			AddGlobalResources(); 
+			AddGlobalResources();
 
 			// The root page of your application
-			MainPage = new NavigationPage(new HomeTabsView());
+			if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "data.json"))) MainPage = new NavigationPage(new HomeTabsView());
+			else MainPage = new NavigationPage(new HomeTabsView());
+
 			new NavigationService(MainPage.Navigation);
 		}
 

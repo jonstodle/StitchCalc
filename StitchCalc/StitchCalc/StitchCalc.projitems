@@ -94,6 +94,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\ModelViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ViewViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\JsonToRealmMigrationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\DBService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\HomeView.xaml">
