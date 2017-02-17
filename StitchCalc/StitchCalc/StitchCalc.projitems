@@ -25,10 +25,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.User.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\MaterialViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\ProductMaterialViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\ProductViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\WorkUnitViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\HomeTabsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\HomeViewViewModel.cs" />
@@ -85,7 +81,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemReactiveLinqExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Models\ModelViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Views\ViewViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\JsonToRealmMigrationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DBService.cs" />
