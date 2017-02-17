@@ -9,75 +9,72 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using StitchCalc.Models;
 using Realms;
+using System.Collections.Specialized;
 
 namespace StitchCalc.ViewModels
 {
-	public class HomeViewViewModel : ViewModelBase, INavigable
-	{
-		readonly IRealmCollection<Product> products;
-		readonly ObservableAsPropertyHelper<IRealmCollection<Product>> collectionView;
-		readonly ReactiveCommand<Unit, Unit> navigateToProductFormPage;
-		readonly ReactiveCommand<Unit, Unit> navigateToProductPage;
-		string searchTerm;
-		object selectedProduct;
+    public class HomeViewViewModel : ViewModelBase, INavigable
+    {
+        public HomeViewViewModel()
+        {
+            _products = DBService.Get<Product, string>(x => x.Name);
 
-		public HomeViewViewModel()
-		{
-			products = DataService.Current.GetProducts();
+            _navigateToProductFormPage = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductFormView>());
 
-			this
-				.WhenAnyValue(x => x.SearchTerm)
-				.Merge(products.Changed.Select(_ => ""))
-				.Throttle(TimeSpan.FromMilliseconds(500), RxApp.TaskpoolScheduler)
-				.Select(x => CreateDerivedList(x))
-				.ObserveOn(RxApp.MainThreadScheduler)
-				.ToProperty(this, x => x.CollectionView, out collectionView);
+            _navigateToProductPage = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<ProductView>(_selectedProduct.Id));
 
-			navigateToProductFormPage = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductFormView>());
-
-			navigateToProductPage = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<ProductView>((selectedProduct as ProductViewModel).Model.Id));
-		}
-
-		public IRealmCollection<Product> Products => products;
-
-		public IRealmCollection<Product> CollectionView => collectionView.Value;
-
-		public ReactiveCommand NavigateToProductFormPage => navigateToProductFormPage;
-
-		public ReactiveCommand NavigateToProductPage => navigateToProductPage;
-
-		public string SearchTerm
-		{
-			get { return searchTerm; }
-			set { this.RaiseAndSetIfChanged(ref searchTerm, value); }
-		}
-
-		public object SelectedProduct
-		{
-			get { return selectedProduct; }
-			set { this.RaiseAndSetIfChanged(ref selectedProduct, value); }
-		}
+            _collectionView = Observable.Merge(
+                    this.WhenAnyValue(x => x.SearchTerm),
+                    _products.Changed().Select(_ => ""))
+                .Throttle(TimeSpan.FromMilliseconds(500), RxApp.TaskpoolScheduler)
+                .Select(x => CreateFilteredList(x))
+                .ObserveOn(RxApp.MainThreadScheduler)
+                .ToProperty(this, x => x.CollectionView);
+        }
 
 
 
-		private IRealmCollection<Product> CreateDerivedList(string searchString)
-		{
-			var orderFunc = new Func<ProductViewModel, ProductViewModel, int>((item1, item2) => item1.Name.CompareTo(item2.Name));
+        public IRealmCollection<Product> Products => _products;
 
-			if (string.IsNullOrWhiteSpace(searchString))
-			{
-				return Products.CreateDerivedCollection(x => x, orderer: orderFunc);
-			}
-			else
-			{
-				return Products.CreateDerivedCollection(x => x, x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), orderFunc);
-			}
-		}
+        public IRealmCollection<Product> CollectionView => _collectionView.Value;
+
+        public ReactiveCommand NavigateToProductFormPage => _navigateToProductFormPage;
+
+        public ReactiveCommand NavigateToProductPage => _navigateToProductPage;
+
+        public string SearchTerm
+        {
+            get { return _searchTerm; }
+            set { this.RaiseAndSetIfChanged(ref _searchTerm, value); }
+        }
+
+        public Product SelectedProduct
+        {
+            get { return _selectedProduct; }
+            set { this.RaiseAndSetIfChanged(ref _selectedProduct, value); }
+        }
 
 
 
-		public Task OnNavigatedTo(object parameter, NavigationDirection direction) => Task.CompletedTask;
+        public Task OnNavigatedTo(object parameter, NavigationDirection direction) => Task.CompletedTask;
 
-		public Task OnNavigatingFrom() => Task.CompletedTask;
-	}
+        public Task OnNavigatingFrom() => Task.CompletedTask;
+
+
+
+        private IRealmCollection<Product> CreateFilteredList(string searchString)
+        {
+            if (!searchString.HasValue()) return _products;
+            else return DBService.Get<Product, string>(x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), x => x.Name);
+        }
+
+
+
+        private readonly IRealmCollection<Product> _products;
+        private readonly ObservableAsPropertyHelper<IRealmCollection<Product>> _collectionView;
+        private readonly ReactiveCommand<Unit, Unit> _navigateToProductFormPage;
+        private readonly ReactiveCommand<Unit, Unit> _navigateToProductPage;
+        private string _searchTerm;
+        private Product _selectedProduct;
+    }
 }
