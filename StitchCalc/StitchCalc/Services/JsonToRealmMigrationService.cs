@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,6 +15,44 @@ namespace StitchCalc
 		{
 			_jsonData = jsonData;
 		}
+
+
+
+		public IObservable<Unit> MigrateData() => Observable.Start(() =>
+		{
+			var products = GetProducts().Wait();
+			DBService.Write(realm => 
+			{
+				foreach (var product in products)
+				{
+					realm.Add(product);
+				}
+			});
+
+			var materials = GetMaterials().Wait();
+			DBService.Write(realm => { foreach (var material in materials) realm.Add(material); });
+
+			foreach (var product in DBService.GetList<Product>())
+			{
+				var workUnits = GetWorkUnits(product).Wait();
+				var productMaterials = GetProductMaterials(product, DBService.GetList<Material>()).Wait();
+
+				DBService.Write(realm =>
+				{
+					foreach (var workUnit in workUnits)
+					{
+						workUnit.Product = product;
+						realm.Add(workUnit);
+					}
+
+					foreach (var productMaterial in productMaterials)
+					{
+						productMaterial.Product = product;
+						realm.Add(productMaterial);
+					}
+				});
+			}
+		});
 
 
 
@@ -48,7 +87,7 @@ namespace StitchCalc
 							 if (material == null) return null;
 
 							 var productMaterial = new ProductMaterial(material);
-							 productMaterial.Id = JsonConvert.DeserializeObject<Guid>(x["Id"].ToString());
+							 productMaterial.StringId = x["Id"].ToString();
 							 productMaterial.Length = JsonConvert.DeserializeObject<double>(x["Length"].ToString());
 							 return productMaterial;
 						 })
