@@ -12,35 +12,32 @@ namespace StitchCalc.ViewModels
 {
 	public class ProductMaterialsViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<Unit, Unit> navigateToMaterialFormView;
-		readonly ReactiveCommand<Unit, Unit> edit;
-		Product product;
-		object selectedProductMaterial;
-
 		public ProductMaterialsViewViewModel()
 		{
-			navigateToMaterialFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductMaterialFormView>(product.Model.Id));
+			_navigateToMaterialFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductMaterialFormView>(_product.Id));
 
-			edit = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<ProductMaterialFormView>(Tuple.Create(product.Model.Id, (selectedProductMaterial as ProductMaterialViewModel).Model.Id)));
-			edit
+			_edit = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<ProductMaterialFormView>(Tuple.Create(_product.Id, _selectedProductMaterial.Id)));
+			_edit
 				.ThrownExceptions
 				.Subscribe(ex => System.Diagnostics.Debug.WriteLine(ex.Message));
 		}
 
-		public ReactiveCommand NavigateToProductMaterialFormView => navigateToMaterialFormView;
 
-		public ReactiveCommand Edit => edit;
+
+		public ReactiveCommand NavigateToProductMaterialFormView => _navigateToMaterialFormView;
+
+		public ReactiveCommand Edit => _edit;
 
 		public Product Product
 		{
-			get { return product; }
-			set { this.RaiseAndSetIfChanged(ref product, value); }
+			get { return _product; }
+			set { this.RaiseAndSetIfChanged(ref _product, value); }
 		}
 
-		public object SelectedProductMaterial
+		public ProductMaterial SelectedProductMaterial
 		{
-			get { return selectedProductMaterial; }
-			set { this.RaiseAndSetIfChanged(ref selectedProductMaterial, value); }
+			get { return _selectedProductMaterial; }
+			set { this.RaiseAndSetIfChanged(ref _selectedProductMaterial, value); }
 		}
 
 
@@ -49,12 +46,19 @@ namespace StitchCalc.ViewModels
 		{
 			if (parameter is Guid)
 			{
-				Product = DataService.Current.GetProduct((Guid)parameter);
+				Product = DBService.GetSingle<Product>((Guid)parameter);
 			}
 
 			return Task.CompletedTask;
 		}
 
 		public Task OnNavigatingFrom() => Task.CompletedTask;
-	}
+
+
+
+        private readonly ReactiveCommand<Unit, Unit> _navigateToMaterialFormView;
+        private readonly ReactiveCommand<Unit, Unit> _edit;
+        private Product _product;
+        private ProductMaterial _selectedProductMaterial;
+    }
 }
