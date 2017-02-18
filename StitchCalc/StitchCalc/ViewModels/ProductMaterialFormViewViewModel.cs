@@ -12,67 +12,89 @@ namespace StitchCalc.ViewModels
 {
 	public class ProductMaterialFormViewViewModel : ViewModelBase, INavigable
 	{
-		readonly IRealmCollection<Material> materials;
-		readonly ReactiveCommand<Unit, Unit> save;
-		readonly ReactiveCommand<Unit, Unit> navigateToMaterialFormView;
-		string pageTitle;
-		int selectedMaterialIndex;
-		string amount;
-		Product product;
-		ProductMaterial productMaterial;
-
 		public ProductMaterialFormViewViewModel()
 		{
-			materials = DataService.Current.GetMaterials();
+            _materials = DBService.GetOrderedList<Material, string>(x => x.Name);
 
-			save = ReactiveCommand.Create(
+			_save = ReactiveCommand.Create(
 				() => SaveImpl(),
 				this.WhenAnyValue(x => x.SelectedMaterialIndex, y => y.Amount, (x, y) => x >= 0 && !string.IsNullOrWhiteSpace(y) && GetLengthFromAmountString(y) > 0));
 
-			navigateToMaterialFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<MaterialFormView>());
-		}
+			_navigateToMaterialFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<MaterialFormView>());
+        }
 
-		public string PageTitle
+
+
+        public ReactiveCommand Save => _save;
+
+        public ReactiveCommand NavigateToMaterialFormView => _navigateToMaterialFormView;
+
+        public IRealmCollection<Material> Materials => _materials;
+
+        public string PageTitle
 		{
-			get { return pageTitle; }
-			set { this.RaiseAndSetIfChanged(ref pageTitle, value); }
+			get { return _pageTitle; }
+			set { this.RaiseAndSetIfChanged(ref _pageTitle, value); }
 		}
-
-		public ReactiveCommand Save => save;
-
-		public ReactiveCommand NavigateToMaterialFormView => navigateToMaterialFormView;
-
-		public IRealmCollection<Material> Materials => materials;
 
 		public int SelectedMaterialIndex
 		{
-			get { return selectedMaterialIndex; }
-			set { this.RaiseAndSetIfChanged(ref selectedMaterialIndex, value); }
+			get { return _selectedMaterialIndex; }
+			set { this.RaiseAndSetIfChanged(ref _selectedMaterialIndex, value); }
 		}
 
 		public string Amount
 		{
-			get { return amount; }
-			set { this.RaiseAndSetIfChanged(ref amount, value); }
-		}
+			get { return _amount; }
+			set { this.RaiseAndSetIfChanged(ref _amount, value); }
+        }
 
-		private async void SaveImpl()
+
+
+        public Task OnNavigatedTo(object parameter, NavigationDirection direction)
+        {
+            if (direction == NavigationDirection.Forwards)
+            {
+                if (parameter is Guid)
+                {
+                    _product = DBService.GetSingle<Product>(x => x.Id == (Guid)parameter);
+
+                    PageTitle = "Add Material";
+                    SelectedMaterialIndex = 0;
+                }
+                else
+                {
+                    var param = (Tuple<Guid, Guid>)parameter;
+                    _product = DBService.GetSingle<Product>(x => x.Id == param.Item1);
+                    _productMaterial = _product.Materials.FirstOrDefault(x => x.Id == param.Item2);
+
+                    PageTitle = "Edit Material";
+                    SelectedMaterialIndex = _materials.ToList().IndexOf(_materials.FirstOrDefault(x => x.Id == _productMaterial.MaterialId));
+                    Amount = _productMaterial.Length.ToString();
+                }
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task OnNavigatingFrom() => Task.CompletedTask;
+
+
+
+        private async void SaveImpl()
 		{
-			var prdctmtrl = new ProductMaterial
+			var productMaterial = new ProductMaterial(_materials[_selectedMaterialIndex])
 			{
-				Id = productMaterial?.Model.Id ?? default(Guid),
-				ProductId = product.Model.Id,
-				MaterialId = materials[selectedMaterialIndex].Model.Id,
 				Length = GetLengthFromAmountString(Amount)
 			};
+            if (_productMaterial != null) productMaterial.Id = _productMaterial.Id;
 
-			if (productMaterial == null) { DataService.Current.Add(prdctmtrl); }
-			else { DataService.Current.Update(prdctmtrl); }
+            DBService.Write(realm => realm.Add(productMaterial, true));
 
 			await NavigationService.Current.GoBack();
 		}
 
-		double GetLengthFromAmountString(string amountString)
+		private double GetLengthFromAmountString(string amountString)
 		{
 			double l, w;
 
@@ -82,7 +104,7 @@ namespace StitchCalc.ViewModels
 
 			if (amountParts.Count == 2 && double.TryParse(amountParts[0], out l) && double.TryParse(amountParts[1], out w))
 			{
-				return (l * w) / materials[SelectedMaterialIndex >= 0 ? SelectedMaterialIndex : 0].Width;
+				return (l * w) / _materials[SelectedMaterialIndex >= 0 ? SelectedMaterialIndex : 0].Width;
 			}
 
 			return -1;
@@ -90,39 +112,13 @@ namespace StitchCalc.ViewModels
 
 
 
-		public Task OnNavigatedTo(object parameter, NavigationDirection direction)
-		{
-			if (direction == NavigationDirection.Forwards)
-			{
-				if (parameter is Guid)
-				{
-					product = DataService.Current.GetProduct((Guid)parameter);
-
-					PageTitle = "Add Material";
-					SelectedMaterialIndex = materials.Count > 0 ? 0 : default(int);
-				}
-				else
-				{
-					var param = (Tuple<Guid, Guid>)parameter;
-					product = DataService.Current.GetProduct(param.Item1);
-					productMaterial = DataService.Current.GetProductMaterial(param.Item2);
-
-					PageTitle = "Edit Material";
-					for (int i = 0; i < materials.Count; i++)
-					{
-						if (materials[i].Model.Id == productMaterial.Model.MaterialId)
-						{
-							SelectedMaterialIndex = i;
-							break;
-						}
-					}
-					Amount = productMaterial.Length.ToString();
-				} 
-			}
-
-			return Task.CompletedTask;
-		}
-
-		public Task OnNavigatingFrom() => Task.CompletedTask;
-	}
+        private readonly IRealmCollection<Material> _materials;
+        private readonly ReactiveCommand<Unit, Unit> _save;
+        private readonly ReactiveCommand<Unit, Unit> _navigateToMaterialFormView;
+        private string _pageTitle;
+        private int _selectedMaterialIndex;
+        private string _amount;
+        private Product _product;
+        private ProductMaterial _productMaterial;
+    }
 }
