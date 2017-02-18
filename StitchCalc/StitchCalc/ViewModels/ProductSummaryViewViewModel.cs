@@ -77,7 +77,7 @@ namespace StitchCalc.ViewModels
 
         public bool IsWorkPriceMultiplied => _isWorkPriceMultiplied.Value;
 
-        public double TotalPrice => _workPrice.Value;
+		public double TotalPrice => _totalPrice.Value;
 
         public Product Product
 		{
