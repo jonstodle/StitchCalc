@@ -10,63 +10,66 @@ namespace StitchCalc.ViewModels
 {
 	public class ProductFormViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<Unit, Unit> save;
-		string pageTitle;
-		Product product;
-		string name;
-
 		public ProductFormViewViewModel()
 		{
-			save = ReactiveCommand.Create(
+			_save = ReactiveCommand.Create(
 				() => AddMaterialsImpl(),
 				this.WhenAnyValue(x => x.Name, x => !string.IsNullOrWhiteSpace(x)));
 		}
 
-		public ReactiveCommand Save => save;
+		public ReactiveCommand Save => _save;
 
 		public string PageTitle
 		{
-			get { return pageTitle; }
-			set { this.RaiseAndSetIfChanged(ref pageTitle, value); }
+			get { return _pageTitle; }
+			set { this.RaiseAndSetIfChanged(ref _pageTitle, value); }
 		}
 
 		public string Name
 		{
-			get { return name; }
-			set { this.RaiseAndSetIfChanged(ref name, value); }
+			get { return _name; }
+			set { this.RaiseAndSetIfChanged(ref _name, value); }
 		}
 
-		private async void AddMaterialsImpl()
+
+
+        public Task OnNavigatedTo(object parameter, NavigationDirection direction)
+        {
+            if (parameter is Guid)
+            {
+                _product = DBService.GetSingle<Product>(x => x.Id == (Guid)parameter);
+
+                PageTitle = "Edit Product";
+                Name = _product.Name;
+            }
+            else
+            {
+                PageTitle = "Add Product";
+            }
+
+            return Task.CompletedTask;
+        }
+
+        public Task OnNavigatingFrom() => Task.CompletedTask;
+
+
+
+        private async void AddMaterialsImpl()
 		{
-			if (product == null)
-			{
-				var addedItem = DataService.Current.Add(new Product { Name = Name });
-				await NavigationService.Current.NavigateToAndRemoveThis<ProductView>(Tuple.Create(addedItem.Id, 1));
-			}
-			else
-			{
-				DataService.Current.Update(new Product { Id = product.Model.Id, Name = Name });
-				await NavigationService.Current.GoBack();
-			}
+            var product = new Product { Name = _name };
+            if (_product != null) product.Id = _product.Id;
+
+            DBService.Write(realm => realm.Add(product, true));
+
+            if (_product != null) await NavigationService.Current.GoBack();
+            else await NavigationService.Current.NavigateToAndRemoveThis<ProductView>(Tuple.Create(product.Id, 1));
 		}
 
-		public Task OnNavigatedTo(object parameter, NavigationDirection direction)
-		{
-			if (parameter is Guid)
-			{
-				product = DataService.Current.GetProduct((Guid)parameter);
 
-				PageTitle = "Edit Product";
-				Name = product.Name;
-			}
-			else
-			{
-				PageTitle = "Add Product";
-			}
 
-			return Task.CompletedTask;
-		}
-
-		public Task OnNavigatingFrom() => Task.CompletedTask;
-	}
+        private readonly ReactiveCommand<Unit, Unit> _save;
+        private string _pageTitle;
+        private Product _product;
+        private string _name;
+    }
 }
