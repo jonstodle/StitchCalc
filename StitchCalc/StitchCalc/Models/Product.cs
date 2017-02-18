@@ -8,7 +8,7 @@ namespace StitchCalc.Models
 	public class Product : RealmObject, IGuidId
     {
         [PrimaryKey]
-        public Guid Id { get; set; } = Guid.NewGuid();
+		public string StringId { get; set; } = Guid.NewGuid().ToString();
 
 		public string Name { get; set; }
 		public bool ChargeForMaterials { get; set; } = true;
@@ -16,8 +16,12 @@ namespace StitchCalc.Models
 		public double MaterialsMultiplier { get; set; }
 		public double WorkMultiplier { get; set; }
         [Backlink(nameof(ProductMaterial.Product))]
-		public IQueryable<ProductMaterial> Materials { get; set; }
+		public IQueryable<ProductMaterial> Materials { get; }
         [Backlink(nameof(WorkUnit.Product))]
-		public IQueryable<WorkUnit> WorkUnits { get; set; }
+		public IQueryable<WorkUnit> WorkUnits { get; }
+
+
+
+		public Guid Id { get { return Guid.Parse(StringId); } set { StringId = value.ToString(); } }
 	}
 }
