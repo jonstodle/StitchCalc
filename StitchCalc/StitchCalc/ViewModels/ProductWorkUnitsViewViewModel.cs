@@ -12,32 +12,27 @@ namespace StitchCalc.ViewModels
 {
 	public class ProductWorkUnitsViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<Unit, Unit> navigateToWorkUnitFormView;
-		readonly ReactiveCommand<Unit, Unit> edit;
-		Product product;
-		object selectedWorkUnit;
-
 		public ProductWorkUnitsViewViewModel()
 		{
-			navigateToWorkUnitFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<WorkUnitFormView>(product.Model.Id));
+			_navigateToWorkUnitFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<WorkUnitFormView>(_product.Id));
 
-			edit = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<WorkUnitFormView>(Tuple.Create(product.Model.Id, (selectedWorkUnit as WorkUnitViewModel).Model.Id)));
+			_edit = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<WorkUnitFormView>(Tuple.Create(_product.Id, _selectedWorkUnit.Id)));
 		}
 
-		public ReactiveCommand NavigateToWorkUnitFormView => navigateToWorkUnitFormView;
+		public ReactiveCommand NavigateToWorkUnitFormView => _navigateToWorkUnitFormView;
 
-		public ReactiveCommand Edit => edit;
+		public ReactiveCommand Edit => _edit;
 
-		public Product Model
+		public Product Product
 		{
-			get { return product; }
-			set { this.RaiseAndSetIfChanged(ref product, value); }
+			get { return _product; }
+			set { this.RaiseAndSetIfChanged(ref _product, value); }
 		}
 
-		public object SelectedWorkUnit
+		public WorkUnit SelectedWorkUnit
 		{
-			get { return selectedWorkUnit; }
-			set { this.RaiseAndSetIfChanged(ref selectedWorkUnit, value); }
+			get { return _selectedWorkUnit; }
+			set { this.RaiseAndSetIfChanged(ref _selectedWorkUnit, value); }
 		}
 
 
@@ -46,12 +41,19 @@ namespace StitchCalc.ViewModels
 		{
 			if (parameter is Guid)
 			{
-				Model = DataService.Current.GetProduct((Guid)parameter);
+				Product = DBService.GetSingle<Product>((Guid)parameter);
 			}
 
 			return Task.CompletedTask;
 		}
 
 		public Task OnNavigatingFrom() => Task.CompletedTask;
-	}
+
+
+
+        private readonly ReactiveCommand<Unit, Unit> _navigateToWorkUnitFormView;
+        private readonly ReactiveCommand<Unit, Unit> _edit;
+        private Product _product;
+        private WorkUnit _selectedWorkUnit;
+    }
 }
