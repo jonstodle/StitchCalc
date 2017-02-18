@@ -10,13 +10,10 @@ namespace StitchCalc.ViewModels
 {
 	public class SettingsViewViewModel : ViewModelBase, INavigable
 	{
-		string defaultHourlyCharge;
-		string appVersion;
-
 		public SettingsViewViewModel()
 		{
-			defaultHourlyCharge = SettingsService.Current.DefaultHourlyCharge.ToString();
-			appVersion = DeviceInfo.App.ShortVersion;
+			_defaultHourlyCharge = SettingsService.Current.DefaultHourlyCharge.ToString();
+			_appVersion = DeviceInfo.App.ShortVersion;
 
 			this
 				.WhenAnyValue(x => x.DefaultHourlyCharge)
@@ -32,11 +29,11 @@ namespace StitchCalc.ViewModels
 				.Subscribe(x => DefaultHourlyCharge = x.ToString());
 		}
 
-		public string AppVersion => appVersion;
+		public string AppVersion => _appVersion;
 		public string DefaultHourlyCharge
 		{
-			get { return defaultHourlyCharge; }
-			set { this.RaiseAndSetIfChanged(ref defaultHourlyCharge, value); }
+			get { return _defaultHourlyCharge; }
+			set { this.RaiseAndSetIfChanged(ref _defaultHourlyCharge, value); }
 		}
 
 
@@ -47,5 +44,10 @@ namespace StitchCalc.ViewModels
 		}
 
 		public Task OnNavigatingFrom() => Task.CompletedTask;
-	}
+
+
+
+        private string _defaultHourlyCharge;
+        private string _appVersion;
+    }
 }
