@@ -71,7 +71,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemReactiveLinqExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\DataServices\JsonToRealmMigrationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DBService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HomeTabsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HomeViewViewModel.cs" />
@@ -85,6 +84,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductWorkUnitsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkUnitFormViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\HomeView.xaml">
