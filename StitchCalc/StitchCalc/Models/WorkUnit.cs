@@ -3,7 +3,7 @@ using Realms;
 
 namespace StitchCalc.Models
 {
-	public class WorkUnit : RealmObject
+	public class WorkUnit : RealmObject, IGuidId
     {
         [PrimaryKey]
         public Guid Id { get; set; } = Guid.NewGuid();

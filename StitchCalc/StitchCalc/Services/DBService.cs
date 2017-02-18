@@ -17,9 +17,15 @@ namespace StitchCalc
 
 		public static void Write(Action<Realm> writeActions) => _realm.Write(() => writeActions(_realm));
 
+
+
         public static T GetSingle<T>(Expression<Func<T, bool>> findFunction) where T : RealmObject => _realm.All<T>().FirstOrDefault(findFunction);
 
-		public static IRealmCollection<T> GetList<T>() where T : RealmObject => _realm.All<T>().AsRealmCollection();
+        public static T GetSingle<T>(Guid id) where T : RealmObject, IGuidId => _realm.All<T>().FirstOrDefault(x => x.Id == id);
+
+
+
+        public static IRealmCollection<T> GetList<T>() where T : RealmObject => _realm.All<T>().AsRealmCollection();
 
 		public static IRealmCollection<T> GetOrderedList<T, TSortKey>(Expression<Func<T, TSortKey>> orderFunction, bool sortAscending = true) where T : RealmObject
 		{

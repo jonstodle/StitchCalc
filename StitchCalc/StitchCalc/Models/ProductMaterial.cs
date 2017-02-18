@@ -3,7 +3,7 @@ using Realms;
 
 namespace StitchCalc.Models
 {
-	public class ProductMaterial : RealmObject
+	public class ProductMaterial : RealmObject, IGuidId
     {
 		public ProductMaterial() { }
 

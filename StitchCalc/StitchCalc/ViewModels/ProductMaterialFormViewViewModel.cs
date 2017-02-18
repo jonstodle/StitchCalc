@@ -57,7 +57,7 @@ namespace StitchCalc.ViewModels
             {
                 if (parameter is Guid)
                 {
-                    _product = DBService.GetSingle<Product>(x => x.Id == (Guid)parameter);
+                    _product = DBService.GetSingle<Product>((Guid)parameter);
 
                     PageTitle = "Add Material";
                     SelectedMaterialIndex = 0;
@@ -65,7 +65,7 @@ namespace StitchCalc.ViewModels
                 else
                 {
                     var param = (Tuple<Guid, Guid>)parameter;
-                    _product = DBService.GetSingle<Product>(x => x.Id == param.Item1);
+                    _product = DBService.GetSingle<Product>(param.Item1);
                     _productMaterial = _product.Materials.FirstOrDefault(x => x.Id == param.Item2);
 
                     PageTitle = "Edit Material";

@@ -4,7 +4,7 @@ using Realms;
 
 namespace StitchCalc.Models
 {
-	public class Product : RealmObject
+	public class Product : RealmObject, IGuidId
     {
         [PrimaryKey]
         public Guid Id { get; set; } = Guid.NewGuid();

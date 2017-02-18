@@ -37,7 +37,7 @@ namespace StitchCalc.ViewModels
         {
             if (parameter is Guid)
             {
-                _product = DBService.GetSingle<Product>(x => x.Id == (Guid)parameter);
+                _product = DBService.GetSingle<Product>((Guid)parameter);
 
                 PageTitle = "Edit Product";
                 Name = _product.Name;
