@@ -71,7 +71,7 @@ namespace StitchCalc.ViewModels
         {
             if (parameter is Guid)
             {
-                Material = DBService.Get<Material>(x => x.Id == (Guid)parameter);
+                Material = DBService.GetSingle<Material>(x => x.Id == (Guid)parameter);
 
                 PageTitle = "Edit Material";
                 Name = _material.Name;

@@ -16,7 +16,7 @@ namespace StitchCalc.ViewModels
 	{
 		public MaterialsViewViewModel()
 		{
-            _materials = DBService.Get<Material, string>(x => x.Name);
+            _materials = DBService.GetOrderedList<Material, string>(x => x.Name);
 
 			_navigateToMaterialFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<MaterialFormView>());
 
@@ -64,7 +64,7 @@ namespace StitchCalc.ViewModels
         private IRealmCollection<Material> CreateFilteredList(string searchString)
 		{
             if (searchString.HasValue()) return _materials;
-            else return DBService.Get<Material, string>(x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), x => x.Name);
+            else return DBService.GetFilteredList<Material, string>(x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), x => x.Name);
 		}
 
 

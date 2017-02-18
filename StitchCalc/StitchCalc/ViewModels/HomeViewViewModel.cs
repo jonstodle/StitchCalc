@@ -17,7 +17,7 @@ namespace StitchCalc.ViewModels
     {
         public HomeViewViewModel()
         {
-            _products = DBService.Get<Product, string>(x => x.Name);
+            _products = DBService.GetOrderedList<Product, string>(x => x.Name);
 
             _navigateToProductFormPage = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductFormView>());
 
@@ -65,7 +65,7 @@ namespace StitchCalc.ViewModels
         private IRealmCollection<Product> CreateFilteredList(string searchString)
         {
             if (!searchString.HasValue()) return _products;
-            else return DBService.Get<Product, string>(x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), x => x.Name);
+            else return DBService.GetFilteredList<Product, string>(x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), x => x.Name);
         }
 
 
