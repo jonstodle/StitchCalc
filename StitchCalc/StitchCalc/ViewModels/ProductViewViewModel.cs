@@ -6,73 +6,63 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using StitchCalc.Models;
+using System.Collections.Specialized;
 
 namespace StitchCalc.ViewModels
 {
 	public class ProductViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveList<Page> pages;
-		readonly ObservableAsPropertyHelper<string> pageTitle;
-		Product model;
-		int selectedPageIndex;
-
 		public ProductViewViewModel()
 		{
-			pages = new ReactiveList<Page>();
-			pages.Add(new ProductSummaryView());
-			pages.Add(new ProductMaterialsView());
-			pages.Add(new ProductWorkUnitsView());
+			_pages = new ReactiveList<Page>();
+			_pages.Add(new ProductSummaryView());
+			_pages.Add(new ProductMaterialsView());
+			_pages.Add(new ProductWorkUnitsView());
 
-			DataService.Current.GetProducts()
-				.Changed
-				.Select(_ => DataService.Current.GetProduct(model.Model.Id))
-				.Subscribe(newModel => Model = newModel);
+			DBService.GetList<Product>()
+				.Changed()
+				.Select(_ => DBService.GetSingle<Product>(_product.Id))
+				.Subscribe(newProduct => Product = newProduct);
 
 			Observable.Merge(
-				pages.Changed.Select(_ => 0),
-				this.WhenAnyValue(x=> x.Model).Where(x => x != null).Select(_ => 0))
+				_pages.Changed.Select(_ => 0),
+				this.WhenAnyValue(x=> x.Product).Where(x => x != null).Select(_ => 0))
 				.Subscribe(_ => SetModelForChildViews());
 
 			this
-				.WhenAnyValue(x => x.Model, x => x?.Name)
-				.ToProperty(this, x => x.PageTitle, out pageTitle);
+				.WhenAnyValue(x => x.Product, x => x?.Name)
+				.ToProperty(this, x => x.PageTitle, out _pageTitle);
 		}
 
-		public ReactiveList<Page> Pages => pages;
+		public ReactiveList<Page> Pages => _pages;
 
-		public string PageTitle => pageTitle.Value;
+		public string PageTitle => _pageTitle.Value;
 
-		public Product Model
+		public Product Product
 		{
-			get { return model; }
-			set { this.RaiseAndSetIfChanged(ref model, value); }
+			get { return _product; }
+			set { this.RaiseAndSetIfChanged(ref _product, value); }
 		}
 
 		public int SelectedPageIndex
 		{
-			get { return selectedPageIndex; }
-			set { this.RaiseAndSetIfChanged(ref selectedPageIndex, value); }
+			get { return _selectedPageIndex; }
+			set { this.RaiseAndSetIfChanged(ref _selectedPageIndex, value); }
 		}
 
-		void SetModelForChildViews()
-		{
-			foreach (var page in pages)
-			{
-				((page as IViewFor).ViewModel as INavigable).OnNavigatedTo(model.Model.Id, NavigationDirection.Forwards);
-			}
-		}
+
 
 		public Task OnNavigatedTo(object parameter, NavigationDirection direction)
 		{
 			if (parameter is Guid)
 			{
-				Model = DataService.Current.GetProduct((Guid)parameter);
+				Product = DBService.GetSingle<Product>((Guid)parameter);
 			}
 			else if (parameter is Tuple<Guid,int>)
 			{
 				var p = parameter as Tuple<Guid, int>;
 
-				Model = DataService.Current.GetProduct(p.Item1);
+				Product = DBService.GetSingle<Product>(p.Item1);
 				SelectedPageIndex = p.Item2;
 			}
 
@@ -80,5 +70,22 @@ namespace StitchCalc.ViewModels
 		}
 
 		public Task OnNavigatingFrom() => Task.CompletedTask;
-	}
+
+
+
+        private void SetModelForChildViews()
+        {
+            foreach (var page in _pages)
+            {
+                ((page as IViewFor).ViewModel as INavigable).OnNavigatedTo(_product.Id, NavigationDirection.Forwards);
+            }
+        }
+
+
+
+        private readonly ReactiveList<Page> _pages;
+        private readonly ObservableAsPropertyHelper<string> _pageTitle;
+        private Product _product;
+        private int _selectedPageIndex;
+    }
 }
