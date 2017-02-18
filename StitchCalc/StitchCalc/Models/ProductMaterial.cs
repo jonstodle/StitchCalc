@@ -20,6 +20,7 @@ namespace StitchCalc.Models
         [PrimaryKey]
         public Guid Id { get; set; } = Guid.NewGuid();
 
+        public Product Product { get; set; }
         public Guid MaterialId { get; set; }
         public string Name { get; set; }
 		public double Price { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Realms;
+using System.Linq;
 
 namespace StitchCalc.Models
 {
@@ -14,7 +15,9 @@ namespace StitchCalc.Models
 		public bool ChargeForWork { get; set; } = true;
 		public double MaterialsMultiplier { get; set; }
 		public double WorkMultiplier { get; set; }
-		public IList<ProductMaterial> Materials { get; set; }
-		public IList<WorkUnit> WorkUnits { get; set; }
+        [Backlink(nameof(ProductMaterial.Product))]
+		public IQueryable<ProductMaterial> Materials { get; set; }
+        [Backlink(nameof(WorkUnit.Product))]
+		public IQueryable<WorkUnit> WorkUnits { get; set; }
 	}
 }

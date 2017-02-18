@@ -8,8 +8,17 @@ namespace StitchCalc.Models
         [PrimaryKey]
         public Guid Id { get; set; } = Guid.NewGuid();
 
-		public string Name { get; set; }
+        public Product Product { get; set; }
+        public string Name { get; set; }
 		public double Charge { get; set; }
 		public int Minutes { get; set; }
+
+
+
+        public double ChargePerHour
+        {
+            get { return Charge * 60; }
+            set { Charge = value / 60; }
+        }
 	}
 }

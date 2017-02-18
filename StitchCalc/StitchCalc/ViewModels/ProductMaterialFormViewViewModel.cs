@@ -83,8 +83,9 @@ namespace StitchCalc.ViewModels
 
         private async void SaveImpl()
 		{
-			var productMaterial = new ProductMaterial(_materials[_selectedMaterialIndex])
-			{
+            var productMaterial = new ProductMaterial(_materials[_selectedMaterialIndex])
+            {
+                Product = _product,
 				Length = GetLengthFromAmountString(Amount)
 			};
             if (_productMaterial != null) productMaterial.Id = _productMaterial.Id;
