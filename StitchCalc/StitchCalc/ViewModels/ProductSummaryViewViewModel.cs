@@ -11,20 +11,17 @@ namespace StitchCalc.ViewModels
 {
 	public class ProductSummaryViewViewModel : ViewModelBase, INavigable
 	{
-		readonly ReactiveCommand<Unit, Unit> edit;
-		Product model;
-
 		public ProductSummaryViewViewModel()
 		{
-			edit = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductFormView>(model.Model.Id));
+			_edit = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductFormView>(_model.Id));
 		}
 
-		public ReactiveCommand Edit => edit;
+		public ReactiveCommand Edit => _edit;
 
 		public Product Model
 		{
-			get { return model; }
-			set { this.RaiseAndSetIfChanged(ref model, value); }
+			get { return _model; }
+			set { this.RaiseAndSetIfChanged(ref _model, value); }
 		}
 
 
@@ -33,12 +30,17 @@ namespace StitchCalc.ViewModels
 		{
 			if (parameter is Guid)
 			{
-				Model = DataService.Current.GetProduct((Guid)parameter);
+				Model = DBService.GetSingle<Product>((Guid)parameter);
 			}
 
 			return Task.CompletedTask;
 		}
 
 		public Task OnNavigatingFrom() => Task.CompletedTask;
-	}
+
+
+
+        private readonly ReactiveCommand<Unit, Unit> _edit;
+        private Product _model;
+    }
 }
