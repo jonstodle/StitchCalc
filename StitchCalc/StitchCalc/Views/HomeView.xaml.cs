@@ -9,24 +9,25 @@ using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {
-	public partial class HomeView : ReactiveContentPage<HomeViewViewModel>
-	{
-		public HomeView ()
-		{
-			InitializeComponent ();
+    public partial class HomeView : ReactiveContentPage<HomeViewViewModel>
+    {
+        public HomeView()
+        {
+            InitializeComponent();
 
-			ViewModel = new HomeViewViewModel();
+            ViewModel = new HomeViewViewModel();
 
-			this.WhenActivated(disposables => {
-				this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.ProductListView.ItemsSource).DisposeWith(disposables);
-				this.Bind(ViewModel, vm => vm.SelectedProduct, v => v.ProductListView.SelectedItem).DisposeWith(disposables);
+            this.WhenActivated(disposables =>
+            {
+                this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text).DisposeWith(disposables);
+                this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.ProductListView.ItemsSource).DisposeWith(disposables);
+                this.Bind(ViewModel, vm => vm.SelectedProduct, v => v.ProductListView.SelectedItem).DisposeWith(disposables);
 
-				this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem).DisposeWith(disposables);
-				this.BindCommand(ViewModel, vm => vm.NavigateToProductPage, v => v.ProductListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
+                this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem).DisposeWith(disposables);
+                this.BindCommand(ViewModel, vm => vm.NavigateToProductPage, v => v.ProductListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
 
-				ProductListView.SelectedItem = null;
-			});
-		}
-	}
+                ProductListView.SelectedItem = null;
+            });
+        }
+    }
 }

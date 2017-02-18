@@ -7,6 +7,9 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using StitchCalc.Models;
+using Realms;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace StitchCalc.ViewModels
 {
@@ -20,6 +23,12 @@ namespace StitchCalc.ViewModels
 			_edit
 				.ThrownExceptions
 				.Subscribe(ex => System.Diagnostics.Debug.WriteLine(ex.Message));
+
+            _materialsPrice = this.WhenAnyValue(x => x.Product)
+                .WhereNotNull()
+                .SelectMany(x => x.Materials.AsRealmCollection().Changed().Select(_ => x.Materials.ToList()))
+                .Select(x => x.Sum(y => y.Price))
+                .ToProperty(this, x => x.MaterialsPrice);
 		}
 
 
@@ -27,6 +36,8 @@ namespace StitchCalc.ViewModels
 		public ReactiveCommand NavigateToProductMaterialFormView => _navigateToMaterialFormView;
 
 		public ReactiveCommand Edit => _edit;
+
+        public double MaterialsPrice => _materialsPrice.Value;
 
 		public Product Product
 		{
@@ -58,6 +69,7 @@ namespace StitchCalc.ViewModels
 
         private readonly ReactiveCommand<Unit, Unit> _navigateToMaterialFormView;
         private readonly ReactiveCommand<Unit, Unit> _edit;
+        private readonly ObservableAsPropertyHelper<double> _materialsPrice;
         private Product _product;
         private ProductMaterial _selectedProductMaterial;
     }

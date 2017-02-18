@@ -19,7 +19,7 @@ namespace StitchCalc.Views
 
 			this.WhenActivated(disposables => {
 				this.OneWayBind(ViewModel, vm => vm.Product.WorkUnits, v => v.WorkUnitsListView.ItemsSource).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.Product.WorkPrice, v => v.SumLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
+				this.OneWayBind(ViewModel, vm => vm.WorkPrice, v => v.SumLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
 				this.Bind(ViewModel, vm => vm.SelectedWorkUnit, v => v.WorkUnitsListView.SelectedItem).DisposeWith(disposables);
 
 				this.BindCommand(ViewModel, vm => vm.NavigateToWorkUnitFormView, v => v.AddWorkUnitToolbarItem).DisposeWith(disposables);

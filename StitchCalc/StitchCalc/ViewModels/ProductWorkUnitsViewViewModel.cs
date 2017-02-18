@@ -7,6 +7,9 @@ using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using StitchCalc.Models;
+using Realms;
+using System.Collections.Specialized;
+using System.Linq;
 
 namespace StitchCalc.ViewModels
 {
@@ -17,11 +20,19 @@ namespace StitchCalc.ViewModels
 			_navigateToWorkUnitFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<WorkUnitFormView>(_product.Id));
 
 			_edit = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<WorkUnitFormView>(Tuple.Create(_product.Id, _selectedWorkUnit.Id)));
+
+            _workPrice = this.WhenAnyValue(x => x.Product)
+                .WhereNotNull()
+                .SelectMany(x => x.WorkUnits.AsRealmCollection().Changed().Select(_ => x.WorkUnits.ToList()))
+                .Select(x => x.Sum(y => y.Charge * y.Minutes))
+                .ToProperty(this, x => x.WorkPrice);
 		}
 
 		public ReactiveCommand NavigateToWorkUnitFormView => _navigateToWorkUnitFormView;
 
 		public ReactiveCommand Edit => _edit;
+
+        public double WorkPrice => _workPrice.Value;
 
 		public Product Product
 		{
@@ -53,6 +64,7 @@ namespace StitchCalc.ViewModels
 
         private readonly ReactiveCommand<Unit, Unit> _navigateToWorkUnitFormView;
         private readonly ReactiveCommand<Unit, Unit> _edit;
+        private readonly ObservableAsPropertyHelper<double> _workPrice;
         private Product _product;
         private WorkUnit _selectedWorkUnit;
     }
