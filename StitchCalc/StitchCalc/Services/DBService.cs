@@ -21,7 +21,7 @@ namespace StitchCalc
 
         public static T GetSingle<T>(Expression<Func<T, bool>> findFunction) where T : RealmObject => _realm.All<T>().FirstOrDefault(findFunction);
 
-        public static T GetSingle<T>(Guid id) where T : RealmObject, IGuidId => _realm.All<T>().FirstOrDefault(x => x.Id == id);
+		public static T GetSingle<T>(Guid id) where T : RealmObject, IGuidId => _realm.All<T>().AsRealmCollection().FirstOrDefault(x => x.Id == id);
 
 
 

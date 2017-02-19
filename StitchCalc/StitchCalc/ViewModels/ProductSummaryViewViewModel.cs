@@ -53,7 +53,7 @@ namespace StitchCalc.ViewModels
                     d => d.Product.WorkMultiplier,
                     e => e.Product.ChargeForMaterials,
                     f => f.Product.ChargeForWork,
-                    (mPrice, wPrice, mMultiplier, wMultiplier, mCharge, wCharge) => (mCharge ? mPrice * (mMultiplier == 0 ? 1 : mMultiplier) : 0) + (wCharge ? wPrice * (wPrice == 0 ? 1 : wMultiplier) : 0))
+				(mPrice, wPrice, mMultiplier, wMultiplier, mCharge, wCharge) => (mCharge ? mPrice * (mMultiplier == 0 ? 1 : mMultiplier) : 0) + (wCharge ? wPrice * (wMultiplier == 0 ? 1 : wMultiplier) : 0))
                 .ToProperty(this, x => x.TotalPrice);
         }
 
