@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StitchCalc.Models
+namespace StitchCalc.Services.JsonToRealmMigrationService
 {
 	public class DataStorageObject<T>
     {

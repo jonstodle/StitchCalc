@@ -12,7 +12,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemCollectionsSpecializedExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\DataStorageObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\IGuidId.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Material.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Product.cs" />
@@ -84,7 +83,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductWorkUnitsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkUnitFormViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\MigrationClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\Material.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\Product.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\ProductMaterial.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\WorkUnit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\DataStorageObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\HomeView.xaml">
@@ -145,5 +149,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\" />
   </ItemGroup>
 </Project>
