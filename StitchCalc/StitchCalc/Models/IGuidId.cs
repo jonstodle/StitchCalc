@@ -6,6 +6,7 @@ namespace StitchCalc.Models
 {
     public interface IGuidId
     {
+		string StringId { get; set; }
         Guid Id { get; set; }
     }
 }
