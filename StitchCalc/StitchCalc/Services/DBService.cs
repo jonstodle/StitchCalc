@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using Newtonsoft.Json;
 using Realms;
 using StitchCalc.Models;
 
@@ -11,6 +14,13 @@ namespace StitchCalc
 		static DBService()
 		{
 			_realm = Realm.GetInstance();
+
+			var dataFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "data.json");
+			if (File.Exists(dataFilePath))
+			{
+				var data = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataFilePath));
+				new JsonToRealmMigrationService(data).MigrateData().Subscribe();
+			}
 		}
 
 
