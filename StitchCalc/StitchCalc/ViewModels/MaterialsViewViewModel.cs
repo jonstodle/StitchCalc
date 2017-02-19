@@ -63,8 +63,8 @@ namespace StitchCalc.ViewModels
 
         private IRealmCollection<Material> CreateFilteredList(string searchString)
 		{
-            if (searchString.HasValue()) return _materials;
-            else return DBService.GetFilteredList<Material, string>(x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), x => x.Name);
+            if (!searchString.HasValue()) return _materials;
+            else return DBService.GetFilteredList<Material, string>(x => x.Name.Contains(searchString), x => x.Name);
 		}
 
 
