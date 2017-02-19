@@ -13,7 +13,7 @@ namespace StitchCalc.ViewModels
 		public ProductFormViewViewModel()
 		{
 			_save = ReactiveCommand.Create(
-				() => AddMaterialsImpl(),
+				() => SaveImpl(),
 				this.WhenAnyValue(x => x.Name, x => !string.IsNullOrWhiteSpace(x)));
 		}
 
@@ -54,7 +54,7 @@ namespace StitchCalc.ViewModels
 
 
 
-        private async void AddMaterialsImpl()
+		private async void SaveImpl()
 		{
             var product = new Product { Name = _name };
             if (_product != null) product.Id = _product.Id;
