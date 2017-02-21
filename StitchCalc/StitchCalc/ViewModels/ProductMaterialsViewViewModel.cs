@@ -24,11 +24,11 @@ namespace StitchCalc.ViewModels
 				.ThrownExceptions
 				.Subscribe(ex => System.Diagnostics.Debug.WriteLine(ex.Message));
 
-            _materialsPrice = this.WhenAnyValue(x => x.Product)
-                .WhereNotNull()
-                .SelectMany(x => x.Materials.AsRealmCollection().Changed().Select(_ => x.Materials.ToList()))
-                .Select(x => x.Sum(y => y.Price))
-                .ToProperty(this, x => x.MaterialsPrice);
+			_materialsPrice = this.WhenAnyValue(x => x.Product)
+				.WhereNotNull()
+				.SelectMany(x => x.Materials.AsRealmCollection().Changed().Select(_ => x.Materials.ToList()).StartWith(x.Materials.ToList()))
+				.Select(x => x.Sum(y => y.Price))
+				.ToProperty(this, x => x.MaterialsPrice);
 		}
 
 
@@ -37,7 +37,7 @@ namespace StitchCalc.ViewModels
 
 		public ReactiveCommand Edit => _edit;
 
-        public double MaterialsPrice => _materialsPrice.Value;
+		public double MaterialsPrice => _materialsPrice.Value;
 
 		public Product Product
 		{
@@ -67,10 +67,10 @@ namespace StitchCalc.ViewModels
 
 
 
-        private readonly ReactiveCommand<Unit, Unit> _navigateToMaterialFormView;
-        private readonly ReactiveCommand<Unit, Unit> _edit;
-        private readonly ObservableAsPropertyHelper<double> _materialsPrice;
-        private Product _product;
-        private ProductMaterial _selectedProductMaterial;
-    }
+		private readonly ReactiveCommand<Unit, Unit> _navigateToMaterialFormView;
+		private readonly ReactiveCommand<Unit, Unit> _edit;
+		private readonly ObservableAsPropertyHelper<double> _materialsPrice;
+		private Product _product;
+		private ProductMaterial _selectedProductMaterial;
+	}
 }
