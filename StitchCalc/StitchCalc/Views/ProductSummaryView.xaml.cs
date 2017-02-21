@@ -44,6 +44,7 @@ namespace StitchCalc.Views
 				materialsTaps
 					.Where(x => x == _toggleString)
 					.ToSignal()
+					.ObserveOn(RxApp.MainThreadScheduler)
 					.InvokeCommand(ViewModel.ToggleChargeForMaterials)
 					.DisposeWith(disposables);
 
@@ -52,6 +53,7 @@ namespace StitchCalc.Views
 					.SelectMany(_ => Observable.FromAsync(() => CreateMultiplyPrompt("Materials")))
 					.Where(x => x.Ok && x.Value.IsValidDouble())
 					.Select(x => double.Parse(x.Value))
+					.ObserveOn(RxApp.MainThreadScheduler)
 					.InvokeCommand(ViewModel.SetMaterialsMultiplier)
 					.DisposeWith(disposables);
 
@@ -63,6 +65,7 @@ namespace StitchCalc.Views
 				workTaps
 					.Where(x => x == _toggleString)
 					.ToSignal()
+					.ObserveOn(RxApp.MainThreadScheduler)
 					.InvokeCommand(ViewModel.ToggleChargeForWork)
 					.DisposeWith(disposables);
 
@@ -71,6 +74,7 @@ namespace StitchCalc.Views
 					.SelectMany(_ => Observable.FromAsync(() => CreateMultiplyPrompt("Work")))
 					.Where(x => x.Ok && x.Value.IsValidDouble())
 					.Select(x => double.Parse(x.Value))
+					.ObserveOn(RxApp.MainThreadScheduler)
 					.InvokeCommand(ViewModel.SetWorkMultiplier)
 					.DisposeWith(disposables);
 			});
