@@ -6,6 +6,7 @@ using System.Linq.Expressions;
 using Newtonsoft.Json;
 using Realms;
 using StitchCalc.Models;
+using StitchCalc.Services.JsonToRealmMigrationService;
 
 namespace StitchCalc
 {
@@ -16,11 +17,7 @@ namespace StitchCalc
 			_realm = Realm.GetInstance();
 
 			var dataFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "data.json");
-			if (File.Exists(dataFilePath))
-			{
-				var data = JsonConvert.DeserializeObject<Dictionary<string, object>>(File.ReadAllText(dataFilePath));
-				new JsonToRealmMigrationService(data).MigrateData().Subscribe();
-			}
+			if (File.Exists(dataFilePath)) new MigrationClient(dataFilePath).MigrateData().Subscribe(_ => { }, () => System.Diagnostics.Debug.WriteLine("Test"));
 		}
 
 
