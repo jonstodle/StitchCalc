@@ -19,7 +19,8 @@
 		<ListView x:Name="WorkUnitsListView">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<TextCell Text="{Binding Name}" Detail="{Binding TotalCharge, StringFormat='{}{0:N2}'}">
+					<TextCell Text="{Binding Name}">
+<!--					<TextCell Text="{Binding Name}" Detail="{Binding TotalCharge, StringFormat='{}{0:N2}'}">-->
 						<TextCell.ContextActions>
 							<!--<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>-->
 						</TextCell.ContextActions>
