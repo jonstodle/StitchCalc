@@ -74,7 +74,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\HomeTabsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialFormViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialsViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductFormViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialFormViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialsViewViewModel.cs" />
@@ -90,6 +90,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\WorkUnit.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\DataStorageObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ProductsView.xaml">

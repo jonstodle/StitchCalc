@@ -12,9 +12,9 @@ using System.Collections.Specialized;
 
 namespace StitchCalc.ViewModels
 {
-	public class MaterialsViewViewModel : ViewModelBase, INavigable
+	public class MaterialsViewModel : ViewModelBase, INavigable
 	{
-		public MaterialsViewViewModel()
+		public MaterialsViewModel()
 		{
             _materials = DBService.GetOrderedList<Material, string>(x => x.Name);
 
@@ -22,13 +22,13 @@ namespace StitchCalc.ViewModels
 
 			_edit = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<MaterialFormView>(_selectedMaterial.Id));
 
-            _collectionView = Observable.Merge(
+			_materialsView = Observable.Merge(
                     this.WhenAnyValue(x => x.SearchTerm),
-                    _materials.Changed().Select(_ => ""))
+                    _materials.CollectionChanges().Select(_ => ""))
                 .Throttle(TimeSpan.FromMilliseconds(500), RxApp.TaskpoolScheduler)
-                .Select(x => CreateFilteredList(x))
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .ToProperty(this, x => x.CollectionView, out _collectionView);
+				.Select(x => CreateFilteredList(x))
+                .ToProperty(this, x => x.MaterialsView, out _materialsView);
         }
 
 
@@ -39,7 +39,7 @@ namespace StitchCalc.ViewModels
 
         public IRealmCollection<Material> Materials => _materials;
 
-		public IRealmCollection<Material> CollectionView => _collectionView.Value;
+		public IReactiveDerivedList<MaterialViewModel> MaterialsView => _materialsView.Value;
 
 		public string SearchTerm
 		{
@@ -61,18 +61,18 @@ namespace StitchCalc.ViewModels
 
 
 
-        private IRealmCollection<Material> CreateFilteredList(string searchString)
+		private IReactiveDerivedList<MaterialViewModel> CreateFilteredList(string searchString)
 		{
-            if (!searchString.HasValue()) return _materials;
-            else return DBService.GetFilteredList<Material, string>(x => x.Name.Contains(searchString), x => x.Name);
+			if (!searchString.HasValue()) return _materials.CreateDerivedCollection(x => new MaterialViewModel(x));
+			else return DBService.GetFilteredList<Material, string>(x => x.Name.Contains(searchString), x => x.Name).CreateDerivedCollection(x => new MaterialViewModel(x));
 		}
 
 
 
-        private readonly IRealmCollection<Material> _materials;
-        private readonly ObservableAsPropertyHelper<IRealmCollection<Material>> _collectionView;
         private readonly ReactiveCommand<Unit, Unit> _navigateToMaterialFormView;
         private readonly ReactiveCommand<Unit, Unit> _edit;
+        private readonly IRealmCollection<Material> _materials;
+		private readonly ObservableAsPropertyHelper<IReactiveDerivedList<MaterialViewModel>> _materialsView;
         private string _searchTerm;
         private Material _selectedMaterial;
     }
