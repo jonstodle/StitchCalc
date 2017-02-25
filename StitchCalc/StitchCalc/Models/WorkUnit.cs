@@ -16,13 +16,5 @@ namespace StitchCalc.Models
 
 
 		public Guid Id { get { return Guid.Parse(StringId); } set { StringId = value.ToString(); } }
-
-
-
-		public double ChargePerHour
-        {
-            get { return Charge * 60; }
-            set { Charge = value / 60; }
-        }
 	}
 }
