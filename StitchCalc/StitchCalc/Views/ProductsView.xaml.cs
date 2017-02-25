@@ -9,18 +9,18 @@ using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {
-    public partial class HomeView : ReactiveContentPage<HomeViewViewModel>
+    public partial class ProductsView : ReactiveContentPage<ProductsViewModel>
     {
-        public HomeView()
+        public ProductsView()
         {
             InitializeComponent();
 
-            ViewModel = new HomeViewViewModel();
+            ViewModel = new ProductsViewModel();
 
             this.WhenActivated(disposables =>
             {
                 this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text).DisposeWith(disposables);
-                this.OneWayBind(ViewModel, vm => vm.CollectionView, v => v.ProductListView.ItemsSource).DisposeWith(disposables);
+                this.OneWayBind(ViewModel, vm => vm.ProductsView, v => v.ProductListView.ItemsSource).DisposeWith(disposables);
                 this.Bind(ViewModel, vm => vm.SelectedProduct, v => v.ProductListView.SelectedItem).DisposeWith(disposables);
 
                 this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem).DisposeWith(disposables);

@@ -13,9 +13,9 @@ using System.Collections.Specialized;
 
 namespace StitchCalc.ViewModels
 {
-    public class HomeViewViewModel : ViewModelBase, INavigable
+    public class ProductsViewModel : ViewModelBase, INavigable
     {
-        public HomeViewViewModel()
+        public ProductsViewModel()
         {
             _products = DBService.GetOrderedList<Product, string>(x => x.Name);
 
@@ -23,20 +23,20 @@ namespace StitchCalc.ViewModels
 
             _navigateToProductPage = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<ProductView>(_selectedProduct.Id));
 
-            _collectionView = Observable.Merge(
+			_productsView = Observable.Merge(
                     this.WhenAnyValue(x => x.SearchTerm),
-                    _products.Changed().Select(_ => ""))
+					_products.CollectionChanges().Select(_ => SearchTerm))
                 .Throttle(TimeSpan.FromMilliseconds(500), RxApp.TaskpoolScheduler)
-                .Select(x => CreateFilteredList(x))
                 .ObserveOn(RxApp.MainThreadScheduler)
-                .ToProperty(this, x => x.CollectionView);
+				.Select(x => CreateFilteredList(x))
+                .ToProperty(this, x => x.ProductsView);
         }
 
 
 
         public IRealmCollection<Product> Products => _products;
 
-        public IRealmCollection<Product> CollectionView => _collectionView.Value;
+		public IReactiveDerivedList<ProductViewModel> ProductsView => _productsView.Value;
 
         public ReactiveCommand NavigateToProductFormPage => _navigateToProductFormPage;
 
@@ -62,16 +62,16 @@ namespace StitchCalc.ViewModels
 
 
 
-        private IRealmCollection<Product> CreateFilteredList(string searchString)
+		private IReactiveDerivedList<ProductViewModel> CreateFilteredList(string searchString)
         {
-            if (!searchString.HasValue()) return _products;
-            else return DBService.GetFilteredList<Product, string>(x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), x => x.Name);
+			if (!searchString.HasValue()) return _products.CreateDerivedCollection(x => new ProductViewModel(x));
+			else return DBService.GetFilteredList<Product, string>(x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), x => x.Name).CreateDerivedCollection(x => new ProductViewModel(x));
         }
 
 
 
         private readonly IRealmCollection<Product> _products;
-        private readonly ObservableAsPropertyHelper<IRealmCollection<Product>> _collectionView;
+		private readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductViewModel>> _productsView;
         private readonly ReactiveCommand<Unit, Unit> _navigateToProductFormPage;
         private readonly ReactiveCommand<Unit, Unit> _navigateToProductPage;
         private string _searchTerm;

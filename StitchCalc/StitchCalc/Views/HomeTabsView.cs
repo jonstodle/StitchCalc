@@ -5,7 +5,7 @@
         {
             ViewModel = new HomeTabsViewViewModel();
 
-            Title = "StitchCalc";            Children.Add(new HomeView());
+            Title = "StitchCalc";            Children.Add(new ProductsView());
             Children.Add(new MaterialsView());
             Children.Add(new SettingsView());
         }
