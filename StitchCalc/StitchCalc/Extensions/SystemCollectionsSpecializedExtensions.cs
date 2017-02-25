@@ -9,6 +9,6 @@ namespace System.Collections.Specialized
 {
     public static class SystemCollectionsSpecializedExtensions
     {
-        public static IObservable<EventPattern<NotifyCollectionChangedEventArgs>> Changed(this INotifyCollectionChanged source) => Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(source, nameof(source.CollectionChanged));
+        public static IObservable<EventPattern<NotifyCollectionChangedEventArgs>> CollectionChanges(this INotifyCollectionChanged source) => Observable.FromEventPattern<NotifyCollectionChangedEventArgs>(source, nameof(source.CollectionChanged));
     }
 }

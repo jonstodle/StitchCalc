@@ -23,7 +23,7 @@ namespace StitchCalc.ViewModels
 
             _workPrice = this.WhenAnyValue(x => x.Product)
                 .WhereNotNull()
-                .SelectMany(x => x.WorkUnits.AsRealmCollection().Changed().Select(_ => x.WorkUnits.ToList()).StartWith(x.WorkUnits.ToList()))
+                .SelectMany(x => x.WorkUnits.AsRealmCollection().CollectionChanges().Select(_ => x.WorkUnits.ToList()).StartWith(x.WorkUnits.ToList()))
                 .Select(x => x.Sum(y => y.Charge * y.Minutes))
                 .ToProperty(this, x => x.WorkPrice);
 		}

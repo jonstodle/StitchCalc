@@ -20,7 +20,7 @@ namespace StitchCalc.ViewModels
 			_pages.Add(new ProductWorkUnitsView());
 
 			DBService.GetList<Product>()
-				.Changed()
+				.CollectionChanges()
 				.Select(_ => DBService.GetSingle<Product>(_product.Id))
 				.Subscribe(newProduct => Product = newProduct);
 

@@ -26,7 +26,7 @@ namespace StitchCalc.ViewModels
 
 			_materialsPrice = this.WhenAnyValue(x => x.Product)
 				.WhereNotNull()
-				.SelectMany(x => x.Materials.AsRealmCollection().Changed().Select(_ => x.Materials.ToList()).StartWith(x.Materials.ToList()))
+				.SelectMany(x => x.Materials.AsRealmCollection().CollectionChanges().Select(_ => x.Materials.ToList()).StartWith(x.Materials.ToList()))
 				.Select(x => x.Sum(y => y.Price))
 				.ToProperty(this, x => x.MaterialsPrice);
 		}

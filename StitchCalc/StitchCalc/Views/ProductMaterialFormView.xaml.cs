@@ -31,7 +31,7 @@ namespace StitchCalc.Views
 
                 ViewModel
                     .Materials
-                    .Changed()
+                    .CollectionChanges()
                     .Select(_ => ViewModel.Materials)
                     .StartWith(ViewModel.Materials)
                     .Subscribe(items =>

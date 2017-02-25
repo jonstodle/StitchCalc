@@ -29,7 +29,7 @@ namespace StitchCalc.ViewModels
             var productChanged = this.WhenAnyValue(x => x.Product).WhereNotNull();
 
             _materialsPrice = productChanged
-				.SelectMany(x => x.Materials.AsRealmCollection().Changed().Select(_ => x.Materials.ToList()).StartWith(x.Materials.ToList()))
+				.SelectMany(x => x.Materials.AsRealmCollection().CollectionChanges().Select(_ => x.Materials.ToList()).StartWith(x.Materials.ToList()))
                 .Select(x => x.Sum(y => y.Price))
                 .ToProperty(this, x => x.MaterialsPrice);
 
@@ -38,7 +38,7 @@ namespace StitchCalc.ViewModels
                 .ToProperty(this, x => x.IsMaterialsPriceMultiplied);
 
             _workPrice = productChanged
-				.SelectMany(x => x.WorkUnits.AsRealmCollection().Changed().Select(_ => x.WorkUnits.ToList()).StartWith(x.WorkUnits.ToList()))
+				.SelectMany(x => x.WorkUnits.AsRealmCollection().CollectionChanges().Select(_ => x.WorkUnits.ToList()).StartWith(x.WorkUnits.ToList()))
                 .Select(x => x.Sum(y => y.Charge * y.Minutes))
                 .ToProperty(this, x => x.WorkPrice);
 
