@@ -69,7 +69,7 @@ namespace StitchCalc.ViewModels
                 PageTitle = "Edit Work";
                 Name = _workUnit.Name;
                 Minutes = _workUnit.Minutes.ToString();
-                Charge = _workUnit.ChargePerHour.ToString();
+				Charge = (_workUnit.Charge * 60).ToString();
             }
 
             return Task.CompletedTask;
@@ -86,7 +86,7 @@ namespace StitchCalc.ViewModels
                 Product = _product,
                 Name = Name,
                 Minutes = int.Parse(Minutes),
-                ChargePerHour = double.Parse(Charge)
+				Charge = double.Parse(Charge) / 60
             };
             if (_workUnit != null) workUnit.Id = _workUnit.Id;
 
