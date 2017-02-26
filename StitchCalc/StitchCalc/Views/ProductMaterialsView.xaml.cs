@@ -11,11 +11,11 @@ namespace StitchCalc.Views
 {
     public partial class ProductMaterialsView : ReactiveContentPage<ProductViewModel>
     {
-        public ProductMaterialsView()
+        public ProductMaterialsView(ProductViewModel viewModel)
         {
             InitializeComponent();
 
-            ViewModel = new ProductMaterialsViewViewModel();
+            ViewModel = viewModel;
 
             this.WhenActivated(disposables =>
             {

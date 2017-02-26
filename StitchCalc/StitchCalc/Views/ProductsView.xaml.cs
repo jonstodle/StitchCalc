@@ -15,7 +15,7 @@ namespace StitchCalc.Views
         {
             InitializeComponent();
 
-            ViewModel = new ProductsViewModel();
+            ViewModel = viewModel;
 
             this.WhenActivated(disposables =>
             {

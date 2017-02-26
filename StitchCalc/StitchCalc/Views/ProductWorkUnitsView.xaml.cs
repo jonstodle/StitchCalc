@@ -11,11 +11,11 @@ namespace StitchCalc.Views
 {
 	public partial class ProductWorkUnitsView : ReactiveContentPage<ProductViewModel>
 	{
-		public ProductWorkUnitsView()
+		public ProductWorkUnitsView(ProductViewModel viewModel)
 		{
 			InitializeComponent();
 
-			ViewModel = new ProductWorkUnitsViewViewModel();
+			ViewModel = viewModel;
 
 			this.WhenActivated(disposables => {
 				this.OneWayBind(ViewModel, vm => vm.Product.WorkUnits, v => v.WorkUnitsListView.ItemsSource).DisposeWith(disposables);

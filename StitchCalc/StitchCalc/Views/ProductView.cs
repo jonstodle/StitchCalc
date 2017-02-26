@@ -6,31 +6,24 @@ using Xamarin.Forms;
 using System.Reactive;
 using StitchCalc.ViewModels;
 using System;
+using System.Reactive.Disposables;
 
 namespace StitchCalc.Views
 {
 	public class ProductView : TabbedPage, IViewFor<ProductViewModel>
 	{
-		public ProductView ()
+		public ProductView (ProductViewModel viewModel)
 		{
-			ViewModel = new ProductViewViewModel();
+			ViewModel = viewModel;
 
-			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
+            Children.Add(new ProductSummaryView(ViewModel));
+            Children.Add(new ProductMaterialsView(ViewModel));
+            Children.Add(new ProductWorkUnitsView(ViewModel));
 
-				ViewModel.Pages
-					.Changed
-					.Throttle(TimeSpan.FromMilliseconds(10))
-					.Select(_ => ViewModel.Pages)
-					.StartWith(ViewModel.Pages)
-					.Subscribe(pages =>
-					{
-						Children.Clear();
-						foreach (var page in pages) { Children.Add(page); }
-					});
-				ViewModel.WhenAnyValue(x => x.SelectedPageIndex)
-					.Where(x => x >= 0 && x < Children.Count)
-					.Select(x => Children[x])
-					.Subscribe(x => SelectedItem = x);
+            this.WhenActivated(disposables =>
+            {
+                this.OneWayBind(ViewModel, vm => vm.Product.Name, v => v.Title).DisposeWith(disposables);
+            });
 		}
 
 		public ProductViewModel ViewModel

@@ -1,11 +1,11 @@
 ﻿using ReactiveUI;using System;using System.Linq;using System.Reactive.Linq;using Xamarin.Forms;using System.Reactive.Disposables;using System.Reactive;using StitchCalc.ViewModels;namespace StitchCalc.Views{
     public class HomeTabsView : TabbedPage, IViewFor<HomeTabsViewViewModel>, ICanActivate
     {
-        public HomeTabsView()
+        public HomeTabsView(HomeTabsViewViewModel viewModel)
         {
-            ViewModel = new HomeTabsViewViewModel();
+            ViewModel = viewModel;
 
-            Title = "StitchCalc";            Children.Add(new ProductsView());
+            Title = "StitchCalc";            Children.Add(new ProductsView(new ProductsViewModel()));
             Children.Add(new MaterialsView());
             Children.Add(new SettingsView());
         }

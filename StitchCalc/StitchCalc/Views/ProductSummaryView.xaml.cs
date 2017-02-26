@@ -18,7 +18,7 @@ namespace StitchCalc.Views
 		{
 			InitializeComponent();
 
-			ViewModel = new ProductSummaryViewViewModel();
+			ViewModel = viewModel;
 
 			this.BindCommand(ViewModel, vm => vm.Edit, v => v.EditProductToolbarItem);
 
