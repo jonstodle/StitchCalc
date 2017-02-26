@@ -7,7 +7,7 @@
 
             Title = "StitchCalc";            Children.Add(new ProductsView(new ProductsViewModel()));
             Children.Add(new MaterialsView());
-            Children.Add(new SettingsView());
+            Children.Add(new SettingsView(new SettingsViewModel()));
         }
 
         public HomeTabsViewViewModel ViewModel
