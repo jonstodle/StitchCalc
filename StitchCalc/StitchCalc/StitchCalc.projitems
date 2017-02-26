@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkUnitViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\HomeTabsView.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Views\ProductsView.xaml.cs">
       <DependentUpon>ProductsView.xaml</DependentUpon>
