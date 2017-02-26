@@ -24,6 +24,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkUnitsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkUnitViewModel.cs" />
