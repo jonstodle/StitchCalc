@@ -20,9 +20,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.IosAndroid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.Windows.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\INavigable.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\NavigationDirection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService\NavigationService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.User.cs" />
