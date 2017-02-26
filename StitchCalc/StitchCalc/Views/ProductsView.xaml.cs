@@ -11,7 +11,7 @@ namespace StitchCalc.Views
 {
     public partial class ProductsView : ReactiveContentPage<ProductsViewModel>
     {
-        public ProductsView()
+        public ProductsView(ProductsViewModel viewModel)
         {
             InitializeComponent();
 

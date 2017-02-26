@@ -12,9 +12,9 @@ using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {
-	public partial class ProductSummaryView : ReactiveContentPage<ProductSummaryViewViewModel>
+	public partial class ProductSummaryView : ReactiveContentPage<ProductViewModel>
 	{
-		public ProductSummaryView()
+		public ProductSummaryView(ProductViewModel viewModel)
 		{
 			InitializeComponent();
 

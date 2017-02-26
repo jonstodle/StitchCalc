@@ -9,7 +9,7 @@ using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {
-	public partial class ProductWorkUnitsView : ReactiveContentPage<ProductWorkUnitsViewViewModel>
+	public partial class ProductWorkUnitsView : ReactiveContentPage<ProductViewModel>
 	{
 		public ProductWorkUnitsView()
 		{

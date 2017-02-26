@@ -9,7 +9,7 @@ using System;
 
 namespace StitchCalc.Views
 {
-	public class ProductView : TabbedPage, IViewFor<ProductViewViewModel>, ICanActivate
+	public class ProductView : TabbedPage, IViewFor<ProductViewModel>
 	{
 		public ProductView ()
 		{
@@ -33,18 +33,18 @@ namespace StitchCalc.Views
 					.Subscribe(x => SelectedItem = x);
 		}
 
-		public ProductViewViewModel ViewModel
+		public ProductViewModel ViewModel
 		{
-			get { return (ProductViewViewModel)GetValue(ViewModelProperty); }
+			get { return (ProductViewModel)GetValue(ViewModelProperty); }
 			set { SetValue(ViewModelProperty, value); }
 		}
 
-		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductViewViewModel), typeof(ProductView), null);
+		public static readonly BindableProperty ViewModelProperty = BindableProperty.Create(nameof(ViewModel), typeof(ProductViewModel), typeof(ProductView), null);
 
 		object IViewFor.ViewModel
 		{
 			get { return ViewModel; }
-			set { ViewModel = (ProductViewViewModel)value; }
+			set { ViewModel = (ProductViewModel)value; }
 		}
 
 		public IObservable<Unit> Activated => Observable.FromEventPattern(this, nameof(this.Appearing)).ToSignal();
