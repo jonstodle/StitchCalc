@@ -8,13 +8,13 @@ using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {
-    public partial class ProductFormView : ReactiveContentPage<ProductFormViewViewModel>
+    public partial class ProductFormView : ReactiveContentPage<ProductFormViewModel>
     {
-        public ProductFormView()
+        public ProductFormView(ProductFormViewModel viewModel)
         {
             InitializeComponent();
 
-            ViewModel = new ProductFormViewViewModel();
+            ViewModel = viewModel;
 
             this.WhenActivated(disposables =>
             {
