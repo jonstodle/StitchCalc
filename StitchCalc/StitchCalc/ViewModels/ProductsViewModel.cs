@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using StitchCalc.Models;
 using Realms;
 using System.Collections.Specialized;
+using StitchCalc.Services;
 
 namespace StitchCalc.ViewModels
 {
@@ -18,9 +19,9 @@ namespace StitchCalc.ViewModels
         {
             _products = DBService.GetOrderedList<Product, string>(x => x.Name);
 
-            _navigateToProductFormPage = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<ProductFormView>());
+            _addProduct = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => NavigationService.NavigateTo(new ProductFormView(new ProductFormViewModel()))));
 
-            _navigateToProductPage = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<ProductView>(_selectedProduct.Id));
+            _showProduct = ReactiveCommand.CreateFromTask(x => NavigationService.NavigateTo(new ProductView(_selectedProduct)));
 
 			_productsView = Observable.Merge(
                     this.WhenAnyValue(x => x.SearchTerm),
@@ -33,9 +34,9 @@ namespace StitchCalc.ViewModels
 
 
 
-        public ReactiveCommand NavigateToProductFormPage => _navigateToProductFormPage;
+        public ReactiveCommand NavigateToProductFormPage => _addProduct;
 
-        public ReactiveCommand NavigateToProductPage => _navigateToProductPage;
+        public ReactiveCommand NavigateToProductPage => _showProduct;
 
         public IRealmCollection<Product> Products => _products;
 
@@ -47,17 +48,11 @@ namespace StitchCalc.ViewModels
             set { this.RaiseAndSetIfChanged(ref _searchTerm, value); }
         }
 
-        public Product SelectedProduct
+        public ProductViewModel SelectedProduct
         {
             get { return _selectedProduct; }
             set { this.RaiseAndSetIfChanged(ref _selectedProduct, value); }
         }
-
-
-
-        public Task OnNavigatedTo(object parameter, NavigationDirection direction) => Task.CompletedTask;
-
-        public Task OnNavigatingFrom() => Task.CompletedTask;
 
 
 
@@ -69,11 +64,11 @@ namespace StitchCalc.ViewModels
 
 
 
-        private readonly ReactiveCommand<Unit, Unit> _navigateToProductFormPage;
-        private readonly ReactiveCommand<Unit, Unit> _navigateToProductPage;
+        private readonly ReactiveCommand<Unit, Unit> _addProduct;
+        private readonly ReactiveCommand<Unit, Unit> _showProduct;
         private readonly IRealmCollection<Product> _products;
 		private readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductViewModel>> _productsView;
         private string _searchTerm;
-        private Product _selectedProduct;
+        private ProductViewModel _selectedProduct;
     }
 }
