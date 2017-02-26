@@ -1,6 +1,5 @@
 ﻿using ReactiveUI;
 using StitchCalc.Models;
-using StitchCalc.Services.NavigationService;
 using System;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels
 {
-    public class MaterialFormViewViewModel : ViewModelBase, INavigable
+    public class MaterialFormViewViewModel : ViewModelBase
     {
         public MaterialFormViewViewModel()
         {

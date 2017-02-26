@@ -1,5 +1,4 @@
 ﻿using ReactiveUI;
-using StitchCalc.Services.NavigationService;
 using StitchCalc.Views;
 using System;
 using System.Linq;
@@ -13,7 +12,7 @@ using System.Collections.Specialized;
 
 namespace StitchCalc.ViewModels
 {
-    public class ProductsViewModel : ViewModelBase, INavigable
+    public class ProductsViewModel : ViewModelBase
     {
         public ProductsViewModel()
         {

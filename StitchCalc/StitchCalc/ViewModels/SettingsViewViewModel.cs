@@ -1,6 +1,5 @@
 ﻿using Acr.DeviceInfo;
 using ReactiveUI;
-using StitchCalc.Services.NavigationService;
 using StitchCalc.Services.SettingsServices;
 using System;
 using System.Reactive.Linq;
@@ -8,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace StitchCalc.ViewModels
 {
-	public class SettingsViewViewModel : ViewModelBase, INavigable
+	public class SettingsViewViewModel : ViewModelBase
 	{
 		public SettingsViewViewModel()
 		{
