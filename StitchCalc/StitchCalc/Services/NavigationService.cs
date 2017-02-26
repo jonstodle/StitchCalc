@@ -7,7 +7,7 @@ namespace StitchCalc.Services
 {
 	public static class NavigationService
 	{
-		public static void Init(INavigation navigation) => this.navigation = navigation;
+		public static void Init(INavigation navigation) => _navigation = navigation;
 
 
 
@@ -19,17 +19,17 @@ namespace StitchCalc.Services
 
 		private static async Task NavigateTo<TView>(TView view, bool removeCurrentPageFromBackStack) where TView : Page, IViewFor
 		{
-            var currentPage = navigation.NavigationStack.LastOrDefault();
-            await navigation.PushAsync(view);
-            if (removeCurrentPageFromBackStack) navigation.RemovePage(currentPage);
+            var currentPage = _navigation.NavigationStack.LastOrDefault();
+            await _navigation.PushAsync(view);
+            if (removeCurrentPageFromBackStack) _navigation.RemovePage(currentPage);
         }
 
-		public static Task GoBack() => navigation.PopAsync();
+		public static Task GoBack() => _navigation.PopAsync();
 
-        public static Task GoHome() => navigation.PopToRootAsync();
+        public static Task GoHome() => _navigation.PopToRootAsync();
 
 
 
-        private static INavigation navigation;
+        private static INavigation _navigation;
     }
 }
