@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
-using StitchCalc.Services.NavigationService;
 using StitchCalc.Views;
 
 using Xamarin.Forms;
+using StitchCalc.Services;
 
 namespace StitchCalc
 {
@@ -16,7 +16,7 @@ namespace StitchCalc
 			// The root page of your application
 			MainPage = new NavigationPage(new HomeTabsView(new ViewModels.HomeTabsViewViewModel()));
 
-			new NavigationService(MainPage.Navigation);
+            NavigationService.Init(MainPage.Navigation);
 		}
 
 		protected override void OnStart ()
