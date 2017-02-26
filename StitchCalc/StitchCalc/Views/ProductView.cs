@@ -17,8 +17,8 @@ namespace StitchCalc.Views
 			ViewModel = viewModel;
 
             Children.Add(new ProductSummaryView(ViewModel));
-            Children.Add(new ProductMaterialsView(ViewModel));
-            Children.Add(new WorkUnitsView(ViewModel));
+            Children.Add(new ProductMaterialsView(new ProductMaterialsViewModel(ViewModel.Product)));
+            Children.Add(new WorkUnitsView(new WorkUnitsViewModel(ViewModel.Product)));
 
             this.WhenActivated(disposables =>
             {
