@@ -4,7 +4,7 @@
         public HomeTabsView()
         {
             Title = "StitchCalc";            Children.Add(new ProductsView(new ProductsViewModel()));
-            Children.Add(new MaterialsView());
+            Children.Add(new MaterialsView(new MaterialsViewModel()));
             Children.Add(new SettingsView(new SettingsViewModel()));
         }
     }}

@@ -11,11 +11,11 @@ namespace StitchCalc.Views
 {
     public partial class MaterialsView : ReactiveContentPage<MaterialsViewModel>
     {
-        public MaterialsView()
+        public MaterialsView(MaterialsViewModel viewModel)
         {
             InitializeComponent();
 
-            ViewModel = new MaterialsViewModel();
+            ViewModel = viewModel;
 
             this.WhenActivated(disposables =>
             {
@@ -23,8 +23,8 @@ namespace StitchCalc.Views
                 this.OneWayBind(ViewModel, vm => vm.MaterialsView, v => v.MaterialsListView.ItemsSource).DisposeWith(disposables);
                 this.Bind(ViewModel, vm => vm.SelectedMaterial, v => v.MaterialsListView.SelectedItem).DisposeWith(disposables);
 
-                this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialToolbarItem).DisposeWith(disposables);
-                this.BindCommand(ViewModel, vm => vm.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
+                this.BindCommand(ViewModel, vm => vm.AddMaterial, v => v.AddMaterialToolbarItem).DisposeWith(disposables);
+                this.BindCommand(ViewModel, vm => vm.SelectedMaterial.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
 
                 MaterialsListView.SelectedItem = null;
             });

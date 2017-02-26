@@ -8,6 +8,7 @@ using Xamarin.Forms;
 using Realms;
 using StitchCalc.Models;
 using System.Collections.Specialized;
+using StitchCalc.Services;
 
 namespace StitchCalc.ViewModels
 {
@@ -17,9 +18,7 @@ namespace StitchCalc.ViewModels
 		{
             _materials = DBService.GetOrderedList<Material, string>(x => x.Name);
 
-			_navigateToMaterialFormView = ReactiveCommand.CreateFromTask(() => NavigationService.Current.NavigateTo<MaterialFormView>());
-
-			_edit = ReactiveCommand.CreateFromTask(x => NavigationService.Current.NavigateTo<MaterialFormView>(_selectedMaterial.Id));
+			_addMaterial = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => NavigationService.NavigateTo(new MaterialFormView(new MaterialFormViewModel()))));
 
 			_materialsView = Observable.Merge(
                     this.WhenAnyValue(x => x.SearchTerm),
@@ -32,9 +31,7 @@ namespace StitchCalc.ViewModels
 
 
 
-        public ReactiveCommand NavigateToMaterialFormView => _navigateToMaterialFormView;
-
-        public ReactiveCommand Edit => _edit;
+        public ReactiveCommand AddMaterial => _addMaterial;
 
         public IRealmCollection<Material> Materials => _materials;
 
@@ -46,17 +43,11 @@ namespace StitchCalc.ViewModels
 			set { this.RaiseAndSetIfChanged(ref _searchTerm, value); }
 		}
 
-		public Material SelectedMaterial
+		public MaterialViewModel SelectedMaterial
 		{
 			get { return _selectedMaterial; }
 			set { this.RaiseAndSetIfChanged(ref _selectedMaterial, value); }
 		}
-
-
-
-        public Task OnNavigatedTo(object parameter, NavigationDirection direction) => Task.CompletedTask;
-
-        public Task OnNavigatingFrom() => Task.CompletedTask;
 
 
 
@@ -68,11 +59,10 @@ namespace StitchCalc.ViewModels
 
 
 
-        private readonly ReactiveCommand<Unit, Unit> _navigateToMaterialFormView;
-        private readonly ReactiveCommand<Unit, Unit> _edit;
+        private readonly ReactiveCommand<Unit, Unit> _addMaterial;
         private readonly IRealmCollection<Material> _materials;
 		private readonly ObservableAsPropertyHelper<IReactiveDerivedList<MaterialViewModel>> _materialsView;
         private string _searchTerm;
-        private Material _selectedMaterial;
+        private MaterialViewModel _selectedMaterial;
     }
 }
