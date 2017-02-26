@@ -11,13 +11,13 @@ using System.Collections.Specialized;
 
 namespace StitchCalc.Views
 {
-    public partial class ProductMaterialFormView : ReactiveContentPage<ProductMaterialFormViewViewModel>
+    public partial class ProductMaterialFormView : ReactiveContentPage<ProductMaterialFormViewModel>
     {
-        public ProductMaterialFormView()
+        public ProductMaterialFormView(ProductMaterialFormViewModel viewModel)
         {
             InitializeComponent();
 
-            ViewModel = new ProductMaterialFormViewViewModel();
+            ViewModel = viewModel;
 
             this.WhenActivated(disposables =>
             {
@@ -26,7 +26,7 @@ namespace StitchCalc.Views
                 this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text).DisposeWith(disposables);
 
                 this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem).DisposeWith(disposables);
-                this.BindCommand(ViewModel, vm => vm.NavigateToMaterialFormView, v => v.AddMaterialButton).DisposeWith(disposables);
+                this.BindCommand(ViewModel, vm => vm.AddMaterial, v => v.AddMaterialButton).DisposeWith(disposables);
                 this.BindCommand(ViewModel, vm => vm.Save, v => v.AmountEntry, nameof(Entry.Completed)).DisposeWith(disposables);
 
                 ViewModel

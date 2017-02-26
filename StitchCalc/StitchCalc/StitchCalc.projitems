@@ -75,7 +75,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialFormViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductFormViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialFormViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialFormViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductWorkUnitsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
