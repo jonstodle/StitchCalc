@@ -33,13 +33,13 @@ namespace StitchCalc.ViewModels
 
 
 
-        public IRealmCollection<Product> Products => _products;
-
-		public IReactiveDerivedList<ProductViewModel> ProductsView => _productsView.Value;
-
         public ReactiveCommand NavigateToProductFormPage => _navigateToProductFormPage;
 
         public ReactiveCommand NavigateToProductPage => _navigateToProductPage;
+
+        public IRealmCollection<Product> Products => _products;
+
+        public IReactiveDerivedList<ProductViewModel> ProductsView => _productsView.Value;
 
         public string SearchTerm
         {
@@ -69,10 +69,10 @@ namespace StitchCalc.ViewModels
 
 
 
-        private readonly IRealmCollection<Product> _products;
-		private readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductViewModel>> _productsView;
         private readonly ReactiveCommand<Unit, Unit> _navigateToProductFormPage;
         private readonly ReactiveCommand<Unit, Unit> _navigateToProductPage;
+        private readonly IRealmCollection<Product> _products;
+		private readonly ObservableAsPropertyHelper<IReactiveDerivedList<ProductViewModel>> _productsView;
         private string _searchTerm;
         private Product _selectedProduct;
     }
