@@ -12,7 +12,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemCollectionsSpecializedExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemExtensions.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Models\IGuidId.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Models\IRecord.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Material.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\Product.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ProductMaterial.cs" />

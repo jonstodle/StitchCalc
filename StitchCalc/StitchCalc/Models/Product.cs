@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace StitchCalc.Models
 {
-	public class Product : RealmObject, IGuidId
+	public class Product : RealmObject, IRecord
     {
         [PrimaryKey]
 		public string StringId { get; set; } = Guid.NewGuid().ToString();
@@ -14,8 +14,9 @@ namespace StitchCalc.Models
 		public bool ChargeForWork { get; set; } = true;
 		public double MaterialsMultiplier { get; set; }
 		public double WorkMultiplier { get; set; }
+        public DateTimeOffset Added { get; set; } = DateTimeOffset.Now;
         [Backlink(nameof(ProductMaterial.Product))]
-		public IQueryable<ProductMaterial> Materials { get; }
+        public IQueryable<ProductMaterial> Materials { get; }
         [Backlink(nameof(WorkUnit.Product))]
 		public IQueryable<WorkUnit> WorkUnits { get; }
 

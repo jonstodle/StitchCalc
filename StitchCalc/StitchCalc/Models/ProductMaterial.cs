@@ -3,7 +3,7 @@ using Realms;
 
 namespace StitchCalc.Models
 {
-	public class ProductMaterial : RealmObject, IGuidId
+	public class ProductMaterial : RealmObject, IRecord
     {
 		public ProductMaterial() { }
 
@@ -26,9 +26,10 @@ namespace StitchCalc.Models
 		public double Price { get; set; }
 		public double Width { get; set; }
 		public double Length { get; set; }
+        public DateTimeOffset Added { get; set; } = DateTimeOffset.Now;
 
 
-		public Guid Id { get { return Guid.Parse(StringId); } set { StringId = value.ToString(); } }
+        public Guid Id { get { return Guid.Parse(StringId); } set { StringId = value.ToString(); } }
 		public Guid MaterialId { get { return Guid.Parse(StringMaterialId); } set { StringMaterialId = value.ToString(); } }
 	}
 }
