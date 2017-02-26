@@ -77,7 +77,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductWorkUnitsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkUnitFormViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkUnitFormViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\MigrationClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\Material.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\Product.cs" />
