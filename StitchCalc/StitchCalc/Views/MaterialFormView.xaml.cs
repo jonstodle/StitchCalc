@@ -10,13 +10,13 @@ using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {
-    public partial class MaterialFormView : ReactiveContentPage<MaterialFormViewViewModel>
+    public partial class MaterialFormView : ReactiveContentPage<MaterialFormViewModel>
     {
-        public MaterialFormView()
+        public MaterialFormView(MaterialFormViewModel viewModel)
         {
             InitializeComponent();
 
-            ViewModel = new MaterialFormViewViewModel();
+            ViewModel = viewModel;
 
             this.WhenActivated(disposables =>
             {

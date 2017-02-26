@@ -70,13 +70,11 @@
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\SystemReactiveLinqExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\DBService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductsViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialFormViewViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialFormViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductFormViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialFormViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialsViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductSummaryViewViewModel.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductWorkUnitsViewViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\SettingsViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkUnitFormViewViewModel.cs" />

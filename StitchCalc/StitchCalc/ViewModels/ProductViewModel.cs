@@ -6,6 +6,8 @@ using System.Reactive.Linq;
 using ReactiveUI;
 using Realms;
 using StitchCalc.Models;
+using StitchCalc.Services;
+using StitchCalc.Views;
 
 namespace StitchCalc.ViewModels
 {
@@ -14,6 +16,10 @@ namespace StitchCalc.ViewModels
 		public ProductViewModel(Product product)
 		{
 			_product = product;
+
+            _add = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => NavigationService.NavigateTo(new ProductFormView(new ProductFormViewModel()))));
+
+            _edit = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => NavigationService.NavigateTo(new ProductFormView(new ProductFormViewModel(_product)))));
 
             _toggleChargeForMaterials = ReactiveCommand.Create(() => DBService.Write(realm => _product.ChargeForMaterials = !_product.ChargeForMaterials));
 
@@ -52,7 +58,11 @@ namespace StitchCalc.ViewModels
 
 
 
-		public ReactiveCommand ToggleChargeForMaterials => _toggleChargeForMaterials;
+        public ReactiveCommand Add => _add;
+
+        public ReactiveCommand Edit => _edit;
+
+        public ReactiveCommand ToggleChargeForMaterials => _toggleChargeForMaterials;
 
 		public ReactiveCommand ToggleChargeForWork => _toggleChargeForWork;
 
@@ -78,7 +88,9 @@ namespace StitchCalc.ViewModels
 
 
 
-		private readonly ReactiveCommand<Unit, Unit> _toggleChargeForMaterials;
+        private readonly ReactiveCommand<Unit, Unit> _add;
+        private readonly ReactiveCommand<Unit, Unit> _edit;
+        private readonly ReactiveCommand<Unit, Unit> _toggleChargeForMaterials;
 		private readonly ReactiveCommand<Unit, Unit> _toggleChargeForWork;
 		private readonly ReactiveCommand<double, Unit> _setMaterialsMultiplier;
 		private readonly ReactiveCommand<double, Unit> _setWorkMultiplier;
