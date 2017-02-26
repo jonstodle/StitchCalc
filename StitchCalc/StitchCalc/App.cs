@@ -14,8 +14,7 @@ namespace StitchCalc
 			AddGlobalResources();
 
 			// The root page of your application
-			if (File.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "data.json"))) MainPage = new NavigationPage(new HomeTabsView());
-			else MainPage = new NavigationPage(new HomeTabsView());
+			MainPage = new NavigationPage(new HomeTabsView());
 
 			new NavigationService(MainPage.Navigation);
 		}
