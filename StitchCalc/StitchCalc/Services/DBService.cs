@@ -14,7 +14,12 @@ namespace StitchCalc
 	{
 		static DBService()
 		{
-			_realm = Realm.GetInstance();
+			var realmConfig = new RealmConfiguration();
+#if DEBUG
+			realmConfig.ShouldDeleteIfMigrationNeeded = true;
+#endif
+
+			_realm = Realm.GetInstance(realmConfig);
 
 			var dataFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "data.json");
 			if (File.Exists(dataFilePath)) new MigrationClient(dataFilePath).MigrateData().Subscribe(_ => { }, () => System.Diagnostics.Debug.WriteLine("Test"));
