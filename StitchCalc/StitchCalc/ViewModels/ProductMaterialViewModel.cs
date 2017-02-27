@@ -17,6 +17,12 @@ namespace StitchCalc.ViewModels
             _productMaterial = productMaterial;
 
             _edit = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => NavigationService.NavigateTo(new ProductMaterialFormView(new ProductMaterialFormViewModel(_productMaterial.Product, _productMaterial)))));
+
+			_price = this.WhenAnyValue(
+				x => x.ProductMaterial.Price,
+				y => y.ProductMaterial.Length,
+				(x, y) => x * y)
+						 .ToProperty(this, x => x.Price);
         }
 
 
@@ -25,9 +31,12 @@ namespace StitchCalc.ViewModels
 
         public ProductMaterial ProductMaterial => _productMaterial;
 
+		public double Price => _price.Value;
+
 
 
         private readonly ReactiveCommand<Unit, Unit> _edit;
         private readonly ProductMaterial _productMaterial;
+		private readonly ObservableAsPropertyHelper<double> _price;
     }
 }
