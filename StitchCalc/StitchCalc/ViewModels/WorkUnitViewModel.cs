@@ -17,6 +17,12 @@ namespace StitchCalc.ViewModels
             _workUnit = workUnit;
 
             _edit = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => NavigationService.NavigateTo(new WorkUnitFormView(new WorkUnitFormViewModel(_workUnit.Product, _workUnit)))));
+
+			_totalCharge = this.WhenAnyValue(
+				x => x.WorkUnit.Charge,
+				y => y.WorkUnit.Minutes,
+				(x, y) => x * y)
+							   .ToProperty(this, x => x.TotalCharge);
         }
 
 
@@ -25,9 +31,12 @@ namespace StitchCalc.ViewModels
 
         public WorkUnit WorkUnit => _workUnit;
 
+		public double TotalCharge => _totalCharge.Value;
+
 
 
         private readonly ReactiveCommand<Unit, Unit> _edit;
         private readonly WorkUnit _workUnit;
+		private readonly ObservableAsPropertyHelper<double> _totalCharge;
     }
 }
