@@ -19,6 +19,8 @@ namespace StitchCalc.ViewModels
 
             _edit = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => NavigationService.NavigateTo(new ProductFormView(new ProductFormViewModel(_product)))));
 
+			_delete = ReactiveCommand.Create(() => DBService.Write(realm => realm.Remove(_product)));
+
             _toggleChargeForMaterials = ReactiveCommand.Create(() => DBService.Write(realm => _product.ChargeForMaterials = !_product.ChargeForMaterials));
 
 			_setMaterialsMultiplier = ReactiveCommand.Create<double, Unit>(value => { DBService.Write(realm => _product.MaterialsMultiplier = value); return Unit.Default; });
@@ -62,6 +64,8 @@ namespace StitchCalc.ViewModels
 
         public ReactiveCommand Edit => _edit;
 
+		public ReactiveCommand Delete => _delete;
+
         public ReactiveCommand ToggleChargeForMaterials => _toggleChargeForMaterials;
 
 		public ReactiveCommand ToggleChargeForWork => _toggleChargeForWork;
@@ -88,7 +92,8 @@ namespace StitchCalc.ViewModels
 
 
 
-        private readonly ReactiveCommand<Unit, Unit> _edit;
+		private readonly ReactiveCommand<Unit, Unit> _edit;
+        private readonly ReactiveCommand<Unit, Unit> _delete;
         private readonly ReactiveCommand<Unit, Unit> _toggleChargeForMaterials;
 		private readonly ReactiveCommand<Unit, Unit> _toggleChargeForWork;
 		private readonly ReactiveCommand<double, Unit> _setMaterialsMultiplier;
