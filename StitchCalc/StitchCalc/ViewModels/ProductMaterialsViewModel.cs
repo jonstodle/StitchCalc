@@ -27,6 +27,8 @@ namespace StitchCalc.ViewModels
 
 			_materialsPrice = _productMaterials
                 .CollectionChanges()
+				.ToSignal()
+				.StartWith(Unit.Default)
 				.Select(_ => _productMaterials.Sum(x => x.Price))
 				.ToProperty(this, x => x.MaterialsPrice);
 		}

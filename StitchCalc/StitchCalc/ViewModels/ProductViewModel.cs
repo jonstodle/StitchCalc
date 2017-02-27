@@ -28,6 +28,8 @@ namespace StitchCalc.ViewModels
 			_setWorkMultiplier = ReactiveCommand.Create<double, Unit>(value => { DBService.Write(realm => _product.WorkMultiplier = value); return Unit.Default; });
 
 			_materialsPrice = Materials.CollectionChanges()
+									   .ToSignal()
+									   .StartWith(Unit.Default)
 									   .Select(_ => Materials.Sum(x => x.Price))
 									   .ToProperty(this, x => x.MaterialsPrice);
 
@@ -36,6 +38,8 @@ namespace StitchCalc.ViewModels
 				.ToProperty(this, x => x.IsMaterialsPriceMultiplied);
 
 			_workUnitsPrice = WorkUnits.CollectionChanges()
+									   .ToSignal()
+									   .StartWith(Unit.Default)
 									   .Select(_ => WorkUnits.Sum(x => x.Charge * x.Minutes))
 									   .ToProperty(this, x => x.WorkUnitsPrice);
 
