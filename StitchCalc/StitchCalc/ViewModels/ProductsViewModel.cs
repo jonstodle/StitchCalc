@@ -59,7 +59,7 @@ namespace StitchCalc.ViewModels
 		private IReactiveDerivedList<ProductViewModel> CreateFilteredList(string searchString)
         {
 			if (!searchString.HasValue()) return _products.CreateDerivedCollection(x => new ProductViewModel(x));
-			else return DBService.GetFilteredList<Product, string>(x => x.Name.ToLowerInvariant().Contains(searchString.ToLowerInvariant()), x => x.Name).CreateDerivedCollection(x => new ProductViewModel(x));
+			else return DBService.GetFilteredList<Product, string>(x => x.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase), x => x.Name).CreateDerivedCollection(x => new ProductViewModel(x));
         }
 
 

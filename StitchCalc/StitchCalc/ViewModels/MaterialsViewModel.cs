@@ -54,7 +54,7 @@ namespace StitchCalc.ViewModels
 		private IReactiveDerivedList<MaterialViewModel> CreateFilteredList(string searchString)
 		{
 			if (!searchString.HasValue()) return _materials.CreateDerivedCollection(x => new MaterialViewModel(x));
-			else return DBService.GetFilteredList<Material, string>(x => x.Name.Contains(searchString), x => x.Name).CreateDerivedCollection(x => new MaterialViewModel(x));
+			else return DBService.GetFilteredList<Material, string>(x => x.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase), x => x.Name).CreateDerivedCollection(x => new MaterialViewModel(x));
 		}
 
 
