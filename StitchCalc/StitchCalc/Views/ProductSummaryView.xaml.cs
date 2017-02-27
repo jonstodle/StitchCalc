@@ -37,7 +37,7 @@ namespace StitchCalc.Views
 				this.OneWayBind(ViewModel, vm => vm.TotalPrice, v => v.SumCostLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
 
 				var materialsTaps = Observable.FromEventPattern(MaterialsStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-											  .SelectMany(_ => Observable.FromAsync(() => DisplayActionSheet("Materials", _cancelString, _toggleString, _multiplyString)))
+				                              .SelectMany(_ => Observable.FromAsync(() => CreateActionSheet("Materials")))
 				                              .Publish()
 				                              .RefCount();
 
@@ -58,7 +58,7 @@ namespace StitchCalc.Views
 					.DisposeWith(disposables);
 
 				var workTaps = Observable.FromEventPattern(WorkStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-										 .SelectMany(_ => Observable.FromAsync(() => DisplayActionSheet("Work", _cancelString, _toggleString, _multiplyString)))
+				                         .SelectMany(_ => Observable.FromAsync(() => CreateActionSheet("Work")))
 										 .Publish()
 										 .RefCount();
 
@@ -84,6 +84,7 @@ namespace StitchCalc.Views
 		string _cancelString = "Cancel";
 		string _toggleString = "Toggle";
 		string _multiplyString = "Multiply";
+		Task<string> CreateActionSheet(string title) => DisplayActionSheet(title, _cancelString, null, _toggleString, _multiplyString);
 		Task<PromptResult> CreateMultiplyPrompt(string subjectToMultiply) => UserDialogs.Instance.PromptAsync($"Multiply {subjectToMultiply}", "Multiply", "OK", "Cancel", "0 to remove multiplier", inputType: InputType.Number);
 	}
 }
