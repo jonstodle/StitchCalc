@@ -22,7 +22,7 @@ namespace StitchCalc
 			_realm = Realm.GetInstance(realmConfig);
 
 			var dataFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Personal), "data.json");
-			if (File.Exists(dataFilePath)) new MigrationClient(dataFilePath).MigrateData().Subscribe(_ => { }, () => System.Diagnostics.Debug.WriteLine("Test"));
+			if (File.Exists(dataFilePath)) new MigrationClient(dataFilePath).MigrateData().Subscribe(_ => { }, _ => { }, () => File.Delete(dataFilePath));
 		}
 
 
