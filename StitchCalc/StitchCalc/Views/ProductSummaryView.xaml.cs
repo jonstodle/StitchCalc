@@ -30,7 +30,7 @@ namespace StitchCalc.Views
 				this.OneWayBind(ViewModel, vm => vm.Product.MaterialsMultiplier, v => v.MaterialsMultiplierLabel.Text, x => $"x{x}").DisposeWith(disposables);
 
 				this.OneWayBind(ViewModel, vm => vm.Product.ChargeForWork, v => v.WorkStackLayout.Opacity, x => x ? 1 : .2).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.WorkPrice, v => v.WorkCostLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
+				this.OneWayBind(ViewModel, vm => vm.WorkUnitsPrice, v => v.WorkCostLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
 				this.OneWayBind(ViewModel, vm => vm.IsWorkPriceMultiplied, v => v.WorkMultiplierLabel.IsVisible).DisposeWith(disposables);
 				this.OneWayBind(ViewModel, vm => vm.Product.WorkMultiplier, v => v.WorkMultiplierLabel.Text, x => $"x{x}").DisposeWith(disposables);
 
