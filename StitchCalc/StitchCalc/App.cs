@@ -14,7 +14,7 @@ namespace StitchCalc
 			AddGlobalResources();
 
 			// The root page of your application
-			MainPage = new NavigationPage(new HomeTabsView(new ViewModels.HomeTabsViewViewModel()));
+			MainPage = new NavigationPage(new HomeTabsView());
 
             NavigationService.Init(MainPage.Navigation);
 		}
