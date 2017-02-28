@@ -12,7 +12,7 @@ namespace StitchCalc
     {
         public ReactiveObservableList(IReactiveCollection<T> sourceCollection)
         {
-            _collection = sourceCollection;
+			_collection = sourceCollection ?? new ReactiveList<T>();
 
             _collection.Changed.Subscribe(args => CollectionChanged?.Invoke(this, args)).DisposeWith(_disposables);
         }
