@@ -17,7 +17,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Product.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ProductMaterial.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\WorkUnit.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ReactiveObservableList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.IosAndroid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.Windows.cs" />
@@ -89,6 +88,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\JsonToRealmMigrationService\DataStorageObject.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReactiveUIExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ProductsView.xaml">

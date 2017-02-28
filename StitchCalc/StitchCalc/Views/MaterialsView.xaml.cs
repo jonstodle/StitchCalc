@@ -20,7 +20,7 @@ namespace StitchCalc.Views
             this.WhenActivated(disposables =>
             {
                 this.Bind(ViewModel, vm => vm.SearchTerm, v => v.MaterialsSearchBar.Text).DisposeWith(disposables);
-                this.OneWayBind(ViewModel, vm => vm.MaterialsView, v => v.MaterialsListView.ItemsSource, x => new ReactiveObservableList<MaterialViewModel>(x)).DisposeWith(disposables);
+				this.OneWayBind(ViewModel, vm => vm.MaterialsView, v => v.MaterialsListView.ItemsSource, x => x.ToReactiveObservableList()).DisposeWith(disposables);
                 this.Bind(ViewModel, vm => vm.SelectedMaterial, v => v.MaterialsListView.SelectedItem).DisposeWith(disposables);
 
                 this.BindCommand(ViewModel, vm => vm.AddMaterial, v => v.AddMaterialToolbarItem).DisposeWith(disposables);
