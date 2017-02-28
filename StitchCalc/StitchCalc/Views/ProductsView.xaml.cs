@@ -20,7 +20,7 @@ namespace StitchCalc.Views
             this.WhenActivated(disposables =>
             {
                 this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text).DisposeWith(disposables);
-                this.OneWayBind(ViewModel, vm => vm.ProductsView, v => v.ProductListView.ItemsSource).DisposeWith(disposables);
+                this.OneWayBind(ViewModel, vm => vm.ProductsView, v => v.ProductListView.ItemsSource, x => new ReactiveObservableList<ProductViewModel>(x)).DisposeWith(disposables);
                 this.Bind(ViewModel, vm => vm.SelectedProduct, v => v.ProductListView.SelectedItem).DisposeWith(disposables);
 
                 this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem).DisposeWith(disposables);
