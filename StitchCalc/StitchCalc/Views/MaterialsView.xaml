@@ -24,7 +24,7 @@
 				<DataTemplate>
 					<TextCell Text="{Binding Material.Name}" Detail="{Binding Material.Price, StringFormat='{}{0:N2} per meter'}">
 						<TextCell.ContextActions>
-							<!--<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>-->
+							<MenuItem Text="Delete" IsDestructive="True" Command="{Binding Delete}"/>
 						</TextCell.ContextActions>
 					</TextCell>
 				</DataTemplate>
