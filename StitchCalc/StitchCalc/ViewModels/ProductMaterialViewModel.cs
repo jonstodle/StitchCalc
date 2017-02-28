@@ -18,6 +18,8 @@ namespace StitchCalc.ViewModels
 
             _edit = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => NavigationService.NavigateTo(new ProductMaterialFormView(new ProductMaterialFormViewModel(_productMaterial.Product, _productMaterial)))));
 
+			_delete = ReactiveCommand.Create(() => DBService.Write(realm => realm.Remove(_productMaterial)));
+
 			_price = this.WhenAnyValue(
 				x => x.ProductMaterial.Price,
 				y => y.ProductMaterial.Length,
@@ -29,13 +31,16 @@ namespace StitchCalc.ViewModels
 
         public ReactiveCommand Edit => _edit;
 
+		public ReactiveCommand Delete => _delete;
+
         public ProductMaterial ProductMaterial => _productMaterial;
 
 		public double Price => _price.Value;
 
 
 
-        private readonly ReactiveCommand<Unit, Unit> _edit;
+		private readonly ReactiveCommand<Unit, Unit> _edit;
+        private readonly ReactiveCommand<Unit, Unit> _delete;
         private readonly ProductMaterial _productMaterial;
 		private readonly ObservableAsPropertyHelper<double> _price;
     }
