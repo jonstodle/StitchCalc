@@ -17,6 +17,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Models\Product.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\ProductMaterial.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\WorkUnit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ReactiveObservableList.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.IosAndroid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.Windows.cs" />
