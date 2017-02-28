@@ -18,7 +18,7 @@ namespace StitchCalc.ViewModels
             _workUnit = workUnit;
             Name = _workUnit?.Name;
             Minutes = _workUnit?.Minutes.ToString();
-            Charge = (_workUnit?.Charge * 60).ToString() ?? SettingsService.Current.DefaultHourlyCharge.ToString();
+            Charge = _workUnit != null ? (_workUnit.Charge * 60).ToString() : SettingsService.Current.DefaultHourlyCharge.ToString();
 
             _save = ReactiveCommand.CreateFromObservable(
                 () => SaveImpl(),
