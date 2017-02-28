@@ -42,7 +42,7 @@ namespace StitchCalc.ViewModels
             DBService.Write(realm => realm.Add(product, true));
 
             if (_product != null) await NavigationService.GoBack();
-            else await NavigationService.NavigateToAndRemoveThis(new ProductView(new ProductViewModel(_product)));
+            else await NavigationService.NavigateToAndRemoveThis(new ProductView(new ProductViewModel(product)));
         });
 
 
