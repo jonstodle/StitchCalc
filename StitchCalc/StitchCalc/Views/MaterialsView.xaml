@@ -9,11 +9,7 @@
 						 Title="Materials">
 	
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="AddMaterialToolbarItem" Text="Add">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource" Android="add.png" WinPhone="add.png"/>
-			</ToolbarItem.Icon>
-		</ToolbarItem>
+		<ToolbarItem x:Name="AddMaterialToolbarItem" Text="Add" Icon="add.png"/>
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout>

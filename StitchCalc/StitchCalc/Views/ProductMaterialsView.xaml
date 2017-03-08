@@ -8,11 +8,7 @@
 						 Icon="cloth.png"
 						 Title="Materials">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="AddProductMaterialsToolbarItem" Text="Add">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource" Android="add.png" WinPhone="add.png"/>
-			</ToolbarItem.Icon>
-		</ToolbarItem>
+		<ToolbarItem x:Name="AddProductMaterialsToolbarItem" Text="Add" Icon="add.png"/>
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout>

@@ -6,11 +6,7 @@
 			 x:TypeArguments="vms:MaterialFormViewModel"
              x:Class="StitchCalc.Views.MaterialFormView">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="SaveToolbarItem" Text="Save">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource" Android="save.png" WinPhone="save.png"/>
-			</ToolbarItem.Icon>
-		</ToolbarItem>
+		<ToolbarItem x:Name="SaveToolbarItem" Text="Save" Icon="save.png"/>
 	</ContentPage.ToolbarItems>
 
 	<ScrollView>

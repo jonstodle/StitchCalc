@@ -71,8 +71,6 @@
     <MtouchUseLlvm>True</MtouchUseLlvm>
     <MtouchUseThumb>False</MtouchUseThumb>
     <MtouchEnableBitcode>False</MtouchEnableBitcode>
-    <MtouchUseSGen>False</MtouchUseSGen>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
     <OptimizePNGs>True</OptimizePNGs>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
@@ -97,8 +95,6 @@
     <MtouchUseLlvm>True</MtouchUseLlvm>
     <MtouchUseThumb>False</MtouchUseThumb>
     <MtouchEnableBitcode>False</MtouchEnableBitcode>
-    <MtouchUseSGen>False</MtouchUseSGen>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
     <OptimizePNGs>True</OptimizePNGs>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
@@ -124,8 +120,6 @@
     <MtouchUseLlvm>True</MtouchUseLlvm>
     <MtouchUseThumb>False</MtouchUseThumb>
     <MtouchEnableBitcode>False</MtouchEnableBitcode>
-    <MtouchUseSGen>False</MtouchUseSGen>
-    <MtouchUseRefCounting>False</MtouchUseRefCounting>
     <OptimizePNGs>True</OptimizePNGs>
     <MtouchTlsProvider>Default</MtouchTlsProvider>
     <MtouchHttpClientHandler>HttpClientHandler</MtouchHttpClientHandler>
@@ -163,6 +157,12 @@
     <BundleResource Include="Resources\Icon-Small%403x.png" />
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <BundleResource Include="Resources\Icon-300.png" />
+    <BundleResource Include="Resources\add%402x.png" />
+    <BundleResource Include="Resources\add%403x.png" />
+    <BundleResource Include="Resources\save%402x.png" />
+    <BundleResource Include="Resources\save%403x.png" />
+    <BundleResource Include="Resources\edit%402x.png" />
+    <BundleResource Include="Resources\edit%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Acr.DeviceInfo, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -258,9 +258,6 @@
     <Reference Include="Realm.Sync">
       <HintPath>..\..\packages\Realm.1.0.3\lib\Xamarin.iOS10\Realm.Sync.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\save.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\home%402x.png" />

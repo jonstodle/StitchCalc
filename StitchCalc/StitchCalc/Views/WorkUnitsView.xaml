@@ -8,11 +8,7 @@
 						 Icon="clock.png"
 						 Title="Work">
 	<ContentPage.ToolbarItems>
-		<ToolbarItem x:Name="AddWorkUnitToolbarItem" Text="Add">
-			<ToolbarItem.Icon>
-				<OnPlatform x:TypeArguments="FileImageSource" Android="add.png" WinPhone="add.png"/>
-			</ToolbarItem.Icon>
-		</ToolbarItem>
+		<ToolbarItem x:Name="AddWorkUnitToolbarItem" Text="Add" Icon="add.png"/>
 	</ContentPage.ToolbarItems>
 	
 	<StackLayout>
