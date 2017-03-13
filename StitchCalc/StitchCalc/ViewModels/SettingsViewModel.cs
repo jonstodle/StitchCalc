@@ -1,9 +1,9 @@
 ﻿using Acr.DeviceInfo;
 using ReactiveUI;
-using StitchCalc.Services.SettingsServices;
 using System;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using StitchCalc.Services;
 
 namespace StitchCalc.ViewModels
 {

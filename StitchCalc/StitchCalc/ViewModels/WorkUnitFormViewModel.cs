@@ -1,12 +1,11 @@
 ﻿using ReactiveUI;
 using StitchCalc.Models;
 using StitchCalc.Services;
-using StitchCalc.Services.SettingsServices;
-using System;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace StitchCalc.ViewModels
 {

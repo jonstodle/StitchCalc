@@ -21,9 +21,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.IosAndroid.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\FileServices\FileService.Windows.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Services\NavigationService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.App.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsServices\SettingsService.User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductMaterialViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ViewModelBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\WorkUnitsViewModel.cs" />
@@ -89,6 +86,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\ProductViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MaterialViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Extensions\ReactiveUIExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Services\SettingsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)Views\ProductsView.xaml">
