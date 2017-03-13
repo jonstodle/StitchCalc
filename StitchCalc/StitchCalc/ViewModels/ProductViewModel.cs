@@ -19,7 +19,7 @@ namespace StitchCalc.ViewModels
 
             _edit = ReactiveCommand.CreateFromObservable(() => Observable.FromAsync(() => NavigationService.NavigateTo(new ProductFormView(new ProductFormViewModel(_product)))));
 
-			_delete = ReactiveCommand.Create(() => DBService.Write(realm => realm.Remove(_product)));
+			_delete = ReactiveCommand.Create(() => DeleteImpl());
 
             _toggleChargeForMaterials = ReactiveCommand.Create(() => DBService.Write(realm => _product.ChargeForMaterials = !_product.ChargeForMaterials));
 
@@ -89,6 +89,15 @@ namespace StitchCalc.ViewModels
 		public bool IsWorkPriceMultiplied => _isWorkPriceMultiplied.Value;
 
 		public double TotalPrice => _totalPrice.Value;
+
+
+
+		private void DeleteImpl() => DBService.Write(realm =>
+		{
+			realm.RemoveRange(_product.Materials);
+			realm.RemoveRange(_product.WorkUnits);
+			realm.Remove(_product);
+		});
 
 
 
