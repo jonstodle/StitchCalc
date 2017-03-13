@@ -9,25 +9,22 @@ using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {
-    public partial class ProductMaterialsView : ReactiveContentPage<ProductMaterialsViewModel>
-    {
-        public ProductMaterialsView(ProductMaterialsViewModel viewModel)
-        {
-            InitializeComponent();
+	public partial class ProductMaterialsView : ReactiveContentPage<ProductMaterialsViewModel>
+	{
+		public ProductMaterialsView(ProductMaterialsViewModel viewModel)
+		{
+			InitializeComponent();
 
-            ViewModel = viewModel;
+			ViewModel = viewModel;
 
-            this.WhenActivated(disposables =>
-            {
-				this.OneWayBind(ViewModel, vm => vm.ProductMaterialsView, v => v.MaterialsListView.ItemsSource, x => x.ToReactiveObservableList()).DisposeWith(disposables);
-                this.OneWayBind(ViewModel, vm => vm.MaterialsPrice, v => v.SumLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
-                this.Bind(ViewModel, vm => vm.SelectedProductMaterial, v => v.MaterialsListView.SelectedItem).DisposeWith(disposables);
+			this.OneWayBind(ViewModel, vm => vm.ProductMaterialsView, v => v.MaterialsListView.ItemsSource, x => x.ToReactiveObservableList());
+			this.OneWayBind(ViewModel, vm => vm.MaterialsPrice, v => v.SumLabel.Text, x => x.ToString("N2"));
+			this.Bind(ViewModel, vm => vm.SelectedProductMaterial, v => v.MaterialsListView.SelectedItem);
 
-                this.BindCommand(ViewModel, vm => vm.AddProductMaterial, v => v.AddProductMaterialsToolbarItem).DisposeWith(disposables);
-                this.BindCommand(ViewModel, vm => vm.SelectedProductMaterial.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
+			this.BindCommand(ViewModel, vm => vm.AddProductMaterial, v => v.AddProductMaterialsToolbarItem);
+			this.BindCommand(ViewModel, vm => vm.SelectedProductMaterial.Edit, v => v.MaterialsListView, nameof(ListView.ItemTapped));
 
-                MaterialsListView.SelectedItem = null;
-            });
-        }
-    }
+			MaterialsListView.SelectedItem = null;
+		}
+	}
 }

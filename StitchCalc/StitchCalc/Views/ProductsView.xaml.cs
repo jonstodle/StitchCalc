@@ -9,25 +9,22 @@ using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {
-    public partial class ProductsView : ReactiveContentPage<ProductsViewModel>
-    {
-        public ProductsView(ProductsViewModel viewModel)
-        {
-            InitializeComponent();
+	public partial class ProductsView : ReactiveContentPage<ProductsViewModel>
+	{
+		public ProductsView(ProductsViewModel viewModel)
+		{
+			InitializeComponent();
 
-            ViewModel = viewModel;
+			ViewModel = viewModel;
 
-            this.WhenActivated(disposables =>
-            {
-                this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.ProductsView, v => v.ProductListView.ItemsSource, x => x.ToReactiveObservableList()).DisposeWith(disposables);
-                this.Bind(ViewModel, vm => vm.SelectedProduct, v => v.ProductListView.SelectedItem).DisposeWith(disposables);
+			this.Bind(ViewModel, vm => vm.SearchTerm, v => v.ProductSearchBar.Text);
+			this.OneWayBind(ViewModel, vm => vm.ProductsView, v => v.ProductListView.ItemsSource, x => x.ToReactiveObservableList());
+			this.Bind(ViewModel, vm => vm.SelectedProduct, v => v.ProductListView.SelectedItem);
 
-                this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem).DisposeWith(disposables);
-                this.BindCommand(ViewModel, vm => vm.NavigateToProductPage, v => v.ProductListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
+			this.BindCommand(ViewModel, vm => vm.NavigateToProductFormPage, v => v.AddProductToolbarItem);
+			this.BindCommand(ViewModel, vm => vm.NavigateToProductPage, v => v.ProductListView, nameof(ListView.ItemTapped));
 
-                ProductListView.SelectedItem = null;
-            });
-        }
-    }
+			ProductListView.SelectedItem = null;
+		}
+	}
 }

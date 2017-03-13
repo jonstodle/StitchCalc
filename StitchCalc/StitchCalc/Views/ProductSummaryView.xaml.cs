@@ -22,62 +22,59 @@ namespace StitchCalc.Views
 
 			this.BindCommand(ViewModel, vm => vm.Edit, v => v.EditProductToolbarItem);
 
-			this.WhenActivated(disposables =>
-			{
-				this.OneWayBind(ViewModel, vm => vm.Product.ChargeForMaterials, v => v.MaterialsStackLayout.Opacity, x => x ? 1 : .2).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.MaterialsPrice, v => v.MaterialsCostLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.IsMaterialsPriceMultiplied, v => v.MaterialsMultiplierLabel.IsVisible).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.Product.MaterialsMultiplier, v => v.MaterialsMultiplierLabel.Text, x => $"x{x}").DisposeWith(disposables);
+			this.OneWayBind(ViewModel, vm => vm.Product.ChargeForMaterials, v => v.MaterialsStackLayout.Opacity, x => x ? 1 : .2);
+			this.OneWayBind(ViewModel, vm => vm.MaterialsPrice, v => v.MaterialsCostLabel.Text, x => x.ToString("N2"));
+			this.OneWayBind(ViewModel, vm => vm.IsMaterialsPriceMultiplied, v => v.MaterialsMultiplierLabel.IsVisible);
+			this.OneWayBind(ViewModel, vm => vm.Product.MaterialsMultiplier, v => v.MaterialsMultiplierLabel.Text, x => $"x{x}");
 
-				this.OneWayBind(ViewModel, vm => vm.Product.ChargeForWork, v => v.WorkStackLayout.Opacity, x => x ? 1 : .2).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.WorkUnitsPrice, v => v.WorkCostLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.IsWorkPriceMultiplied, v => v.WorkMultiplierLabel.IsVisible).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.Product.WorkMultiplier, v => v.WorkMultiplierLabel.Text, x => $"x{x}").DisposeWith(disposables);
+			this.OneWayBind(ViewModel, vm => vm.Product.ChargeForWork, v => v.WorkStackLayout.Opacity, x => x ? 1 : .2);
+			this.OneWayBind(ViewModel, vm => vm.WorkUnitsPrice, v => v.WorkCostLabel.Text, x => x.ToString("N2"));
+			this.OneWayBind(ViewModel, vm => vm.IsWorkPriceMultiplied, v => v.WorkMultiplierLabel.IsVisible);
+			this.OneWayBind(ViewModel, vm => vm.Product.WorkMultiplier, v => v.WorkMultiplierLabel.Text, x => $"x{x}");
 
-				this.OneWayBind(ViewModel, vm => vm.TotalPrice, v => v.SumCostLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
+			this.OneWayBind(ViewModel, vm => vm.TotalPrice, v => v.SumCostLabel.Text, x => x.ToString("N2"));
 
-				var materialsTaps = Observable.FromEventPattern(MaterialsStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-				                              .SelectMany(_ => Observable.FromAsync(() => CreateActionSheet("Materials")))
-				                              .Publish()
-				                              .RefCount();
+			var materialsTaps = Observable.FromEventPattern(MaterialsStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
+										  .SelectMany(_ => Observable.FromAsync(() => CreateActionSheet("Materials")))
+										  .Publish()
+										  .RefCount();
 
-				materialsTaps
-					.Where(x => x == _toggleString)
-					.ToSignal()
-					.ObserveOn(RxApp.MainThreadScheduler)
-					.InvokeCommand(ViewModel.ToggleChargeForMaterials)
-					.DisposeWith(disposables);
+			materialsTaps
+				.Where(x => x == _toggleString)
+				.ToSignal()
+				.ObserveOn(RxApp.MainThreadScheduler)
+				.InvokeCommand(ViewModel.ToggleChargeForMaterials)
+				;
 
-				materialsTaps
-					.Where(x => x == _multiplyString)
-					.SelectMany(_ => Observable.FromAsync(() => CreateMultiplyPrompt("Materials")))
-					.Where(x => x.Ok && x.Value.IsValidDouble())
-					.Select(x => double.Parse(x.Value))
-					.ObserveOn(RxApp.MainThreadScheduler)
-					.InvokeCommand(ViewModel.SetMaterialsMultiplier)
-					.DisposeWith(disposables);
+			materialsTaps
+				.Where(x => x == _multiplyString)
+				.SelectMany(_ => Observable.FromAsync(() => CreateMultiplyPrompt("Materials")))
+				.Where(x => x.Ok && x.Value.IsValidDouble())
+				.Select(x => double.Parse(x.Value))
+				.ObserveOn(RxApp.MainThreadScheduler)
+				.InvokeCommand(ViewModel.SetMaterialsMultiplier)
+				;
 
-				var workTaps = Observable.FromEventPattern(WorkStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
-				                         .SelectMany(_ => Observable.FromAsync(() => CreateActionSheet("Work")))
-										 .Publish()
-										 .RefCount();
+			var workTaps = Observable.FromEventPattern(WorkStackLayoutTapGestureRecognizer, nameof(TapGestureRecognizer.Tapped))
+									 .SelectMany(_ => Observable.FromAsync(() => CreateActionSheet("Work")))
+									 .Publish()
+									 .RefCount();
 
-				workTaps
-					.Where(x => x == _toggleString)
-					.ToSignal()
-					.ObserveOn(RxApp.MainThreadScheduler)
-					.InvokeCommand(ViewModel.ToggleChargeForWork)
-					.DisposeWith(disposables);
+			workTaps
+				.Where(x => x == _toggleString)
+				.ToSignal()
+				.ObserveOn(RxApp.MainThreadScheduler)
+				.InvokeCommand(ViewModel.ToggleChargeForWork)
+				;
 
-				workTaps
-					.Where(x => x == _multiplyString)
-					.SelectMany(_ => Observable.FromAsync(() => CreateMultiplyPrompt("Work")))
-					.Where(x => x.Ok && x.Value.IsValidDouble())
-					.Select(x => double.Parse(x.Value))
-					.ObserveOn(RxApp.MainThreadScheduler)
-					.InvokeCommand(ViewModel.SetWorkMultiplier)
-					.DisposeWith(disposables);
-			});
+			workTaps
+				.Where(x => x == _multiplyString)
+				.SelectMany(_ => Observable.FromAsync(() => CreateMultiplyPrompt("Work")))
+				.Where(x => x.Ok && x.Value.IsValidDouble())
+				.Select(x => double.Parse(x.Value))
+				.ObserveOn(RxApp.MainThreadScheduler)
+				.InvokeCommand(ViewModel.SetWorkMultiplier)
+				;
 		}
 
 		enum ChargeReasons { Materials, Work }

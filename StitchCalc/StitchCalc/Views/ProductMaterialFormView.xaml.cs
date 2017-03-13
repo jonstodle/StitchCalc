@@ -19,19 +19,16 @@ namespace StitchCalc.Views
 
             ViewModel = viewModel;
 
-            this.WhenActivated(disposables =>
-            {
                 MaterialPicker.Items.Clear();
 				foreach (var material in ViewModel.Materials) MaterialPicker.Items.Add(material.Name);
 
-				this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title).DisposeWith(disposables);
-                this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex).DisposeWith(disposables);
-                this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text).DisposeWith(disposables);
+				this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
+                this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex);
+                this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text);
 
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem).DisposeWith(disposables);
-                this.BindCommand(ViewModel, vm => vm.AddMaterial, v => v.AddMaterialButton).DisposeWith(disposables);
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.AmountEntry, nameof(Entry.Completed)).DisposeWith(disposables);
-            });
+                this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
+                this.BindCommand(ViewModel, vm => vm.AddMaterial, v => v.AddMaterialButton);
+                this.BindCommand(ViewModel, vm => vm.Save, v => v.AmountEntry, nameof(Entry.Completed));
         }
     }
 }

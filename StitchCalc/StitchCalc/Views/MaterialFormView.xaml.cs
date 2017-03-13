@@ -10,27 +10,24 @@ using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {
-    public partial class MaterialFormView : ReactiveContentPage<MaterialFormViewModel>
-    {
-        public MaterialFormView(MaterialFormViewModel viewModel)
-        {
-            InitializeComponent();
+	public partial class MaterialFormView : ReactiveContentPage<MaterialFormViewModel>
+	{
+		public MaterialFormView(MaterialFormViewModel viewModel)
+		{
+			InitializeComponent();
 
-            ViewModel = viewModel;
+			ViewModel = viewModel;
 
-            this.WhenActivated(disposables =>
-            {
-                this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title).DisposeWith(disposables);
-                this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text).DisposeWith(disposables);
-                this.Bind(ViewModel, vm => vm.Width, v => v.WidthEntry.Text).DisposeWith(disposables);
-                this.Bind(ViewModel, vm => vm.Price, v => v.PriceEntry.Text).DisposeWith(disposables);
-                this.Bind(ViewModel, vm => vm.Notes, v => v.NotesEditor.Text).DisposeWith(disposables);
+			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
+			this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
+			this.Bind(ViewModel, vm => vm.Width, v => v.WidthEntry.Text);
+			this.Bind(ViewModel, vm => vm.Price, v => v.PriceEntry.Text);
+			this.Bind(ViewModel, vm => vm.Notes, v => v.NotesEditor.Text);
 
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem).DisposeWith(disposables);
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.NameEntry, nameof(Entry.Completed)).DisposeWith(disposables);
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.WidthEntry, nameof(Entry.Completed)).DisposeWith(disposables);
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.PriceEntry, nameof(Entry.Completed)).DisposeWith(disposables);
-            });
-        }
-    }
+			this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
+			this.BindCommand(ViewModel, vm => vm.Save, v => v.NameEntry, nameof(Entry.Completed));
+			this.BindCommand(ViewModel, vm => vm.Save, v => v.WidthEntry, nameof(Entry.Completed));
+			this.BindCommand(ViewModel, vm => vm.Save, v => v.PriceEntry, nameof(Entry.Completed));
+		}
+	}
 }

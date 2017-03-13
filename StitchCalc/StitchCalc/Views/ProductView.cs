@@ -12,18 +12,15 @@ namespace StitchCalc.Views
 {
 	public class ProductView : TabbedPage, IViewFor<ProductViewModel>
 	{
-		public ProductView (ProductViewModel viewModel)
+		public ProductView(ProductViewModel viewModel)
 		{
 			ViewModel = viewModel;
 
-            Children.Add(new ProductSummaryView(ViewModel));
-            Children.Add(new ProductMaterialsView(new ProductMaterialsViewModel(ViewModel.Product)));
-            Children.Add(new WorkUnitsView(new WorkUnitsViewModel(ViewModel.Product)));
+			Children.Add(new ProductSummaryView(ViewModel));
+			Children.Add(new ProductMaterialsView(new ProductMaterialsViewModel(ViewModel.Product)));
+			Children.Add(new WorkUnitsView(new WorkUnitsViewModel(ViewModel.Product)));
 
-            this.WhenActivated(disposables =>
-            {
-                this.OneWayBind(ViewModel, vm => vm.Product.Name, v => v.Title).DisposeWith(disposables);
-            });
+			this.OneWayBind(ViewModel, vm => vm.Product.Name, v => v.Title);
 		}
 
 		public ProductViewModel ViewModel

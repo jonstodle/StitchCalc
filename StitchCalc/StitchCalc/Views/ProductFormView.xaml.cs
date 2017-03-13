@@ -16,14 +16,11 @@ namespace StitchCalc.Views
 
             ViewModel = viewModel;
 
-            this.WhenActivated(disposables =>
-            {
-                this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title).DisposeWith(disposables);
-                this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text).DisposeWith(disposables);
+                this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
+                this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
 
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem).DisposeWith(disposables);
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.NameEntry, nameof(Entry.Completed)).DisposeWith(disposables);
-            });
+                this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem);
+                this.BindCommand(ViewModel, vm => vm.Save, v => v.NameEntry, nameof(Entry.Completed));
         }
     }
 }

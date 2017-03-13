@@ -17,16 +17,14 @@ namespace StitchCalc.Views
 
 			ViewModel = viewModel;
 
-			this.WhenActivated(disposables => {
-				this.OneWayBind(ViewModel, vm => vm.WorkUnitsView, v => v.WorkUnitsListView.ItemsSource, x => x.ToReactiveObservableList()).DisposeWith(disposables);
-				this.OneWayBind(ViewModel, vm => vm.WorkPrice, v => v.SumLabel.Text, x => x.ToString("N2")).DisposeWith(disposables);
-				this.Bind(ViewModel, vm => vm.SelectedWorkUnit, v => v.WorkUnitsListView.SelectedItem).DisposeWith(disposables);
+			this.OneWayBind(ViewModel, vm => vm.WorkUnitsView, v => v.WorkUnitsListView.ItemsSource, x => x.ToReactiveObservableList());
+			this.OneWayBind(ViewModel, vm => vm.WorkPrice, v => v.SumLabel.Text, x => x.ToString("N2"));
+			this.Bind(ViewModel, vm => vm.SelectedWorkUnit, v => v.WorkUnitsListView.SelectedItem);
 
-				this.BindCommand(ViewModel, vm => vm.AddWorkUnit, v => v.AddWorkUnitToolbarItem).DisposeWith(disposables);
-				this.BindCommand(ViewModel, vm => vm.SelectedWorkUnit.Edit, v => v.WorkUnitsListView, nameof(ListView.ItemTapped)).DisposeWith(disposables);
+			this.BindCommand(ViewModel, vm => vm.AddWorkUnit, v => v.AddWorkUnitToolbarItem);
+			this.BindCommand(ViewModel, vm => vm.SelectedWorkUnit.Edit, v => v.WorkUnitsListView, nameof(ListView.ItemTapped));
 
-				WorkUnitsListView.SelectedItem = null;
-			});
+			WorkUnitsListView.SelectedItem = null;
 		}
 	}
 }
