@@ -11,24 +11,24 @@ using System.Collections.Specialized;
 
 namespace StitchCalc.Views
 {
-    public partial class ProductMaterialFormView : ReactiveContentPage<ProductMaterialFormViewModel>
-    {
-        public ProductMaterialFormView(ProductMaterialFormViewModel viewModel)
-        {
-            InitializeComponent();
+	public partial class ProductMaterialFormView : ReactiveContentPage<ProductMaterialFormViewModel>
+	{
+		public ProductMaterialFormView(ProductMaterialFormViewModel viewModel)
+		{
+			InitializeComponent();
 
-            ViewModel = viewModel;
+			ViewModel = viewModel;
 
-                MaterialPicker.Items.Clear();
-				foreach (var material in ViewModel.Materials) MaterialPicker.Items.Add(material.Name);
+			MaterialPicker.Items.Clear();
+			foreach (var material in ViewModel.Materials) MaterialPicker.Items.Add(material.Name);
 
-				this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
-                this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex);
-                this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text);
+			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
+			this.Bind(ViewModel, vm => vm.SelectedMaterialIndex, v => v.MaterialPicker.SelectedIndex);
+			this.Bind(ViewModel, vm => vm.Amount, v => v.AmountEntry.Text);
 
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
-                this.BindCommand(ViewModel, vm => vm.AddMaterial, v => v.AddMaterialButton);
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.AmountEntry, nameof(Entry.Completed));
-        }
-    }
+			this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveToolbarItem);
+			this.BindCommand(ViewModel, vm => vm.AddMaterial, v => v.AddMaterialButton);
+			this.BindCommand(ViewModel, vm => vm.Save, v => v.AmountEntry, nameof(Entry.Completed));
+		}
+	}
 }

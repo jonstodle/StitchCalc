@@ -8,19 +8,19 @@ using StitchCalc.ViewModels;
 
 namespace StitchCalc.Views
 {
-    public partial class ProductFormView : ReactiveContentPage<ProductFormViewModel>
-    {
-        public ProductFormView(ProductFormViewModel viewModel)
-        {
-            InitializeComponent();
+	public partial class ProductFormView : ReactiveContentPage<ProductFormViewModel>
+	{
+		public ProductFormView(ProductFormViewModel viewModel)
+		{
+			InitializeComponent();
 
-            ViewModel = viewModel;
+			ViewModel = viewModel;
 
-                this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
-                this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
+			this.OneWayBind(ViewModel, vm => vm.PageTitle, v => v.Title);
+			this.Bind(ViewModel, vm => vm.Name, v => v.NameEntry.Text);
 
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem);
-                this.BindCommand(ViewModel, vm => vm.Save, v => v.NameEntry, nameof(Entry.Completed));
-        }
-    }
+			this.BindCommand(ViewModel, vm => vm.Save, v => v.SaveProductToolbarItem);
+			this.BindCommand(ViewModel, vm => vm.Save, v => v.NameEntry, nameof(Entry.Completed));
+		}
+	}
 }
